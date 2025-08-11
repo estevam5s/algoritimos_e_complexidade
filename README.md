@@ -52,7 +52,9 @@ A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profi
 ### **📘 Aula 01: Introdução aos Algoritmos**
 - **Conteúdo:** Definições, propriedades e importância
 - **Duração:** 2 horas
-- **Arquivo:** [`aulas/aula01.md`](aulas/aula01.md)
+- **Arquivos:** 
+  - 📄 **PDF:** [`aulas/pdf/aula01.pdf`](aulas/pdf/aula01.pdf)
+  - 📝 **Markdown:** [`aulas/aula01.md`](aulas/aula01.md)
 - **Objetivos:**
   - Compreender o conceito de algoritmo
   - Identificar características de algoritmos eficientes
@@ -61,7 +63,9 @@ A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profi
 ### **📗 Aula 02: Notação Assintótica e Análise**
 - **Conteúdo:** Big O, Omega, Theta e análise matemática
 - **Duração:** 2 horas
-- **Arquivo:** [`aulas/aula02.md`](aulas/aula02.md)
+- **Arquivos:** 
+  - 📄 **PDF:** [`aulas/pdf/aula02.pdf`](aulas/pdf/aula02.pdf)
+  - 📝 **Markdown:** [`aulas/aula02.md`](aulas/aula02.md)
 - **Objetivos:**
   - Dominar notações assintóticas
   - Analisar complexidade de algoritmos
@@ -70,7 +74,9 @@ A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profi
 ### **📙 Aula 03: Estruturas de Dados Lineares**
 - **Conteúdo:** Arrays, listas, pilhas e filas
 - **Duração:** 2 horas
-- **Arquivo:** [`aulas/aula03.md`](aulas/aula03.md)
+- **Arquivos:** 
+  - 📄 **PDF:** [`aulas/pdf/aula03.pdf`](aulas/pdf/aula03.pdf)
+  - 📝 **Markdown:** [`aulas/aula03.md`](aulas/aula03.md)
 - **Objetivos:**
   - Implementar estruturas lineares
   - Comparar eficiência das operações
@@ -144,9 +150,13 @@ gcc -Wall -O2 -o bin/teste exemplos/c/complexidade/exemplos_complexidade.c
 algoritimos_e_complexidade/
 ├── README.md                    # Este arquivo
 ├── aulas/                       # Material teórico
-│   ├── aula01.md               # Introdução
-│   ├── aula02.md               # Notação assintótica
-│   └── aula03.md               # Estruturas lineares
+│   ├── pdf/                    # Aulas em formato PDF
+│   │   ├── aula01.pdf         # Introdução (PDF)
+│   │   ├── aula02.pdf         # Notação assintótica (PDF)
+│   │   └── aula03.pdf         # Estruturas lineares (PDF)
+│   ├── aula01.md               # Introdução (Markdown)
+│   ├── aula02.md               # Notação assintótica (Markdown)
+│   └── aula03.md               # Estruturas lineares (Markdown)
 ├── exercicios/                  # Listas práticas
 │   ├── lista01.md              # Análise de complexidade
 │   └── lista02.md              # Estruturas de dados
