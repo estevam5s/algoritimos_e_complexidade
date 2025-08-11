@@ -23,71 +23,81 @@ A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profi
 
 ## 📚 Ementa da Disciplina
 
-### **Unidade I: Fundamentos Teóricos (20h)**
-- Conceitos básicos de algoritmos
-- Análise de complexidade temporal e espacial
-- Notações assintóticas (Big O, Omega, Theta)
-- Técnicas de análise matemática
+### **Unidade I: Fundamentos e Funções (16h)**
+- Conceitos básicos de algoritmos e funções
+- Estruturas de dados homogêneas e heterogêneas
+- Ponteiros e gerenciamento de memória
+- Análise de complexidade e notações assintóticas
 
-### **Unidade II: Estruturas de Dados (25h)**
-- Arrays e listas
-- Pilhas e filas
-- Listas ligadas e suas variações
-- Árvores binárias e árvores de busca
-- Tabelas hash
+### **Unidade II: Recursividade (16h)**
+- Definições recursivas e implementação
+- Desenvolvimento de algoritmos recursivos
+- Limitações e alternativas à recursão
+- Casos práticos e otimizações
 
-### **Unidade III: Algoritmos Fundamentais (20h)**
-- Algoritmos de ordenação (Bubble, Selection, Insertion, Merge, Quick)
-- Algoritmos de busca (Linear, Binária)
-- Algoritmos em grafos (DFS, BFS)
+### **Unidade III: Algoritmos de Ordenação (16h)**
+- Ordenação elementar (Bubble, Selection, Insertion)
+- Algoritmos avançados (Merge Sort, Quick Sort)
+- Shell Sort e análise comparativa
+- Complexidade e escolha de algoritmos
 
-### **Unidade IV: Técnicas Avançadas (15h)**
-- Programação dinâmica
-- Algoritmos gulosos
-- Divisão e conquista
-- Análise de problemas NP
+### **Unidade IV: Estruturas de Dados Avançadas (16h)**
+- Árvores binárias de busca
+- Percursos em árvores
+- Balanceamento e árvores AVL
+- Introdução a grafos
+
+### **Unidade V: Projetos e Laboratório (16h)**
+- Conceitos e representação de grafos
+- Roteiro de laboratório prático
+- Desenvolvimento de projetos
+- Apresentações e avaliações
 
 ## 📖 Guia de Estudos por Aulas
 
-### **📘 Aula 01: Introdução aos Algoritmos**
-- **Conteúdo:** Definições, propriedades e importância
-- **Duração:** 2 horas
+## 📖 Guia de Estudos por Aulas
+
+### **📘 Aula 01: Algoritmos - Funções e Passagem de Parâmetros**
+- **Conteúdo:** Conceitos fundamentais, funções e parâmetros
+- **Duração:** 4 horas
 - **Arquivos:** 
   - 📄 **PDF:** [`aulas/pdf/aula01.pdf`](aulas/pdf/aula01.pdf)
   - 📝 **Markdown:** [`aulas/aula01.md`](aulas/aula01.md)
-- **Objetivos:**
-  - Compreender o conceito de algoritmo
-  - Identificar características de algoritmos eficientes
-  - Aplicar análise básica de complexidade
 
-### **📗 Aula 02: Notação Assintótica e Análise**
-- **Conteúdo:** Big O, Omega, Theta e análise matemática
-- **Duração:** 2 horas
+### **📗 Aula 02: Estruturas de Dados - Homogêneas, Heterogêneas e Ponteiros**
+- **Conteúdo:** Arrays, structs e ponteiros
+- **Duração:** 4 horas
 - **Arquivos:** 
   - 📄 **PDF:** [`aulas/pdf/aula02.pdf`](aulas/pdf/aula02.pdf)
   - 📝 **Markdown:** [`aulas/aula02.md`](aulas/aula02.md)
-- **Objetivos:**
-  - Dominar notações assintóticas
-  - Analisar complexidade de algoritmos
-  - Resolver recorrências simples
 
-### **📙 Aula 03: Estruturas de Dados Lineares**
-- **Conteúdo:** Arrays, listas, pilhas e filas
-- **Duração:** 2 horas
+### **� Aula 03: Análise de Algoritmos e Prática de Análise**
+- **Conteúdo:** Complexidade, notações assintóticas e análise
+- **Duração:** 4 horas
 - **Arquivos:** 
   - 📄 **PDF:** [`aulas/pdf/aula03.pdf`](aulas/pdf/aula03.pdf)
   - 📝 **Markdown:** [`aulas/aula03.md`](aulas/aula03.md)
-- **Objetivos:**
-  - Implementar estruturas lineares
-  - Comparar eficiência das operações
-  - Escolher estrutura adequada para cada problema
 
-### **📕 Próximas Aulas (em desenvolvimento)**
-- Aula 04: Algoritmos de Ordenação I
-- Aula 05: Algoritmos de Ordenação II
-- Aula 06: Algoritmos de Busca
-- Aula 07: Introdução a Grafos
-- Aula 08: Programação Dinâmica
+### **📕 Aula 04: Definições Recursivas e Como Implementar Recursividade**
+- **Conteúdo:** Conceitos e implementação de recursão
+- **Duração:** 4 horas
+- **Arquivos:** 
+  - 📄 **PDF:** [`aulas/pdf/aula04.pdf`](aulas/pdf/aula04.pdf)
+  - 📝 **Markdown:** [`aulas/aula04.md`](aulas/aula04.md)
+
+### **📚 Próximas Aulas (cronograma completo):**
+- **Aula 05:** Desenvolvendo Algoritmos com Recursividade
+- **Aula 06:** Quando Não Usar Recursividade
+- **Aula 07:** Análise Ordenação Elementar e Mergesort
+- **Aula 08:** Quicksort e Shellsort
+- **Aula 09:** Árvore Binária de Busca
+- **Aula 10:** Percurso em Árvores Binárias
+- **Aula 11:** Balanceamento de Árvore e Árvore AVL
+- **Aula 12:** APS (Grafos) - Conceitos e Representação
+- **Aula 13:** Roteiro de Laboratório
+- **Aula 14:** Projetos
+
+**Cronograma resumido:** [`aulas/aulas_05_14.md`](aulas/aulas_05_14.md)
 
 ## 💻 Exercícios Práticos
 
@@ -151,12 +161,16 @@ algoritimos_e_complexidade/
 ├── README.md                    # Este arquivo
 ├── aulas/                       # Material teórico
 │   ├── pdf/                    # Aulas em formato PDF
-│   │   ├── aula01.pdf         # Introdução (PDF)
-│   │   ├── aula02.pdf         # Notação assintótica (PDF)
-│   │   └── aula03.pdf         # Estruturas lineares (PDF)
-│   ├── aula01.md               # Introdução (Markdown)
-│   ├── aula02.md               # Notação assintótica (Markdown)
-│   └── aula03.md               # Estruturas lineares (Markdown)
+│   │   ├── aula01.pdf         # Funções e Parâmetros (PDF)
+│   │   ├── aula02.pdf         # Estruturas de Dados (PDF)
+│   │   ├── aula03.pdf         # Análise de Algoritmos (PDF)
+│   │   └── aula04.pdf         # Recursividade (PDF)
+│   ├── aula01.md               # Funções e Parâmetros (Markdown)
+│   ├── aula02.md               # Estruturas de Dados (Markdown)
+│   ├── aula03.md               # Análise de Algoritmos (Markdown)
+│   ├── aula04.md               # Recursividade (Markdown)
+│   ├── aulas_05_14.md          # Cronograma das demais aulas
+│   └── DOWNLOADS_PDF.md        # Guia de downloads
 ├── exercicios/                  # Listas práticas
 │   ├── lista01.md              # Análise de complexidade
 │   └── lista02.md              # Estruturas de dados
