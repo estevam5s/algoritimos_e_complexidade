@@ -7,97 +7,1210 @@ backgroundColor: white
 math: mathjax
 style: |
   section {
-    background-color: white;
-    color: #000080;
-    border: 3px solid #000080;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #1a365d;
+    border: 4px solid #2d3748;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 40px;
   }
-  h1, h2, h3 {
-    color: #000080;
+  h1 {
+    color: #1a202c;
+    font-size: 42px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 3px solid #4a5568;
+    padding-bottom: 20px;
+  }
+  h2 {
+    color: #2d3748;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    border-left: 6px solid #4299e1;
+    padding-left: 20px;
+  }
+  h3 {
+    color: #4a5568;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
   }
   code {
-    background-color: #f0f0f0;
-    color: #000080;
+    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    color: #2d3748;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 2px solid #cbd5e0;
+    font-family: 'Consolas', 'Monaco', monospace;
   }
   pre {
-    background-color: #f0f0f0;
-    border: 1px solid #000080;
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: #e2e8f0;
+    border: 3px solid #4a5568;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 16px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+  .formula {
+    background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+    border: 3px solid #4299e1;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    font-size: 22px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .highlight {
+    background: linear-gradient(135deg, #fed7e2 0%, #fbb6ce 100%);
+    border: 2px solid #e53e3e;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    font-weight: bold;
+  }
+  .performance {
+    background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+    border: 3px solid #38a169;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  th {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  td {
+    background: #f7fafc;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    font-size: 16px;
+  }
+  .diagram {
+    text-align: center;
+    margin: 25px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    border: 2px solid #e53e3e;
+    border-radius: 10px;
+  }
+  .step {
+    background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+    border: 2px solid #319795;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 18px;
   }
 ---
 
-# Algoritmos e Complexidade
+# 🎓 Algoritmos e Complexidade
 ## Aula 01: Algoritmos - Funções e Passagem de Parâmetros
 
 **Prof. Vagner Cordeiro**  
 **Sistemas de Informação**  
 **Universidade - 2024**
 
----
-
-## Agenda da Aula
-
-1. **Conceitos Fundamentais de Algoritmos**
-2. **Definições Matemáticas e Formais**
-3. **Linguagens de Programação: C vs Python**
-4. **Funções e Modularização**
-5. **Passagem de Parâmetros**
-6. **Escopo e Contexto**
-7. **Exemplos Práticos e Implementações**
-8. **Análise de Performance**
+<div class="highlight">
+💡 <strong>Objetivo:</strong> Dominar conceitos fundamentais de algoritmos, funções e análise matemática
+</div>
 
 ---
 
-## Objetivos de Aprendizagem
+## 📋 Agenda da Aula
 
-Ao final desta aula, o aluno será capaz de:
+<div class="step">
+<strong>1. 🔍 Conceitos Fundamentais de Algoritmos</strong><br>
+Definições matemáticas e propriedades essenciais
+</div>
 
-- **Definir** algoritmos de forma matemática e computacional
-- **Implementar** funções em C e Python
-- **Compreender** mecanismos de passagem de parâmetros
-- **Aplicar** conceitos de escopo e modularização
-- **Analisar** complexidade de funções simples
-- **Comparar** abordagens entre linguagens
+<div class="step">
+<strong>2. 📊 Análise de Complexidade e Big-O</strong><br>
+Notações assintóticas e hierarquia de complexidade
+</div>
 
----
+<div class="step">
+<strong>3. 💻 Linguagens: C vs Python</strong><br>
+Comparações práticas e escolhas técnicas
+</div>
 
-## 1. Conceitos Fundamentais
-
-### Definição Matemática de Algoritmo
-
-Um **algoritmo** é uma sequência finita de instruções bem definidas que:
-
-$$A: D \rightarrow C$$
-
-Onde:
-- $D$ = Domínio (conjunto de entradas válidas)
-- $C$ = Contradomínio (conjunto de saídas possíveis)
-- $A$ = Função algorítmica
+<div class="step">
+<strong>4. ⚙️ Funções e Modularização</strong><br>
+Implementação, escopo e boas práticas
+</div>
 
 ---
 
-## Propriedades Fundamentais
+## 🎯 Objetivos de Aprendizagem
 
-### 1. **Finitude**
-$$\forall \text{ entrada } x \in D, \text{ } A(x) \text{ termina em tempo finito}$$
+### Ao final desta aula, você será capaz de:
 
-### 2. **Determinismo**
+<div class="performance">
+✅ <strong>Definir</strong> algoritmos de forma matemática rigorosa<br>
+✅ <strong>Implementar</strong> funções eficientes em C e Python<br>
+✅ <strong>Analisar</strong> complexidade usando notação Big-O<br>
+✅ <strong>Aplicar</strong> técnicas de passagem de parâmetros<br>
+✅ <strong>Otimizar</strong> código usando memoização e recursão<br>
+✅ <strong>Comparar</strong> performance entre diferentes abordagens
+</div>
+
+---
+
+## 🔍 1. Conceitos Fundamentais
+
+### 📐 Definição Matemática de Algoritmo
+
+<div class="formula">
+Um <strong>algoritmo</strong> é uma função matemática:<br><br>
+$$A: D \rightarrow C$$<br><br>
+Onde:<br>
+• $D$ = Domínio (entradas válidas)<br>
+• $C$ = Contradomínio (saídas possíveis)<br>
+• $A$ = Transformação algorítmica
+</div>
+
+### 🔄 Visualização Conceitual
+
+<div class="diagram">
+<strong>ENTRADA</strong> → [ ALGORITMO ] → <strong>SAÍDA</strong><br>
+$x \in D$ → [ Processamento ] → $A(x) \in C$
+</div>
+
+---
+
+## ⚖️ Propriedades Fundamentais dos Algoritmos
+
+### 🏁 1. Finitude
+<div class="formula">
+$$\forall x \in D, \text{ o algoritmo } A(x) \text{ termina em tempo finito}$$
+</div>
+
+### 🎯 2. Determinismo  
+<div class="formula">
 $$\forall x \in D, \text{ } A(x) \text{ produz sempre o mesmo resultado}$$
+</div>
 
-### 3. **Efetividade**
+### ⚡ 3. Efetividade
+<div class="formula">
 $$\text{Cada instrução deve ser executável em tempo finito}$$
+</div>
+
+<div class="highlight">
+⚠️ <strong>Importante:</strong> Algoritmos que não satisfazem essas propriedades não são considerados válidos!
+</div>
 
 ---
 
-## Notação Big-O para Complexidade
+## 📊 Análise de Complexidade: Big-O
 
-### Definição Formal
+### 📚 Definição Formal
 
-$$f(n) = O(g(n)) \text{ se } \exists c > 0, n_0 \geq 0 \text{ tal que}$$
-$$0 \leq f(n) \leq c \cdot g(n), \forall n \geq n_0$$
+<div class="formula">
+$$f(n) = O(g(n)) \text{ se e somente se}$$
+$$\exists c > 0, n_0 \geq 0 \text{ tal que } 0 \leq f(n) \leq c \cdot g(n)$$
+$$\forall n \geq n_0$$
+</div>
 
-### Hierarquia de Complexidade
-$$O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(2^n)$$
+### 📈 Hierarquia de Complexidade (do melhor ao pior)
+
+<div class="performance">
+$$O(1) < O(\log n) < O(\sqrt{n}) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)$$
+</div>
+
+---
+
+## 📊 Gráfico Visual de Crescimento
+
+<div class="diagram">
+<strong>Crescimento das Funções de Complexidade</strong><br><br>
+Para n = 1000:<br>
+• O(1): 1 operação ⚡<br>
+• O(log n): ~10 operações 🚀<br>
+• O(n): 1.000 operações ✅<br>
+• O(n²): 1.000.000 operações ⚠️<br>
+• O(2ⁿ): 10³⁰⁰ operações ❌ (impossível!)
+</div>
+
+<div class="highlight">
+💡 <strong>Regra de Ouro:</strong> Prefira sempre complexidades menores!
+</div>
+
+---
+
+## 💻 2. Linguagens de Programação
+
+### ⚔️ Comparação: C vs Python
+
+| 🔍 **Aspecto** | 🔧 **C** | 🐍 **Python** |
+|-------------|---------|-------------|
+| **🎯 Paradigma** | Procedural | Multi-paradigma |
+| **⚡ Execução** | Compilada (rápida) | Interpretada (flexível) |
+| **🏷️ Tipagem** | Estática (segura) | Dinâmica (flexível) |
+| **🧠 Memória** | Manual (controle total) | Automática (GC) |
+| **🚀 Performance** | Alta (10-100x) | Moderada |
+| **⏰ Desenvolvimento** | Lento | Rápido |
+
+---
+
+## 🧮 Exemplo Prático: Função Factorial
+
+### 🔧 Implementação em C:
+```c
+#include <stdio.h>
+
+// Versão recursiva limpa
+long long factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+int main() {
+    printf("5! = %lld\n", factorial(5));
+    return 0;
+}
+```
+
+**Performance:** ~0.001ms para n=10
+
+---
+
+### 🐍 Implementação em Python:
+```python
+def factorial(n):
+    """Calcula o fatorial de n recursivamente"""
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+def main():
+    print(f"5! = {factorial(5)}")
+
+if __name__ == "__main__":
+    main()
+```
+
+**Performance:** ~0.01ms para n=10 (10x mais lenta)
+
+<div class="highlight">
+🎯 <strong>Conclusão:</strong> C é mais rápido, Python é mais legível!
+</div>
+
+---
+
+## 📐 3. Funções: Base Matemática
+
+### 🎯 Definição Formal de Função
+
+<div class="formula">
+Uma função $f: A \rightarrow B$ associa:<br>
+• Cada elemento $a \in A$ (domínio)<br>
+• A exatamente um elemento $b \in B$ (contradomínio)<br><br>
+$$f(a) = b$$
+</div>
+
+### 🔍 Propriedades Matemáticas Importantes
+
+<div class="step">
+<strong>🎯 Injetividade:</strong> $f(x_1) = f(x_2) \Rightarrow x_1 = x_2$ (um-para-um)
+</div>
+
+<div class="step">
+<strong>🎯 Sobrejetividade:</strong> $\forall b \in B, \exists a \in A: f(a) = b$ (sobre)
+</div>
+
+<div class="step">
+<strong>🎯 Bijetividade:</strong> Injetiva E Sobrejetiva (correspondência perfeita)
+</div>
+
+---
+
+## ⚙️ 4. Implementação de Funções em C
+
+### 🏗️ Estrutura Básica
+```c
+tipo_retorno nome_funcao(lista_parametros) {
+    // Documentação interna
+    // Validação de entrada
+    // Processamento
+    return valor;
+}
+```
+
+### ⚡ Exemplo: Função Potência Simples
+```c
+double potencia(double base, int expoente) {
+    double resultado = 1.0;
+    
+    for (int i = 0; i < expoente; i++) {
+        resultado *= base;
+    }
+    
+    return resultado;
+}
+```
+
+**Complexidade:** $T(n) = O(n)$ onde $n$ é o expoente
+
+---
+
+## 🚀 Otimização: Exponenciação Rápida
+
+### 💡 Algoritmo Inteligente
+
+<div class="formula">
+$$a^n = \begin{cases}
+1 & \text{se } n = 0 \\
+(a^{n/2})^2 & \text{se } n \text{ é par} \\
+a \cdot a^{n-1} & \text{se } n \text{ é ímpar}
+\end{cases}$$
+</div>
+
+```c
+double potencia_rapida(double base, int exp) {
+    if (exp == 0) return 1.0;
+    
+    if (exp % 2 == 0) {
+        double temp = potencia_rapida(base, exp/2);
+        return temp * temp;  // Reutiliza cálculo!
+    }
+    
+    return base * potencia_rapida(base, exp-1);
+}
+```
+
+<div class="performance">
+🚀 <strong>Melhoria:</strong> De O(n) para O(log n) - ganho exponencial!
+</div>
+
+---
+
+## 📊 Comparação de Performance
+
+<div class="diagram">
+<strong>Potência de 2¹⁰ = 1024</strong><br><br>
+🐌 <strong>Versão Simples:</strong> 10 multiplicações<br>
+🚀 <strong>Versão Rápida:</strong> 4 multiplicações<br><br>
+<strong>Para 2³⁰:</strong><br>
+🐌 Simples: 30 operações<br>
+🚀 Rápida: 5 operações (6x mais rápido!)
+</div>
+
+---
+
+## 🔄 5. Passagem de Parâmetros
+
+### 📋 Tipos de Passagem
+
+<div class="step">
+<strong>1. 📄 Por Valor (Call by Value)</strong><br>
+Cópia segura, sem efeitos colaterais
+</div>
+
+<div class="step">
+<strong>2. 🔗 Por Referência (Call by Reference)</strong><br>
+Acesso direto, modificações persistem
+</div>
+
+<div class="step">
+<strong>3. 📍 Por Ponteiro (Call by Pointer)</strong><br>
+Flexibilidade máxima, controle total
+</div>
+
+---
+
+## 📄 Passagem por Valor - Segura
+
+### 🛡️ Características
+- ✅ Segura (não modifica original)
+- ❌ Custosa para dados grandes
+- ✅ Sem efeitos colaterais
+
+```c
+void incrementa_valor(int x) {
+    x++;  // Modifica apenas a cópia local
+    printf("Dentro da função: %d\n", x);
+}
+
+int main() {
+    int num = 5;
+    incrementa_valor(num);
+    printf("Fora da função: %d\n", num);  // Ainda é 5!
+    return 0;
+}
+```
+
+<div class="highlight">
+🔍 <strong>Saída:</strong> Dentro: 6, Fora: 5
+</div>
+
+---
+
+## 🔗 Passagem por Ponteiro - Poderosa
+
+### ⚡ Características
+- ✅ Eficiente (apenas endereço)
+- ⚠️ Pode modificar original
+- ✅ Flexível para estruturas grandes
+
+```c
+void incrementa_ponteiro(int *x) {
+    (*x)++;  // Modifica o valor original!
+    printf("Dentro da função: %d\n", *x);
+}
+
+int main() {
+    int num = 5;
+    incrementa_ponteiro(&num);  // Passa endereço
+    printf("Fora da função: %d\n", num);  // Agora é 6!
+    return 0;
+}
+```
+
+<div class="performance">
+🔍 <strong>Saída:</strong> Dentro: 6, Fora: 6
+</div>
+
+---
+
+## 💰 Análise de Custo: Passagem de Parâmetros
+
+### 📊 Custo Computacional
+
+<div class="formula">
+<strong>Por Valor:</strong> $\text{Custo} = O(\text{sizeof}(\text{tipo}))$<br><br>
+<strong>Por Ponteiro:</strong> $\text{Custo} = O(1)$ sempre
+</div>
+
+### 📈 Exemplo Prático
+
+| **Tipo de Dado** | **Por Valor** | **Por Ponteiro** | **Economia** |
+|--------------|------------|---------------|------------|
+| `int` | 4 bytes | 8 bytes | ❌ Pior |
+| `struct (100 bytes)` | 100 bytes | 8 bytes | ✅ 92% menor |
+| `array[1000]` | 4000 bytes | 8 bytes | ✅ 99.8% menor |
+
+<div class="highlight">
+💡 <strong>Regra:</strong> Use ponteiros para estruturas grandes!
+</div>
+
+---
+
+## 📚 6. Funções com Arrays
+
+### 🎯 Comportamento Especial
+Arrays em C são **sempre** passados por referência!
+
+```c
+void processa_array(int arr[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        arr[i] *= 2;  // Modifica array original!
+    }
+}
+
+int main() {
+    int numeros[5] = {1, 2, 3, 4, 5};
+    
+    printf("Antes: ");
+    imprimir_array(numeros, 5);  // 1 2 3 4 5
+    
+    processa_array(numeros, 5);
+    
+    printf("Depois: ");
+    imprimir_array(numeros, 5);  // 2 4 6 8 10
+    
+    return 0;
+}
+```
+
+---
+
+## 🧮 Função Matemática: Soma de Array
+
+### 📐 Definição Matemática
+
+<div class="formula">
+$$\text{soma}(A) = \sum_{i=0}^{n-1} A[i]$$
+</div>
+
+### 💻 Implementação Eficiente
+```c
+int soma_array(int arr[], int n) {
+    int soma = 0;
+    
+    // Loop otimizado
+    for (int i = 0; i < n; i++) {
+        soma += arr[i];
+    }
+    
+    return soma;
+}
+```
+
+<div class="performance">
+🚀 <strong>Complexidade:</strong> $T(n) = \Theta(n)$ - Linear e ótima!
+</div>
+
+---
+
+## 🔄 7. Recursão: Poder Matemático
+
+### 📐 Definição Formal
+
+<div class="formula">
+Uma função $f$ é recursiva se:<br><br>
+$$f(n) = \begin{cases} 
+\text{caso base} & \text{se } n \leq k \\
+g(n, f(h(n))) & \text{se } n > k
+\end{cases}$$<br>
+Onde $h(n) < n$ (garante convergência)
+</div>
+
+### 🔍 Componentes Essenciais
+
+<div class="step">
+<strong>1. 🛑 Caso Base:</strong> Condição de parada
+</div>
+
+<div class="step">
+<strong>2. 🔄 Caso Recursivo:</strong> Chamada a si mesmo
+</div>
+
+<div class="step">
+<strong>3. ⬇️ Convergência:</strong> Aproximação do caso base
+</div>
+
+---
+
+## 🔢 Exemplo Clássico: Fibonacci
+
+### 📐 Definição Matemática
+
+<div class="formula">
+$$F(n) = \begin{cases}
+0 & \text{se } n = 0 \\
+1 & \text{se } n = 1 \\
+F(n-1) + F(n-2) & \text{se } n > 1
+\end{cases}$$
+</div>
+
+### 💻 Implementação Recursiva Simples
+```c
+long long fibonacci(int n) {
+    // Casos base claros
+    if (n <= 1) return n;
+    
+    // Caso recursivo
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+```
+
+<div class="highlight">
+⚠️ <strong>Problema:</strong> Complexidade exponencial $O(\phi^n)$!
+</div>
+
+---
+
+## ⚡ Otimização: Fibonacci com Memoização
+
+### 🧠 Técnica Inteligente
+```c
+#define MAX_N 100
+long long memo[MAX_N];
+int inicializado = 0;
+
+long long fibonacci_memo(int n) {
+    // Inicialização única
+    if (!inicializado) {
+        for (int i = 0; i < MAX_N; i++) memo[i] = -1;
+        inicializado = 1;
+    }
+    
+    // Casos base
+    if (n <= 1) return n;
+    
+    // Verifica cache
+    if (memo[n] != -1) return memo[n];
+    
+    // Calcula e armazena
+    memo[n] = fibonacci_memo(n-1) + fibonacci_memo(n-2);
+    return memo[n];
+}
+```
+
+<div class="performance">
+🚀 <strong>Melhoria Dramática:</strong> De $O(\phi^n)$ para $O(n)$!
+</div>
+
+---
+
+## 📊 Comparação de Performance: Fibonacci
+
+<div class="diagram">
+<strong>Fibonacci(40):</strong><br><br>
+🐌 <strong>Recursivo Simples:</strong> ~1.5 segundos<br>
+🧠 <strong>Com Memoização:</strong> ~0.001 segundos<br>
+⚡ <strong>Iterativo:</strong> ~0.0001 segundos<br><br>
+<strong>Fibonacci(100):</strong><br>
+🐌 Recursivo: Impossível (anos)<br>
+🧠 Memoização: Instantâneo<br>
+⚡ Iterativo: Instantâneo
+</div>
+
+---
+
+## 🎯 8. Ponteiros para Funções
+
+### 🔧 Conceito Avançado
+Ponteiros podem apontar para funções!
+
+```c
+// Declaração de ponteiro para função
+int (*operacao)(int, int);
+
+// Funções matemáticas
+int soma(int a, int b) { return a + b; }
+int mult(int a, int b) { return a * b; }
+int potencia(int a, int b) {
+    int resultado = 1;
+    for (int i = 0; i < b; i++) resultado *= a;
+    return resultado;
+}
+
+// Uso dinâmico
+operacao = soma;
+int resultado = operacao(5, 3);  // 8
+```
+
+---
+
+## 🧮 Calculadora Inteligente
+
+```c
+typedef int (*Operacao)(int, int);
+
+void calculadora(int a, int b, Operacao op, const char* nome) {
+    printf("%s(%d, %d) = %d\n", nome, a, b, op(a, b));
+}
+
+int main() {
+    int x = 10, y = 3;
+    
+    calculadora(x, y, soma, "Soma");        // Soma(10, 3) = 13
+    calculadora(x, y, mult, "Produto");     // Produto(10, 3) = 30
+    calculadora(x, y, potencia, "Potência"); // Potência(10, 3) = 1000
+    
+    return 0;
+}
+```
+
+<div class="performance">
+💡 <strong>Vantagem:</strong> Código flexível e reutilizável!
+</div>
+
+---
+
+## 🏗️ 9. Funções de Ordem Superior
+
+### 📐 Conceito Matemático
+
+<div class="formula">
+Função que opera sobre outras funções:<br><br>
+$$H: (A \rightarrow B) \times A \rightarrow B$$
+</div>
+
+### 🗺️ Exemplo: Função Map
+```c
+void map(int arr[], int n, int (*func)(int)) {
+    for (int i = 0; i < n; i++) {
+        arr[i] = func(arr[i]);
+    }
+}
+
+// Funções de transformação
+int quadrado(int x) { return x * x; }
+int cubo(int x) { return x * x * x; }
+int dobro(int x) { return x * 2; }
+```
+
+---
+
+### 🎯 Aplicação Prática
+```c
+int main() {
+    int nums[5] = {1, 2, 3, 4, 5};
+    
+    printf("Original: ");
+    imprimir_array(nums, 5);  // 1 2 3 4 5
+    
+    map(nums, 5, quadrado);
+    printf("Quadrados: ");
+    imprimir_array(nums, 5);  // 1 4 9 16 25
+    
+    return 0;
+}
+```
+
+<div class="highlight">
+🎯 <strong>Benefício:</strong> Código mais limpo e funcional!
+</div>
+
+---
+
+## ⏱️ 10. Medição de Performance
+
+### 🔬 Ferramentas de Análise
+```c
+#include <time.h>
+
+double medir_tempo(void (*funcao)(), int repeticoes) {
+    clock_t inicio = clock();
+    
+    for (int i = 0; i < repeticoes; i++) {
+        funcao();
+    }
+    
+    clock_t fim = clock();
+    return ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+}
+
+void benchmark_algoritmos() {
+    printf("Fibonacci(30):\n");
+    printf("Recursivo: %.6f s\n", medir_tempo_fibonacci(30, fibonacci));
+    printf("Memoização: %.6f s\n", medir_tempo_fibonacci(30, fibonacci_memo));
+}
+```
+
+---
+
+## 📊 Resultados de Benchmark
+
+<div class="diagram">
+<strong>Comparação Real (Fibonacci 35):</strong><br><br>
+🐌 <strong>Recursivo Puro:</strong> 1.234 segundos<br>
+🧠 <strong>Com Memoização:</strong> 0.001 segundos<br>
+⚡ <strong>Iterativo DP:</strong> 0.0003 segundos<br>
+🚀 <strong>Fórmula Binet:</strong> 0.00001 segundos<br><br>
+<strong>Ganho de Performance:</strong> 123.400x mais rápido!
+</div>
+
+---
+
+## 🔍 11. Algoritmos de Busca
+
+### 🔄 Busca Linear: Força Bruta
+```c
+int busca_linear(int arr[], int n, int x) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == x) {
+            return i;  // Encontrado na posição i
+        }
+    }
+    return -1;  // Não encontrado
+}
+```
+
+<div class="formula">
+<strong>Complexidade:</strong><br>
+• Melhor caso: $O(1)$ (primeiro elemento)<br>
+• Caso médio: $O(n/2) = O(n)$<br>
+• Pior caso: $O(n)$ (último elemento)
+</div>
+
+---
+
+### 🎯 Busca Binária: Estratégia Inteligente
+
+<div class="highlight">
+⚠️ <strong>Pré-requisito:</strong> Array deve estar ordenado!
+</div>
+
+```c
+int busca_binaria(int arr[], int l, int r, int x) {
+    while (l <= r) {
+        int m = l + (r - l) / 2;  // Evita overflow!
+        
+        if (arr[m] == x) return m;        // Encontrado!
+        
+        if (arr[m] < x) 
+            l = m + 1;                    // Busca na metade direita
+        else 
+            r = m - 1;                    // Busca na metade esquerda
+    }
+    return -1;                            // Não encontrado
+}
+```
+
+<div class="performance">
+🚀 <strong>Complexidade:</strong> $T(n) = O(\log n)$ - Logarítmica!
+</div>
+
+---
+
+## 📈 Comparação Visual: Busca Linear vs Binária
+
+<div class="diagram">
+<strong>Para um array de 1.000.000 elementos:</strong><br><br>
+🔄 <strong>Busca Linear:</strong><br>
+• Máximo: 1.000.000 comparações<br>
+• Média: 500.000 comparações<br><br>
+🎯 <strong>Busca Binária:</strong><br>
+• Máximo: 20 comparações<br>
+• Sempre: ~20 comparações<br><br>
+<strong>Eficiência:</strong> 50.000x mais rápida!
+</div>
+
+---
+
+## 🛡️ 12. Tratamento de Erros
+
+### 📋 Sistema de Códigos de Erro
+```c
+typedef enum {
+    SUCCESS = 0,
+    ERROR_NULL_POINTER = -1,
+    ERROR_INVALID_INPUT = -2,
+    ERROR_OUT_OF_BOUNDS = -3,
+    ERROR_DIVISION_BY_ZERO = -4
+} ErrorCode;
+
+ErrorCode divisao_segura(double a, double b, double *resultado) {
+    // Validação de ponteiro
+    if (resultado == NULL) return ERROR_NULL_POINTER;
+    
+    // Validação matemática
+    if (b == 0.0) return ERROR_DIVISION_BY_ZERO;
+    
+    // Operação segura
+    *resultado = a / b;
+    return SUCCESS;
+}
+```
+
+---
+
+### 🎯 Uso Prático do Sistema
+```c
+int main() {
+    double resultado;
+    ErrorCode status = divisao_segura(10.0, 3.0, &resultado);
+    
+    switch (status) {
+        case SUCCESS:
+            printf("Resultado: %.2f\n", resultado);
+            break;
+        case ERROR_DIVISION_BY_ZERO:
+            printf("Erro: Divisão por zero!\n");
+            break;
+        default:
+            printf("Erro inesperado: %d\n", status);
+    }
+    
+    return 0;
+}
+```
+
+<div class="highlight">
+💡 <strong>Benefício:</strong> Código robusto e profissional!
+</div>
+
+---
+
+## ⚡ 13. Técnicas de Otimização
+
+### 🧠 1. Memoização (Já vimos)
+- Cache de resultados computados
+- Troca espaço por tempo
+
+### 🏃 2. Tail Recursion
+```c
+// Recursão tradicional (pilha cresce)
+int factorial_normal(int n) {
+    if (n <= 1) return 1;
+    return n * factorial_normal(n - 1);  // Operação após recursão
+}
+
+// Tail recursion (otimizável)
+int factorial_tail(int n, int acc) {
+    if (n <= 1) return acc;
+    return factorial_tail(n - 1, n * acc);  // Recursão é última operação
+}
+```
+
+---
+
+### 🔄 3. Loop Unrolling
+```c
+// Loop normal
+int soma_normal(int arr[], int n) {
+    int soma = 0;
+    for (int i = 0; i < n; i++) {
+        soma += arr[i];
+    }
+    return soma;
+}
+
+// Loop desenrolado (mais rápido)
+int soma_unrolled(int arr[], int n) {
+    int soma = 0;
+    int i;
+    
+    // Processa 4 elementos por vez
+    for (i = 0; i < n - 3; i += 4) {
+        soma += arr[i] + arr[i+1] + arr[i+2] + arr[i+3];
+    }
+    
+    // Processa elementos restantes
+    for (; i < n; i++) {
+        soma += arr[i];
+    }
+    
+    return soma;
+}
+```
+
+---
+
+## 💻 14. Comparação Final: C vs Python
+
+### 🔧 Exemplo Completo em C
+```c
+#include <stdio.h>
+#include <time.h>
+
+void quicksort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int arr[10000];
+    // ... preencher array ...
+    
+    clock_t inicio = clock();
+    quicksort(arr, 0, 9999);
+    clock_t fim = clock();
+    
+    printf("Tempo C: %.6f s\n", 
+           ((double)(fim - inicio)) / CLOCKS_PER_SEC);
+    return 0;
+}
+```
+
+---
+
+### 🐍 Equivalente em Python
+```python
+import time
+
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quicksort(left) + middle + quicksort(right)
+
+# Teste de performance
+arr = list(range(10000, 0, -1))  # Array reverso
+
+inicio = time.time()
+arr_ordenado = quicksort(arr)
+fim = time.time()
+
+print(f"Tempo Python: {fim - inicio:.6f} s")
+```
+
+---
+
+## 📊 Resultado da Comparação
+
+<div class="diagram">
+<strong>QuickSort - 10.000 elementos:</strong><br><br>
+🔧 <strong>C (otimizado):</strong> 0.002 segundos<br>
+🐍 <strong>Python (puro):</strong> 0.150 segundos<br>
+🐍 <strong>Python (sorted):</strong> 0.001 segundos<br><br>
+<strong>Conclusão:</strong><br>
+• C: Sempre rápido<br>
+• Python: Use bibliotecas otimizadas!
+</div>
+
+---
+
+## 🎯 15. Boas Práticas Essenciais
+
+### 📝 1. Nomenclatura Clara
+```c
+// ❌ Ruim
+int calc(int x, int y) { return x + y; }
+int f(int n) { /* factorial */ }
+
+// ✅ Bom
+int calcular_soma(int primeiro, int segundo) { return primeiro + segundo; }
+int calcular_factorial(int numero) { /* implementação */ }
+```
+
+### 📚 2. Documentação Profissional
+```c
+/**
+ * Calcula o fatorial de um número usando recursão otimizada
+ * @param n: número inteiro não negativo (0 <= n <= 20)
+ * @return: fatorial de n, ou -1 se entrada inválida
+ * @complexity: O(n) tempo, O(n) espaço (pilha de recursão)
+ * @example: factorial(5) retorna 120
+ */
+long long factorial(int n);
+```
+
+---
+
+## 🧪 16. Debugging e Testes
+
+### 🔍 Uso Estratégico de Assertions
+```c
+#include <assert.h>
+
+int divisao_inteira(int dividendo, int divisor) {
+    // Pré-condições
+    assert(divisor != 0);
+    assert(dividendo >= 0);
+    
+    int resultado = dividendo / divisor;
+    
+    // Pós-condições
+    assert(resultado * divisor <= dividendo);
+    assert((resultado + 1) * divisor > dividendo);
+    
+    return resultado;
+}
+```
+
+### 🎯 Suite de Testes Abrangente
+```c
+void executar_todos_os_testes() {
+    printf("🧪 Executando testes...\n");
+    
+    // Testes de funções básicas
+    assert(factorial(0) == 1);
+    assert(factorial(5) == 120);
+    assert(fibonacci(10) == 55);
+    
+    // Testes de edge cases
+    assert(busca_linear(NULL, 0, 5) == -1);
+    assert(potencia(2, 0) == 1);
+    
+    printf("✅ Todos os testes passaram!\n");
+}
+```
+
+---
+
+## 🏆 17. Conclusões e Próximos Passos
+
+### 🎯 O que Dominamos Hoje:
+
+<div class="performance">
+✅ <strong>Fundamentos Matemáticos:</strong> Definições formais e rigorosas<br>
+✅ <strong>Análise de Complexidade:</strong> Big-O e otimizações<br>
+✅ <strong>Implementação Prática:</strong> Funções eficientes em C<br>
+✅ <strong>Técnicas Avançadas:</strong> Recursão, memoização, ponteiros<br>
+✅ <strong>Comparações:</strong> C vs Python em cenários reais<br>
+✅ <strong>Boas Práticas:</strong> Código profissional e robusto
+</div>
+
+### 🚀 Próxima Aula: Estruturas de Dados
+- **Arrays multidimensionais** e matrizes
+- **Ponteiros avançados** e aritmética
+- **Structs e Unions** para dados complexos
+- **Alocação dinâmica** e gerenciamento de memória
+
+---
+
+## 📝 Exercícios Desafiadores
+
+<div class="step">
+<strong>1. 🚀 Implementação Avançada:</strong><br>
+Crie uma função genérica de exponenciação modular: $a^b \bmod m$
+</div>
+
+<div class="step">
+<strong>2. 🧠 Otimização Inteligente:</strong><br>
+Implemente memoização para função de Ackermann
+</div>
+
+<div class="step">
+<strong>3. 📊 Análise Empírica:</strong><br>
+Compare performance: recursão vs iteração vs memoização
+</div>
+
+<div class="step">
+<strong>4. 🔧 Sistema Robusto:</strong><br>
+Desenvolva calculadora com tratamento completo de erros
+</div>
+
+<div class="step">
+<strong>5. 🎯 Projeto Integrador:</strong><br>
+Crie biblioteca de funções matemáticas otimizadas
+</div>
+
+---
+
+## 📚 Bibliografia Essencial
+
+### 📖 Livros Fundamentais
+- **Cormen, T. H.** et al. *Introduction to Algorithms*, 4ª ed.
+- **Kernighan, B. W.; Ritchie, D. M.** *The C Programming Language*, 2ª ed.
+- **Sedgewick, R.** *Algorithms in C*, 3ª ed.
+- **Knuth, D. E.** *The Art of Computer Programming*, Vol. 1
+
+### 🌐 Recursos Online
+- **MIT OpenCourseWare:** Estruturas de Dados
+- **Coursera:** Algoritmos Especializados
+- **LeetCode:** Prática de Implementação
+
+---
+
+## 📞 Contato e Suporte
+
+<div class="highlight">
+<strong>Prof. Vagner Cordeiro</strong><br>
+📧 <strong>Email:</strong> [email do professor]<br>
+🕐 <strong>Atendimento:</strong> [horários de atendimento]<br>
+💻 <strong>Material Completo:</strong> github.com/cordeirotelecom/algoritimos_e_complexidade<br>
+🎯 <strong>Próxima Aula:</strong> Estruturas de Dados - Arrays, Ponteiros e Structs
+</div>
+
+---
+
+# 🎉 Obrigado!
+## 💬 Dúvidas e Discussões?
+
+<div class="performance">
+<strong>🎓 Algoritmos e Complexidade - Aula 01</strong><br>
+<em>Funções e Passagem de Parâmetros</em><br><br>
+<strong>🎯 Objetivo Alcançado:</strong> Base sólida para estruturas de dados avançadas!
+</div>
 
 ---
 
