@@ -1,129 +1,28 @@
 ---
 marp: true
 theme: default
+class: invert
 paginate: true
 backgroundColor: white
 math: mathjax
 style: |
   section {
-    background: #ffffff;
-    color: #2c3e50;
-    border: 3px solid #34495e;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 22px;
-    line-height: 1.6;
-    padding: 40px;
+    background-color: white;
+    color: #000080;
+    border: 3px solid #000080;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
   }
-  h1 {
-    color: #2c3e50;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 3px solid #3498db;
-    padding-bottom: 20px;
-  }
-  h2 {
-    color: #34495e;
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 25px;
-    border-left: 6px solid #3498db;
-    padding-left: 20px;
-  }
-  h3 {
-    color: #34495e;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  h1, h2, h3 {
+    color: #000080;
   }
   code {
-    background: #f8f9fa;
-    color: #2c3e50;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 18px;
-    border: 1px solid #dee2e6;
-    font-family: 'Consolas', 'Monaco', monospace;
+    background-color: #f0f0f0;
+    color: #000080;
   }
   pre {
-    background: #2c3e50;
-    color: #ecf0f1;
-    border: 2px solid #34495e;
-    border-radius: 8px;
-    padding: 20px;
-    font-size: 16px;
-    font-family: 'Consolas', 'Monaco', monospace;
-    overflow-x: auto;
-  }
-  pre code {
-    background: transparent;
-    color: #ecf0f1;
-    border: none;
-    padding: 0;
-  }
-  .formula {
-    background: #ebf3fd;
-    border: 2px solid #3498db;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    text-align: center;
-    font-size: 20px;
-  }
-  .highlight {
-    background: #fff3cd;
-    border: 2px solid #ffc107;
-    border-radius: 6px;
-    padding: 15px;
-    margin: 15px 0;
-    font-weight: bold;
-  }
-  .performance {
-    background: #d4edda;
-    border: 2px solid #28a745;
-    border-radius: 6px;
-    padding: 15px;
-    margin: 15px 0;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px 0;
-    font-size: 18px;
-  }
-  th {
-    background: #34495e;
-    color: white;
-    padding: 12px;
-    font-weight: bold;
-    border: 1px solid #2c3e50;
-  }
-  td {
-    background: #f8f9fa;
-    padding: 10px;
-    border: 1px solid #dee2e6;
-  }
-  .definition {
-    background: #f8f9fa;
-    border: 2px solid #6c757d;
-    border-radius: 6px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-  .example {
-    background: #e8f5e8;
-    border: 2px solid #28a745;
-    border-radius: 6px;
-    padding: 15px;
-    margin: 15px 0;
-  }
-  .comparison {
-    background: #fff5f5;
-    border: 2px solid #dc3545;
-    border-radius: 6px;
-    padding: 15px;
-    margin: 15px 0;
+    background-color: #f0f0f0;
+    border: 1px solid #000080;
   }
 ---
 
