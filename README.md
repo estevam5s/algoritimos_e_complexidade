@@ -85,19 +85,26 @@ A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profi
   - 📄 **PDF:** [`aulas/pdf/aula04.pdf`](aulas/pdf/aula04.pdf)
   - 📝 **Markdown:** [`aulas/aula04.md`](aulas/aula04.md)
 
-### **📚 Próximas Aulas (cronograma completo):**
-- **Aula 05:** Desenvolvendo Algoritmos com Recursividade
-- **Aula 06:** Quando Não Usar Recursividade
-- **Aula 07:** Análise Ordenação Elementar e Mergesort
-- **Aula 08:** Quicksort e Shellsort
-- **Aula 09:** Árvore Binária de Busca
-- **Aula 10:** Percurso em Árvores Binárias
-- **Aula 11:** Balanceamento de Árvore e Árvore AVL
-- **Aula 12:** APS (Grafos) - Conceitos e Representação
-- **Aula 13:** Roteiro de Laboratório
-- **Aula 14:** Projetos
+### **📚 Aulas Completas (05-14):**
 
-**Cronograma resumido:** [`aulas/aulas_05_14.md`](aulas/aulas_05_14.md)
+### **📘 Aulas 05-08: Recursividade e Ordenação**
+- **Aula 05:** Desenvolvendo Algoritmos com Recursividade ✅
+- **Aula 06:** Quando Não Usar Recursividade ✅
+- **Aula 07:** Análise Ordenação Elementar e Mergesort ✅
+- **Aula 08:** Quicksort e Shellsort ✅
+- **Arquivo:** [`aulas/aulas_05_14.md`](aulas/aulas_05_14.md)
+
+### **📗 Aulas 09-12: Árvores e Grafos**
+- **Aula 09:** Árvore Binária de Busca ✅
+- **Aula 10:** Percurso em Árvores Binárias ✅
+- **Aula 11:** Balanceamento de Árvore e Árvore AVL ✅
+- **Aula 12:** APS (Grafos) - Conceitos e Representação ✅
+- **Arquivo:** [`aulas/aula09_12.md`](aulas/aula09_12.md)
+
+### **📕 Aulas 13-14: Prática e Projetos**
+- **Aula 13:** Roteiro de Laboratório ✅
+- **Aula 14:** Projetos Finais ✅
+- **Arquivos:** [`aulas/aula13.md`](aulas/aula13.md) | [`aulas/aula14.md`](aulas/aula14.md)
 
 ## 💻 Exercícios Práticos
 
