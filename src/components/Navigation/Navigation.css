@@ -1,0 +1,30 @@
+
+.navigation-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.navigation-tabs {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 25px !important;
+  padding: 10px !important;
+}
+
+.nav-tab {
+  background: rgba(255, 255, 255, 0.9);
+  color: #2c3e50 !important;
+  margin: 0 5px;
+  border-radius: 25px;
+  min-height: 48px;
+  transition: all 0.3s ease !important;
+  font-weight: 600 !important;
+}
+
+.nav-tab:hover,
+.nav-tab.Mui-selected {
+  background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
