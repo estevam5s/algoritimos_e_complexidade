@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos e Complexidade Computacional - Prof. Vagner Cordeiro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .info-card strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .professor-info {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .professor-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .professor-info h3::before {
+            content: "👨‍🏫";
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.pdf-card {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+
+        .card.exercise-card {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        }
+
+        .card.code-card {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        .card.doc-card {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3::before {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .card-type {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .card-action {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-action:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #e17055;
+        }
+
+        .highlight-box h4 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box h4::before {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+            display: block;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .ementa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .unidade-card {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .unidade-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .unidade-card h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .unidade-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .unidade-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .unidade-card li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            margin-left: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            border: 4px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .code-display {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .animated {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header animated">
+            <h1>Algoritmos e Complexidade Computacional</h1>
+            <p class="subtitle">ARA0174 - Sistemas de Informação</p>
+            
+            <div class="course-info">
+                <div class="info-card">
+                    <strong>Professor</strong>
+                    Vagner Cordeiro
+                </div>
+                <div class="info-card">
+                    <strong>Período</strong>
+                    2025.2
+                </div>
+                <div class="info-card">
+                    <strong>Carga Horária</strong>
+                    80 horas
+                </div>
+                <div class="info-card">
+                    <strong>Modalidade</strong>
+                    4 horas/semana
+                </div>
+            </div>
+            
+            <div class="professor-info">
+                <h3>Prof. Vagner Cordeiro</h3>
+                <p><strong>Experiência:</strong> Professor especialista em Algoritmos, Estruturas de Dados e Complexidade Computacional</p>
+                <p><strong>Foco:</strong> Desenvolvimento de habilidades analíticas e implementação eficiente de algoritmos</p>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('overview')">📚 Visão Geral</div>
+            <div class="nav-tab" onclick="showSection('ementa')">📋 Ementa</div>
+            <div class="nav-tab" onclick="showSection('aulas')">🎓 Aulas</div>
+            <div class="nav-tab" onclick="showSection('exercicios')">💻 Exercícios</div>
+            <div class="nav-tab" onclick="showSection('recursos')">🔧 Recursos</div>
+            <div class="nav-tab" onclick="showSection('cronograma')">📅 Cronograma</div>
+        </nav>
+
+        <!-- Seção: Visão Geral -->
+        <div class="content-section active" id="overview">
+            <div class="section-title">📚 Visão Geral do Curso</div>
+            
+            <div class="highlight-box">
+                <h4>🎯 Por que estudar Algoritmos?</h4>
+                <p>A disciplina de Algoritmos e Complexidade é <strong>fundamental</strong> para qualquer profissional de Sistemas de Informação, fornecendo:</p>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li><strong>Base sólida</strong> para desenvolvimento de software eficiente</li>
+                    <li><strong>Capacidade analítica</strong> para resolver problemas computacionais</li>
+                    <li><strong>Conhecimento essencial</strong> para entrevistas técnicas</li>
+                    <li><strong>Fundamentos</strong> para áreas avançadas como IA, Big Data e Sistemas Distribuídos</li>
+                </ul>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">14+</span>
+                    <span class="stat-label">Aulas Completas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">Listas de Exercícios</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">Linguagens (C/Python)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Material Prático</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🚀 Metodologia do Curso</h4>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>🔬 Teoria Fundamentada</h3>
+                        <p>Conceitos matemáticos rigorosos com análise formal de complexidade</p>
+                    </div>
+                    <div class="card">
+                        <h3>💻 Prática Intensiva</h3>
+                        <p>Implementação em C e Python com foco em performance</p>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Análise Comparativa</h3>
+                        <p>Benchmarks reais e comparação entre diferentes abordagens</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Ementa -->
+        <div class="content-section" id="ementa">
+            <div class="section-title">📋 Ementa da Disciplina</div>
+            
+            <div class="ementa-grid">
+                <div class="unidade-card">
+                    <h4>📚 Unidade I: Fundamentos e Funções (16h)</h4>
+                    <ul>
+                        <li>Conceitos básicos de algoritmos e funções</li>
+                        <li>Estruturas de dados homogêneas e heterogêneas</li>
+                        <li>Ponteiros e gerenciamento de memória</li>
+                        <li>Análise de complexidade e notações assintóticas</li>
+                    </ul>
+                </div>
+                
+                <div class="unidade-card">
+                    <h4>🔄 Unidade II: Recursividade (16h)</h4>
+                    <ul>
+                        <li>Definições recursivas e implementação</li>
+                        <li>Desenvolvimento de algoritmos recursivos</li>
+                        <li>Limitações e alternativas à recursão</li>
+                        <li>Casos práticos e otimizações</li>
+                    </ul>
+                </div>
+                
+                <div class="unidade-card">
+                    <h4>🔄 Unidade III: Algoritmos de Ordenação (16h)</h4>
+                    <ul>
+                        <li>Ordenação elementar (Bubble, Selection, Insertion)</li>
+                        <li>Algoritmos avançados (Merge Sort, Quick Sort)</li>
+                        <li>Shell Sort e análise comparativa</li>
+                        <li>Complexidade e escolha de algoritmos</li>
+                    </ul>
+                </div>
+                
+                <div class="unidade-card">
+                    <h4>🌳 Unidade IV: Estruturas de Dados Avançadas (16h)</h4>
+                    <ul>
+                        <li>Árvores binárias de busca</li>
+                        <li>Percursos em árvores</li>
+                        <li>Balanceamento e árvores AVL</li>
+                        <li>Introdução a grafos</li>
+                    </ul>
+                </div>
+                
+                <div class="unidade-card">
+                    <h4>🔬 Unidade V: Projetos e Laboratório (16h)</h4>
+                    <ul>
+                        <li>Conceitos e representação de grafos</li>
+                        <li>Roteiro de laboratório prático</li>
+                        <li>Desenvolvimento de projetos</li>
+                        <li>Apresentações e avaliações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>📊 Sistema de Avaliação</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="text-align: center; padding: 15px; background: rgba(116, 185, 255, 0.1); border-radius: 10px;">
+                        <strong>Prova 1: 25%</strong><br>
+                        <small>Fundamentos e análise</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(108, 92, 231, 0.1); border-radius: 10px;">
+                        <strong>Prova 2: 25%</strong><br>
+                        <small>Estruturas de dados</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(253, 121, 168, 0.1); border-radius: 10px;">
+                        <strong>Prova 3: 25%</strong><br>
+                        <small>Algoritmos fundamentais</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(0, 184, 148, 0.1); border-radius: 10px;">
+                        <strong>Exercícios: 15%</strong><br>
+                        <small>Listas práticas</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(253, 203, 110, 0.1); border-radius: 10px;">
+                        <strong>Projeto: 10%</strong><br>
+                        <small>Implementação completa</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Aulas -->
+        <div class="content-section" id="aulas">
+            <div class="section-title">🎓 Material das Aulas</div>
+            
+            <div class="cards-grid">
+                <div class="card pdf-card" onclick="openModal('aula01-details')">
+                    <div class="card-type">PDF + MARKDOWN</div>
+                    <h3>📘 Aula 01: Algoritmos - Funções e Passagem de Parâmetros</h3>
+                    <p>Conceitos fundamentais, funções e parâmetros. Análise matemática e implementação prática.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">4 horas • Fundamentos</span>
+                        <span class="card-action">Ver Detalhes</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" onclick="openModal('aula02-details')">
+                    <div class="card-type">PDF + MARKDOWN</div>
+                    <h3>📗 Aula 02: Estruturas de Dados - Homogêneas, Heterogêneas e Ponteiros</h3>
+                    <p>Arrays, structs e ponteiros. Gerenciamento de memória e análise de performance.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">4 horas • Estruturas</span>
+                        <span class="card-action">Ver Detalhes</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" onclick="openModal('aula03-details')">
+                    <div class="card-type">PDF + MARKDOWN</div>
+                    <h3>📙 Aula 03: Análise de Algoritmos e Prática de Análise</h3>
+                    <p>Complexidade, notações assintóticas e análise matemática rigorosa.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">4 horas • Análise</span>
+                        <span class="card-action">Ver Detalhes</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" onclick="openModal('aula04-details')">
+                    <div class="card-type">PDF + MARKDOWN</div>
+                    <h3>📕 Aula 04: Definições Recursivas e Como Implementar Recursividade</h3>
+                    <p>Conceitos e implementação de recursão. Casos base e otimizações.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">4 horas • Recursão</span>
+                        <span class="card-action">Ver Detalhes</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-type">MARKDOWN</div>
+                    <h3>📚 Aulas 05-14: Conteúdo Avançado</h3>
+                    <p>Recursividade avançada, algoritmos de ordenação, árvores, grafos e projetos práticos.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">40 horas • Avançado</span>
+                        <a href="#" class="card-action">Acessar</a>
+                    </div>
+                </div>
+
+                <div class="card doc-card">
+                    <div class="card-type">SLIDES</div>
+                    <h3>🎯 Slides das Aulas</h3>
+                    <p>Apresentações em formato Marp para aulas interativas e dinâmicas.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">Formato Marp</span>
+                        <a href="#" class="card-action">Ver Slides</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>📥 Downloads Diretos</h4>
+                <p>Todos os PDFs estão disponíveis para download direto e visualização online:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 15px;">
+                    <a href="#" style="background: rgba(253, 121, 168, 0.1); padding: 10px; border-radius: 8px; text-decoration: none; color: #2c3e50; text-align: center;">📄 aula01.pdf</a>
+                    <a href="#" style="background: rgba(116, 185, 255, 0.1); padding: 10px; border-radius: 8px; text-decoration: none; color: #2c3e50; text-align: center;">📄 aula02.pdf</a>
+                    <a href="#" style="background: rgba(108, 92, 231, 0.1); padding: 10px; border-radius: 8px; text-decoration: none; color: #2c3e50; text-align: center;">📄 aula03.pdf</a>
+                    <a href="#" style="background: rgba(0, 184, 148, 0.1); padding: 10px; border-radius: 8px; text-decoration: none; color: #2c3e50; text-align: center;">📄 aula04.pdf</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Exercícios -->
+        <div class="content-section" id="exercicios">
+            <div class="section-title">💻 Exercícios Práticos</div>
+            
+            <div class="cards-grid">
+                <div class="card exercise-card" onclick="openModal('lista01-details')">
+                    <div class="card-type">LISTA PRÁTICA</div>
+                    <h3>📝 Lista 01: Análise de Complexidade</h3>
+                    <p>Exercícios focados em análise teórica e prática de algoritmos em C e Python.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">Prazo: 2 semanas • Valor: 2,0 pts</span>
+                        <span class="card-action">Ver Exercícios</span>
+                    </div>
+                </div>
+
+                <div class="card exercise-card" onclick="openModal('lista02-details')">
+                    <div class="card-type">LISTA PRÁTICA</div>
+                    <h3>📊 Lista 02: Estruturas de Dados Básicas</h3>
+                    <p>Implementação de estruturas lineares, arrays dinâmicos e análise de performance.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">Prazo: 2 semanas • Valor: 2,5 pts</span>
+                        <span class="card-action">Ver Exercícios</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🎯 Estrutura dos Exercícios</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>🔬 Implementação</strong><br>
+                        <small>Código em C e Python com análise de complexidade</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📊 Análise</strong><br>
+                        <small>Comparação de performance e otimizações</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📝 Relatório</strong><br>
+                        <small>Documentação técnica completa</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>🧪 Testes</strong><br>
+                        <small>Casos de teste abrangentes</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Recursos -->
+        <div class="content-section" id="recursos">
+            <div class="section-title">🔧 Recursos e Ferramentas</div>
+            
+            <div class="cards-grid">
+                <div class="card code-card">
+                    <div class="card-type">EXEMPLOS C</div>
+                    <h3>⚙️ Códigos de Exemplo em C</h3>
+                    <p>Implementações completas com análise de complexidade e otimizações.</p>
+                    <div class="code-display">
+// Exemplo: Busca Binária em C
+int busca_binaria(int arr[], int l, int r, int x) {
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        if (arr[mid] == x) return mid;
+        if (arr[mid] > x) 
+            return busca_binaria(arr, l, mid-1, x);
+        return busca_binaria(arr, mid+1, r, x);
+    }
+    return -1;
+}</div>
+                    <div class="card-footer">
+                        <span class="card-meta">Complexidade: O(log n)</span>
+                        <a href="#" class="card-action">Ver Código</a>
+                    </div>
+                </div>
+
+                <div class="card code-card">
+                    <div class="card-type">EXEMPLOS PYTHON</div>
+                    <h3>🐍 Códigos de Exemplo em Python</h3>
+                    <p>Implementações elegantes e comparações de performance com C.</p>
+                    <div class="code-display">
+# Exemplo: Merge Sort em Python
+def merge_sort(lista):
+    if len(lista) <= 1:
+        return lista
+    
+    meio = len(lista) // 2
+    esquerda = merge_sort(lista[:meio])
+    direita = merge_sort(lista[meio:])
+    
+    return merge(esquerda, direita)</div>
+                    <div class="card-footer">
+                        <span class="card-meta">Complexidade: O(n log n)</span>
+                        <a href="#" class="card-action">Ver Código</a>
+                    </div>
+                </div>
+
+                <div class="card doc-card" onclick="openModal('setup-details')">
+                    <div class="card-type">DOCUMENTAÇÃO</div>
+                    <h3>📚 Guia de Configuração</h3>
+                    <p>Instruções completas para configurar ambiente de desenvolvimento.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">C + Python + Tools</span>
+                        <span class="card-action">Ver Guia</span>
+                    </div>
+                </div>
+
+                <div class="card doc-card">
+                    <div class="card-type">FERRAMENTAS</div>
+                    <h3>🛠️ Ferramentas de Desenvolvimento</h3>
+                    <p>GCC, Python 3.8+, VS Code, Git e ferramentas de debugging.</p>
+                    <div class="card-footer">
+                        <span class="card-meta">Ambiente Completo</span>
+                        <a href="#" class="card-action">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🌐 Recursos Online Recomendados</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <a href="https://visualgo.net/" target="_blank" style="padding: 15px; background: rgba(116, 185, 255, 0.1); border-radius: 10px; text-decoration: none; color: #2c3e50; text-align: center;">
+                        🎨 <strong>VisuAlgo</strong><br>
+                        <small>Visualização de Algoritmos</small>
+                    </a>
+                    <a href="https://www.hackerrank.com/" target="_blank" style="padding: 15px; background: rgba(0, 184, 148, 0.1); border-radius: 10px; text-decoration: none; color: #2c3e50; text-align: center;">
+                        💻 <strong>HackerRank</strong><br>
+                        <small>Prática de Programação</small>
+                    </a>
+                    <a href="https://leetcode.com/" target="_blank" style="padding: 15px; background: rgba(253, 203, 110, 0.1); border-radius: 10px; text-decoration: none; color: #2c3e50; text-align: center;">
+                        🧠 <strong>LeetCode</strong><br>
+                        <small>Problemas Avançados</small>
+                    </a>
+                    <a href="https://github.com/cordeirotelecom/algoritimos_e_complexidade" target="_blank" style="padding: 15px; background: rgba(108, 92, 231, 0.1); border-radius: 10px; text-decoration: none; color: #2c3e50; text-align: center;">
+                        📂 <strong>GitHub</strong><br>
+                        <small>Repositório Oficial</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção: Cronograma -->
+        <div class="content-section" id="cronograma">
+            <div class="section-title">📅 Cronograma do Curso</div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Semanas 1-4: Fundamentos</div>
+                    <h4>🏗️ Bases Sólidas</h4>
+                    <p><strong>Aulas 01-04:</strong> Algoritmos, funções, estruturas de dados e análise de complexidade. Primeira lista de exercícios.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Semanas 5-8: Recursividade</div>
+                    <h4>🔄 Pensamento Recursivo</h4>
+                    <p><strong>Aulas 05-06:</strong> Recursividade avançada, otimizações e limitações. <strong>Prova 1</strong> na semana 8.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Semanas 9-12: Ordenação</div>
+                    <h4>📊 Algoritmos de Ordenação</h4>
+                    <p><strong>Aulas 07-08:</strong> Algoritmos elementares, Merge Sort, Quick Sort e Shell Sort. Segunda lista de exercícios.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Semanas 13-16: Estruturas Avançadas</div>
+                    <h4>🌳 Árvores e Grafos</h4>
+                    <p><strong>Aulas 09-12:</strong> Árvores binárias, AVL e introdução a grafos. <strong>Prova 2</strong> na semana 16.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Semanas 17-20: Laboratório</div>
+                    <h4>🔬 Prática Intensiva</h4>
+                    <p><strong>Aulas 13-14:</strong> Laboratório prático e desenvolvimento de projetos finais. <strong>Prova 3</strong> na semana 20.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>📊 Distribuição da Carga Horária</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="text-align: center; padding: 15px; background: rgba(116, 185, 255, 0.2); border-radius: 10px;">
+                        <strong>32h</strong><br>
+                        <small>Aulas Teóricas</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(0, 184, 148, 0.2); border-radius: 10px;">
+                        <strong>32h</strong><br>
+                        <small>Laboratório Prático</small>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(253, 121, 168, 0.2); border-radius: 10px;">
+                        <strong>16h</strong><br>
+                        <small>Projetos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modais -->
+        <div id="aula01-details" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>📘 Aula 01: Algoritmos - Funções e Passagem de Parâmetros</h2>
+                <p><strong>Duração:</strong> 4 horas | <strong>Formato:</strong> PDF + Markdown</p>
+                
+                <h3>🎯 Objetivos de Aprendizagem</h3>
+                <ul>
+                    <li>Compreender conceitos fundamentais de algoritmos</li>
+                    <li>Dominar a criação e uso de funções</li>
+                    <li>Aplicar diferentes formas de passagem de parâmetros</li>
+                    <li>Analisar o escopo de variáveis em funções</li>
+                </ul>
+
+                <h3>📚 Conteúdo Abordado</h3>
+                <ul>
+                    <li>Definição matemática de algoritmos</li>
+                    <li>Propriedades fundamentais (finitude, determinismo, efetividade)</li>
+                    <li>Sintaxe e semântica de funções em C</li>
+                    <li>Passagem por valor vs passagem por referência</li>
+                    <li>Escopo de variáveis locais e globais</li>
+                    <li>Exemplos práticos completos</li>
+                </ul>
+
+                <div class="code-display">
+// Exemplo da Aula: Função com Passagem por Referência
+void incrementa_ponteiro(int *x) {
+    (*x)++;
+    printf("Dentro da função: %d\n", *x);
+}
+
+int main() {
+    int numero = 5;
+    incrementa_ponteiro(&numero);
+    printf("Fora da função: %d\n", numero);
+    return 0;
+}
+                </div>
+            </div>
+        </div>
+
+        <div id="lista01-details" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>📝 Lista 01: Análise de Complexidade</h2>
+                <p><strong>Prazo:</strong> 2 semanas | <strong>Valor:</strong> 2,0 pontos</p>
+                
+                <h3>🎯 Exercícios Inclusos</h3>
+                <ol>
+                    <li><strong>Busca do Elemento Máximo (1,0 ponto)</strong><br>
+                        Implementar em C e Python, analisar complexidade</li>
+                    <li><strong>Verificação de Array Ordenado (1,5 pontos)</strong><br>
+                        Versões iterativa e recursiva com comparação</li>
+                    <li><strong>Contagem de Elementos Únicos (2,0 pontos)</strong><br>
+                        Duas abordagens diferentes com análise de trade-offs</li>
+                    <li><strong>Análise Teórica (1,5 pontos)</strong><br>
+                        Análise de complexidade sem implementação</li>
+                </ol>
+
+                <h3>📊 Critérios de Avaliação</h3>
+                <ul>
+                    <li><strong>Corretude (30%):</strong> Algoritmos funcionam corretamente</li>
+                    <li><strong>Complexidade (25%):</strong> Análise correta da complexidade</li>
+                    <li><strong>Implementação (20%):</strong> Qualidade do código</li>
+                    <li><strong>Experimentação (15%):</strong> Testes adequados</li>
+                    <li><strong>Documentação (10%):</strong> Relatório bem estruturado</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="setup-details" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>📚 Guia de Configuração do Ambiente</h2>
+                
+                <h3>📋 Pré-requisitos</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h4>Para C:</h4>
+                        <ul>
+                            <li><strong>GCC</strong> (GNU Compiler Collection)</li>
+                            <li><strong>Windows:</strong> MinGW-w64 ou Visual Studio</li>
+                            <li><strong>Linux/Mac:</strong> gcc via package manager</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Para Python:</h4>
+                        <ul>
+                            <li><strong>Python 3.8+</strong></li>
+                            <li><strong>Bibliotecas:</strong> time, random (built-in)</li>
+                            <li><strong>IDE:</strong> VS Code recomendado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🔧 Compilação dos Exemplos</h3>
+                <div class="code-display">
+# Compilação básica
+gcc -o exemplo exemplo.c
+
+# Com flags de otimização e debug
+gcc -Wall -g -O2 -o exemplo exemplo.c
+
+# Execução
+./exemplo
+                </div>
+
+                <h3>▶️ Execução Python</h3>
+                <div class="code-display">
+# Executar diretamente
+python exemplo.py
+
+# Com medição de performance
+python -m cProfile exemplo.py
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 - Algoritmos e Complexidade Computacional | Prof. Vagner Cordeiro - ARA0174</p>
+        <p>
+            <a href="https://github.com/cordeirotelecom/algoritimos_e_complexidade" target="_blank">📂 GitHub</a> |
+            <a href="#" target="_blank">📧 Email</a> |
+            <a href="#" target="_blank">🕐 Atendimento</a> |
+            <a href="#" target="_blank">💬 Fórum</a>
+        </p>
+        <p><em>"A única maneira de aprender algoritmos é programando algoritmos."</em> - Prof. Vagner Cordeiro</p>
+    </footer>
+
+    <script>
+        // Navegação entre seções
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remover classe active de todas as tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Ativar tab correspondente
+            event.target.classList.add('active');
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Sistema de modais
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners para modais
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fechar modal ao clicar no X
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+
+            // Fechar modal ao clicar fora do conteúdo
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Animações de entrada
+            const animatedElements = document.querySelectorAll('.animated');
+            animatedElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.animationDelay = `${index * 0.2}s`;
+                }, index * 100);
+            });
+        });
+
+        // Efeitos interativos nos cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.25)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
+            });
+        });
+
+        // Navegação por teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Fechar todos os modais abertos
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efeito parallax sutil no scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            document.body.style.backgroundPositionY = rate + 'px';
+        });
+
+        // Auto-save da navegação no localStorage
+        function saveCurrentSection() {
+            const activeSection = document.querySelector('.content-section.active').id;
+            localStorage.setItem('algoritmos_current_section', activeSection);
+        }
+
+        function loadSavedSection() {
+            const savedSection = localStorage.getItem('algoritmos_current_section');
+            if (savedSection && document.getElementById(savedSection)) {
+                // Simular clique na tab correspondente
+                const tabs = {
+                    'overview': 0,
+                    'ementa': 1,
+                    'aulas': 2,
+                    'exercicios': 3,
+                    'recursos': 4,
+                    'cronograma': 5
+                };
+                
+                if (tabs[savedSection] !== undefined) {
+                    const tabElement = document.querySelectorAll('.nav-tab')[tabs[savedSection]];
+                    if (tabElement) {
+                        tabElement.click();
+                    }
+                }
+            }
+        }
+
+        // Carregar seção salva ao inicializar
+        window.addEventListener('load', loadSavedSection);
+
+        // Salvar seção atual ao navegar
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', saveCurrentSection);
+        });
+
+        // Contador de visitantes (simulado)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('algoritmos_visitor_count') || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem('algoritmos_visitor_count', count);
+            
+            // Exibir contagem se necessário
+            console.log(`Visita número: ${count}`);
+        }
+
+        window.addEventListener('load', updateVisitorCount);
+
+        // Loading indicator para links externos
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function() {
+                // Adicionar indicator visual de loading
+                this.style.opacity = '0.7';
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
