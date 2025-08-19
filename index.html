@@ -411,6 +411,313 @@
             text-decoration: underline;
         }
 
+        /* ===== ESTILOS DO ASSISTENTE IA ===== */
+        .ai-assistant-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .ai-assistant-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        .ai-chat-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .ai-chat-container {
+            width: 90%;
+            max-width: 500px;
+            height: 80vh;
+            max-height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .ai-chat-modal.active .ai-chat-container {
+            transform: scale(1);
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-chat-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-chat-header h3::before {
+            content: "🤖";
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .ai-chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .ai-chat-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .ai-message {
+            margin-bottom: 15px;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .ai-message.user {
+            text-align: right;
+        }
+
+        .ai-message.bot {
+            text-align: left;
+        }
+
+        .ai-message-content {
+            display: inline-block;
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin: 0 5px;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .ai-message.user .ai-message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .ai-message.bot .ai-message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-message-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .ai-typing-indicator {
+            display: none;
+            align-items: center;
+            padding: 10px 16px;
+            background: white;
+            border-radius: 18px;
+            max-width: 80px;
+            margin-bottom: 15px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .ai-typing-indicator.active {
+            display: flex;
+        }
+
+        .ai-typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .ai-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .ai-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .ai-chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .ai-quick-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .ai-suggestion-btn {
+            background: #f1f3f4;
+            border: 1px solid #e1e8ed;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #555;
+        }
+
+        .ai-suggestion-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .ai-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            border: 2px solid #e1e8ed;
+            border-radius: 20px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            resize: none;
+            max-height: 100px;
+            font-family: inherit;
+        }
+
+        .ai-chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .ai-send-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .ai-send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-welcome-message {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .ai-welcome-message h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .ai-welcome-message p {
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .ai-error-message {
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -427,6 +734,23 @@
             
             .course-info {
                 grid-template-columns: 1fr;
+            }
+
+            .ai-assistant-button {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .ai-chat-container {
+                width: 95%;
+                height: 90vh;
+            }
+
+            .ai-quick-suggestions {
+                flex-direction: column;
             }
         }
 
@@ -1169,6 +1493,47 @@ def merge_sort(lista):
         </div>
     </div>
 
+    <!-- ===== ASSISTENTE IA ===== -->
+    <button class="ai-assistant-button" onclick="openAIChat()">🤖</button>
+
+    <div class="ai-chat-modal" id="ai-chat-modal">
+        <div class="ai-chat-container">
+            <div class="ai-chat-header">
+                <h3>Assistente de Algoritmos</h3>
+                <button class="ai-chat-close" onclick="closeAIChat()">×</button>
+            </div>
+            
+            <div class="ai-chat-messages" id="ai-chat-messages">
+                <div class="ai-welcome-message">
+                    <h4>👋 Olá! Sou seu assistente virtual</h4>
+                    <p>Estou aqui para ajudar com dúvidas sobre algoritmos, complexidade, estruturas de dados e exercícios da disciplina. Como posso ajudá-lo hoje?</p>
+                </div>
+            </div>
+            
+            <div class="ai-typing-indicator" id="ai-typing">
+                <div class="ai-typing-dots">
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="ai-chat-input-container">
+                <div class="ai-quick-suggestions">
+                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Como calcular complexidade O(n)?')">Como calcular complexidade?</button>
+                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Explique recursividade')">Explique recursividade</button>
+                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Qual a diferença entre C e Python?')">C vs Python</button>
+                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Ajuda com exercícios')">Ajuda com exercícios</button>
+                </div>
+                
+                <div class="ai-input-group">
+                    <textarea class="ai-chat-input" id="ai-chat-input" placeholder="Digite sua dúvida sobre algoritmos..." rows="1"></textarea>
+                    <button class="ai-send-button" id="ai-send-btn" onclick="sendMessage()">🚀</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <p>© 2025 - Algoritmos e Complexidade Computacional | Prof. Vagner Cordeiro - ARA0174</p>
         <p>
@@ -1181,6 +1546,7 @@ def merge_sort(lista):
     </footer>
 
     <script>
+        // ===== CÓDIGO EXISTENTE =====
         // Navegação entre seções
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
@@ -2236,7 +2602,6 @@ gdb ./programa
         }
 
         function loadSlideContent(aulaId) {
-            // Esta função seria expandida para carregar o conteúdo real dos slides
             const slideContent = document.getElementById('slide-content');
             slideContent.innerHTML = `
                 <h3>📊 Slides da Aula ${aulaId.slice(-2)}</h3>
@@ -2245,7 +2610,290 @@ gdb ./programa
             `;
         }
 
-        // Event listeners para modais
+        // ===== SISTEMA DO ASSISTENTE IA =====
+
+        // Base de conhecimento expandida da disciplina
+        const knowledgeBase = {
+            // Conceitos fundamentais
+            'algoritmo': {
+                definition: 'Um algoritmo é uma sequência finita e ordenada de instruções não ambíguas que resolve um problema específico.',
+                examples: ['Busca binária', 'Ordenação por bolha', 'Fatorial recursivo'],
+                complexity: 'Varia conforme o algoritmo específico',
+                related: ['complexidade', 'eficiência', 'otimização']
+            },
+            'complexidade': {
+                definition: 'Complexidade computacional mede a quantidade de recursos (tempo e espaço) necessários para executar um algoritmo.',
+                examples: ['O(1) - constante', 'O(log n) - logarítmica', 'O(n) - linear', 'O(n²) - quadrática'],
+                types: ['Temporal', 'Espacial', 'Melhor caso', 'Pior caso', 'Caso médio'],
+                related: ['big-o', 'notação assintótica', 'análise']
+            },
+            'recursividade': {
+                definition: 'Recursividade é uma técnica onde uma função chama a si mesma para resolver uma versão menor do mesmo problema.',
+                components: ['Caso base', 'Caso recursivo', 'Convergência'],
+                examples: ['Fatorial', 'Fibonacci', 'Torres de Hanói'],
+                limitations: ['Stack overflow', 'Complexidade exponencial', 'Uso de memória'],
+                related: ['iteração', 'pilha', 'divide-and-conquer']
+            },
+            'ordenacao': {
+                definition: 'Algoritmos de ordenação reorganizam elementos de uma estrutura de dados em uma ordem específica.',
+                elementary: ['Bubble Sort O(n²)', 'Selection Sort O(n²)', 'Insertion Sort O(n²)'],
+                advanced: ['Merge Sort O(n log n)', 'Quick Sort O(n log n)', 'Heap Sort O(n log n)'],
+                considerations: ['Estabilidade', 'In-place', 'Adaptabilidade'],
+                related: ['comparação', 'troca', 'particionamento']
+            },
+            'estruturas': {
+                definition: 'Estruturas de dados são formas de organizar e armazenar dados para facilitar acesso e modificação.',
+                linear: ['Array', 'Lista ligada', 'Pilha', 'Fila'],
+                nonlinear: ['Árvore', 'Grafo', 'Hash table'],
+                operations: ['Inserção', 'Remoção', 'Busca', 'Atualização'],
+                related: ['ponteiros', 'memória', 'eficiência']
+            }
+        };
+
+        // Respostas predefinidas para perguntas comuns
+        const predefinedResponses = {
+            // Saudações e cumprimentos
+            'ola': 'Olá! 👋 Sou seu assistente virtual para a disciplina de Algoritmos e Complexidade. Como posso ajudá-lo hoje?',
+            'oi': 'Oi! 😊 Estou aqui para esclarecer suas dúvidas sobre algoritmos, complexidade e estruturas de dados. O que gostaria de saber?',
+            'bom dia': 'Bom dia! ☀️ Pronto para estudar algoritmos hoje? Em que posso ajudá-lo?',
+            'boa tarde': 'Boa tarde! 🌅 Como posso ajudá-lo com seus estudos de algoritmos?',
+            'boa noite': 'Boa noite! 🌙 Vamos estudar algoritmos? O que gostaria de aprender?',
+            
+            // Sobre o curso
+            'sobre o curso': 'O curso de Algoritmos e Complexidade (ARA0174) é fundamental para Sistemas de Informação. Aborda:\n\n📚 5 unidades principais:\n• Fundamentos e Funções (16h)\n• Recursividade (16h)\n• Algoritmos de Ordenação (16h)\n• Estruturas Avançadas (16h)\n• Projetos e Laboratório (16h)\n\n🎯 Objetivos: Desenvolver habilidades analíticas e implementação eficiente de algoritmos.',
+            
+            'professor': 'O Prof. Vagner Cordeiro é especialista em Algoritmos, Estruturas de Dados e Complexidade Computacional, com foco no desenvolvimento de habilidades analíticas dos estudantes.',
+            
+            'avaliacao': 'Sistema de avaliação:\n\n📊 Distribuição:\n• Prova 1: 25% (Fundamentos)\n• Prova 2: 25% (Estruturas)\n• Prova 3: 25% (Algoritmos)\n• Exercícios: 15% (Listas práticas)\n• Projeto: 10% (Implementação)\n\n✅ Critérios de aprovação:\n• Nota final ≥ 6,0\n• Frequência ≥ 75%\n• 80% dos exercícios entregues',
+            
+            // Complexidade
+            'o que e complexidade': 'Complexidade computacional mede os recursos necessários para executar um algoritmo:\n\n⏱️ **Complexidade Temporal**: Tempo de execução\n💾 **Complexidade Espacial**: Uso de memória\n\n📈 **Notações principais**:\n• O(1) - Constante\n• O(log n) - Logarítmica\n• O(n) - Linear\n• O(n log n) - Linearítmica\n• O(n²) - Quadrática\n• O(2ⁿ) - Exponencial',
+            
+            'big o': 'A notação Big-O descreve o comportamento assintótico de algoritmos:\n\n🔍 **O que representa**: Limite superior do crescimento\n📊 **Exemplos práticos**:\n• Busca linear: O(n)\n• Busca binária: O(log n)\n• Ordenação por bolha: O(n²)\n• Merge sort: O(n log n)\n\n💡 **Dica**: Foque no termo de maior ordem e ignore constantes!',
+            
+            'como calcular complexidade': 'Para calcular complexidade:\n\n🔢 **Passos básicos**:\n1. Identifique loops e operações\n2. Conte operações elementares\n3. Encontre o termo dominante\n4. Expresse em notação Big-O\n\n📝 **Exemplo prático**:\n```c\nfor(int i=0; i<n; i++) {     // n iterações\n    for(int j=0; j<n; j++) { // n iterações\n        soma += arr[i][j];   // O(1)\n    }\n}\n// Resultado: O(n²)\n```',
+            
+            // Recursividade
+            'recursividade': 'Recursividade é quando uma função chama a si mesma:\n\n🔄 **Componentes essenciais**:\n• **Caso base**: Condição de parada\n• **Caso recursivo**: Chamada com problema menor\n• **Convergência**: Garantia de chegar ao caso base\n\n📝 **Exemplo - Fatorial**:\n```c\nint fatorial(int n) {\n    if (n <= 1) return 1;        // Caso base\n    return n * fatorial(n-1);    // Caso recursivo\n}\n```',
+            
+            'quando usar recursao': 'Use recursão quando:\n\n✅ **Apropriado**:\n• Problema naturalmente recursivo\n• Estruturas hierárquicas (árvores)\n• Divide-and-conquer\n• Backtracking\n\n❌ **Evite quando**:\n• Sobreposição de subproblemas\n• Profundidade muito grande\n• Performance crítica\n• Arrays muito grandes\n\n💡 **Alternativas**: Iteração, programação dinâmica, pilha explícita',
+            
+            // Ordenação
+            'algoritmos de ordenacao': 'Principais algoritmos de ordenação:\n\n🔰 **Elementares O(n²)**:\n• Bubble Sort: Simples, mas ineficiente\n• Selection Sort: Mínimo de trocas\n• Insertion Sort: Bom para dados quase ordenados\n\n🚀 **Avançados O(n log n)**:\n• Merge Sort: Sempre O(n log n), estável\n• Quick Sort: Rápido na prática, O(n²) pior caso\n• Heap Sort: Sempre O(n log n), in-place',
+            
+            'merge sort': 'Merge Sort usa divide-and-conquer:\n\n🔄 **Funcionamento**:\n1. **Divide**: Separa array pela metade\n2. **Conquista**: Ordena recursivamente\n3. **Combina**: Merge das partes ordenadas\n\n📊 **Características**:\n• Complexidade: Sempre O(n log n)\n• Estável: Preserva ordem de elementos iguais\n• Espaço: O(n) adicional\n• Recursivo: Natural divide-and-conquer',
+            
+            'quick sort': 'Quick Sort é eficiente na prática:\n\n⚡ **Funcionamento**:\n1. Escolhe pivot\n2. Particiona array em torno do pivot\n3. Ordena recursivamente as partições\n\n📈 **Complexidade**:\n• Melhor/Médio: O(n log n)\n• Pior caso: O(n²)\n• Espaço: O(log n)\n\n🎯 **Otimizações**: Mediana-de-três, pivot aleatório, iterativo',
+            
+            // Estruturas de dados
+            'arrays': 'Arrays são estruturas homogêneas fundamentais:\n\n🏗️ **Características**:\n• Elementos do mesmo tipo\n• Acesso aleatório O(1)\n• Tamanho fixo (C) ou dinâmico (Python)\n• Memória contígua\n\n⚡ **Operações**:\n• Acesso: O(1)\n• Busca linear: O(n)\n• Busca binária: O(log n) se ordenado\n• Inserção/remoção: O(n)',
+            
+            'ponteiros': 'Ponteiros são fundamentais em C:\n\n🎯 **Conceitos**:\n• Variável que armazena endereço\n• Acesso indireto à memória\n• Essencial para estruturas dinâmicas\n\n📝 **Sintaxe básica**:\n```c\nint x = 10;\nint *ptr = &x;    // ptr aponta para x\nprintf("%d", *ptr); // Acessa valor via ponteiro\n```\n\n⚠️ **Cuidados**: Inicialização, NULL, vazamentos de memória',
+            
+            'arvores': 'Árvores são estruturas hierárquicas:\n\n🌳 **Conceitos básicos**:\n• Nós, raiz, folhas, altura\n• Árvore binária: máximo 2 filhos\n• BST: propriedade de ordenação\n\n🔍 **Operações BST**:\n• Busca, inserção, remoção: O(h)\n• Percursos: in-order, pre-order, post-order\n• Balanceamento: AVL, Red-Black',
+            
+            // Exercícios e listas
+            'exercicios': 'Temos 2 listas de exercícios:\n\n📝 **Lista 01 - Análise de Complexidade**:\n• Valor: 2,0 pontos\n• Foco: Análise teórica e prática\n• Linguagens: C e Python\n• Prazo: 2 semanas\n\n📊 **Lista 02 - Estruturas de Dados**:\n• Valor: 2,5 pontos\n• Foco: Implementação de estruturas lineares\n• Arrays dinâmicos, matrizes esparsas\n• Prazo: 2 semanas',
+            
+            'como fazer exercicios': 'Dicas para os exercícios:\n\n✅ **Estratégia de sucesso**:\n1. **Leia** todo o enunciado primeiro\n2. **Implemente** em C e Python\n3. **Teste** com casos diversos\n4. **Analise** a complexidade teoricamente\n5. **Meça** performance na prática\n6. **Compare** resultados teoria vs prática\n7. **Documente** todo o processo\n\n📋 **Estrutura do relatório**:\n• Implementação comentada\n• Análise de complexidade\n• Resultados dos testes\n• Conclusões e comparações',
+            
+            // Linguagens de programação
+            'c vs python': 'Comparação entre C e Python:\n\n⚡ **C - Performance**:\n• Compilado, muito rápido\n• Controle manual de memória\n• Sintaxe mais verbosa\n• Ideal para algoritmos críticos\n\n🐍 **Python - Produtividade**:\n• Interpretado, desenvolvimento rápido\n• Gerenciamento automático de memória\n• Sintaxe clara e concisa\n• Ideal para prototipagem\n\n🎯 **Na disciplina**: Use C para entender conceitos fundamentais e Python para experimentação rápida!',
+            
+            'compilar c': 'Para compilar código C:\n\n🔧 **Compilação básica**:\n```bash\ngcc -o programa programa.c\n```\n\n🚀 **Com otimizações**:\n```bash\ngcc -Wall -g -O2 -o programa programa.c\n```\n\n🐛 **Para debug**:\n```bash\ngcc -g -o programa programa.c\ngdb ./programa\n```\n\n💡 **Dicas**: Use flags -Wall para warnings, -g para debug, -O2 para otimização',
+            
+            // Ajuda geral
+            'ajuda': 'Posso ajudar com vários tópicos:\n\n🎯 **Conceitos teóricos**:\n• Complexidade e análise\n• Recursividade e iteração\n• Algoritmos de ordenação\n• Estruturas de dados\n\n💻 **Implementação**:\n• Código em C e Python\n• Debugging e otimização\n• Compilação e execução\n\n📝 **Exercícios**:\n• Explicação dos problemas\n• Estratégias de solução\n• Análise de resultados\n\n❓ **Como usar**: Seja específico nas perguntas para respostas mais detalhadas!',
+            
+            'dificuldades': 'Dificuldades comuns e soluções:\n\n🤔 **Complexidade**:\n• **Problema**: Confusão com notações\n• **Solução**: Pratique com exemplos simples, ignore constantes\n\n🔄 **Recursão**:\n• **Problema**: Stack overflow\n• **Solução**: Verifique caso base, considere iteração\n\n📊 **Ordenação**:\n• **Problema**: Escolher algoritmo certo\n• **Solução**: Considere tamanho dos dados e requisitos\n\n💻 **Implementação**:\n• **Problema**: Bugs em ponteiros\n• **Solução**: Inicialize ponteiros, verifique NULL\n\n💡 **Dica geral**: Comece simples, teste incrementalmente!'
+        };
+
+        // Processamento de linguagem natural simples
+        function processMessage(message) {
+            const normalized = message.toLowerCase()
+                .replace(/[^\w\s]/g, '') // Remove pontuação
+                .trim();
+
+            // Verifica correspondências exatas primeiro
+            for (const [key, response] of Object.entries(predefinedResponses)) {
+                if (normalized.includes(key)) {
+                    return response;
+                }
+            }
+
+            // Busca por palavras-chave em tópicos específicos
+            const keywords = {
+                'complexidade': ['complexidade', 'big o', 'notacao', 'temporal', 'espacial', 'analise'],
+                'recursividade': ['recursividade', 'recursao', 'recursivo', 'base', 'fibonacci', 'fatorial'],
+                'ordenacao': ['ordenacao', 'sort', 'bubble', 'quick', 'merge', 'insertion', 'selection'],
+                'estruturas': ['array', 'ponteiro', 'struct', 'arvore', 'lista', 'grafo'],
+                'exercicios': ['exercicio', 'lista', 'trabalho', 'implementar', 'codigo'],
+                'linguagens': ['python', 'compilar', 'gcc', 'debug'],
+                'aulas': ['aula', 'conteudo', 'material', 'slides', 'pdf']
+            };
+
+            for (const [topic, words] of Object.entries(keywords)) {
+                if (words.some(word => normalized.includes(word))) {
+                    return getTopicResponse(topic, normalized);
+                }
+            }
+
+            // Resposta padrão se não encontrar correspondência
+            return `Não encontrei uma resposta específica para "${message}". 🤔\n\nPosso ajudar com:\n\n📚 **Tópicos disponíveis**:\n• Complexidade e análise\n• Recursividade\n• Algoritmos de ordenação\n• Estruturas de dados\n• Exercícios e implementação\n• Linguagens C e Python\n\nTente perguntar sobre algum desses tópicos ou use as sugestões rápidas abaixo! 👇`;
+        }
+
+        function getTopicResponse(topic, message) {
+            switch (topic) {
+                case 'complexidade':
+                    if (message.includes('calcular') || message.includes('como')) {
+                        return predefinedResponses['como calcular complexidade'];
+                    }
+                    return predefinedResponses['o que e complexidade'];
+                
+                case 'recursividade':
+                    if (message.includes('quando') || message.includes('usar')) {
+                        return predefinedResponses['quando usar recursao'];
+                    }
+                    return predefinedResponses['recursividade'];
+                
+                case 'ordenacao':
+                    if (message.includes('merge')) {
+                        return predefinedResponses['merge sort'];
+                    } else if (message.includes('quick')) {
+                        return predefinedResponses['quick sort'];
+                    }
+                    return predefinedResponses['algoritmos de ordenacao'];
+                
+                case 'estruturas':
+                    if (message.includes('ponteiro')) {
+                        return predefinedResponses['ponteiros'];
+                    } else if (message.includes('arvore')) {
+                        return predefinedResponses['arvores'];
+                    }
+                    return predefinedResponses['arrays'];
+                
+                case 'exercicios':
+                    if (message.includes('como') || message.includes('fazer')) {
+                        return predefinedResponses['como fazer exercicios'];
+                    }
+                    return predefinedResponses['exercicios'];
+                
+                case 'linguagens':
+                    if (message.includes('compilar')) {
+                        return predefinedResponses['compilar c'];
+                    }
+                    return predefinedResponses['c vs python'];
+                
+                default:
+                    return predefinedResponses['ajuda'];
+            }
+        }
+
+        // Funções do chat IA
+        let chatHistory = [];
+
+        function openAIChat() {
+            document.getElementById('ai-chat-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Foca no input se não há mensagens além da boas-vindas
+            if (chatHistory.length === 0) {
+                setTimeout(() => {
+                    document.getElementById('ai-chat-input').focus();
+                }, 300);
+            }
+        }
+
+        function closeAIChat() {
+            document.getElementById('ai-chat-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('ai-chat-input').value = message;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('ai-chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Adiciona mensagem do usuário
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Mostra indicador de digitação
+            showTypingIndicator();
+            
+            // Simula delay de processamento
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = processMessage(message);
+                addMessage(response, 'bot');
+                
+                // Salva no histórico
+                chatHistory.push({ user: message, bot: response, timestamp: new Date() });
+            }, 1000 + Math.random() * 1000); // 1-2 segundos de delay
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('ai-chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'ai-message-content';
+            
+            // Processa markdown básico
+            const processedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>')
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                .replace(/\n/g, '<br>');
+            
+            contentDiv.innerHTML = processedText;
+            messageDiv.appendChild(contentDiv);
+            
+            // Adiciona timestamp
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'ai-message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            messageDiv.appendChild(timeDiv);
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('ai-typing').classList.add('active');
+            const messagesContainer = document.getElementById('ai-chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('ai-typing').classList.remove('active');
+        }
+
+        // Event listeners para o chat
+        document.getElementById('ai-chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        document.getElementById('ai-chat-input').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+        });
+
+        // Event listeners gerais
         document.addEventListener('DOMContentLoaded', function() {
             // Fechar modal ao clicar no X
             document.querySelectorAll('.close').forEach(closeBtn => {
@@ -2263,6 +2911,13 @@ gdb ./programa
                         document.body.style.overflow = 'auto';
                     }
                 });
+            });
+
+            // Fechar chat IA ao clicar fora
+            document.getElementById('ai-chat-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAIChat();
+                }
             });
 
             // Animações de entrada
@@ -2290,11 +2945,16 @@ gdb ./programa
         // Navegação por teclado
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                // Fechar todos os modais abertos
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-                document.body.style.overflow = 'auto';
+                // Fechar chat IA primeiro, depois outros modais
+                if (document.getElementById('ai-chat-modal').classList.contains('active')) {
+                    closeAIChat();
+                } else {
+                    // Fechar todos os modais abertos
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = 'auto';
+                }
             }
         });
 
@@ -2312,14 +2972,7 @@ gdb ./programa
             });
         });
 
-        // Efeito parallax sutil no scroll
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            document.body.style.backgroundPositionY = rate + 'px';
-        });
-
-        // Auto-save da navegação no localStorage
+        // Auto-save da navegação
         function saveCurrentSection() {
             const activeSection = document.querySelector('.content-section.active').id;
             localStorage.setItem('algoritmos_current_section', activeSection);
@@ -2346,184 +2999,14 @@ gdb ./programa
             }
         }
 
-        // Carregar seção salva ao inicializar
-        window.addEventListener('load', loadSavedSection);
-
-        // Salvar seção atual ao navegar
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', saveCurrentSection);
-        });
-
-        // Contador de visitantes (simulado)
-        function updateVisitorCount() {
-            let count = localStorage.getItem('algoritmos_visitor_count') || 0;
-            count = parseInt(count) + 1;
-            localStorage.setItem('algoritmos_visitor_count', count);
-            console.log(`Visita número: ${count}`);
-        }
-
-        window.addEventListener('load', updateVisitorCount);
-
-        // Loading indicator para links externos
-        document.querySelectorAll('a[target="_blank"]').forEach(link => {
-            link.addEventListener('click', function() {
-                this.style.opacity = '0.7';
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                }, 1000);
-            });
-        });
-
-        // Scroll suave para âncoras dentro dos modais
-        document.addEventListener('click', function(e) {
-            if (e.target.matches('a[href^="#"]')) {
-                e.preventDefault();
-                const targetId = e.target.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-
-        // Função para destacar código nos modais
-        function highlightCode() {
-            document.querySelectorAll('pre code').forEach(block => {
-                // Adicionar números de linha
-                const lines = block.innerHTML.split('\n');
-                if (lines.length > 1) {
-                    block.innerHTML = lines.map((line, index) => 
-                        `<span class="line-number">${index + 1}</span>${line}`
-                    ).join('\n');
-                }
-            });
-        }
-
-        // Chamar highlight quando modais são abertos
-        const originalOpenModal = openModal;
-        window.openModal = function(modalId) {
-            originalOpenModal(modalId);
-            setTimeout(highlightCode, 100);
-        };
-
-        // Função para copiar código
-        function addCopyButtons() {
-            document.querySelectorAll('pre').forEach(pre => {
-                const button = document.createElement('button');
-                button.textContent = 'Copiar';
-                button.className = 'copy-btn';
-                button.style.cssText = `
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: #3498db;
-                    color: white;
-                    border: none;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 12px;
-                `;
-                
-                button.addEventListener('click', () => {
-                    const code = pre.querySelector('code').textContent;
-                    navigator.clipboard.writeText(code).then(() => {
-                        button.textContent = 'Copiado!';
-                        setTimeout(() => {
-                            button.textContent = 'Copiar';
-                        }, 2000);
-                    });
-                });
-
-                pre.style.position = 'relative';
-                pre.appendChild(button);
-            });
-        }
-
-        // Adicionar funcionalidade de pesquisa
-        function addSearchFunctionality() {
-            const searchInput = document.createElement('input');
-            searchInput.type = 'text';
-            searchInput.placeholder = 'Buscar no conteúdo...';
-            searchInput.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 10px;
-                border: 2px solid #3498db;
-                border-radius: 25px;
-                background: white;
-                z-index: 1001;
-                display: none;
-            `;
-
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const content = document.querySelector('.modal-content');
-                if (content && searchTerm) {
-                    // Implementar busca no conteúdo
-                    console.log('Buscando por:', searchTerm);
-                }
-            });
-
-            document.body.appendChild(searchInput);
-
-            // Mostrar campo de busca quando modal está aberto
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'f') {
-                    e.preventDefault();
-                    if (document.querySelector('.modal:not([style*="display: none"])')) {
-                        searchInput.style.display = 'block';
-                        searchInput.focus();
-                    }
-                }
-            });
-        }
-
-        // Inicializar funcionalidades adicionais
-        document.addEventListener('DOMContentLoaded', function() {
-            addSearchFunctionality();
-        });
-
-        // Melhorar acessibilidade
-        document.addEventListener('keydown', function(e) {
-            // Navegação por tab nos modais
-            if (e.key === 'Tab') {
-                const modal = document.querySelector('.modal:not([style*="display: none"])');
-                if (modal) {
-                    const focusableElements = modal.querySelectorAll(
-                        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                    );
-                    const firstElement = focusableElements[0];
-                    const lastElement = focusableElements[focusableElements.length - 1];
-
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstElement) {
-                            lastElement.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastElement) {
-                            firstElement.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            }
-        });
-
         // Analytics simples
         function trackUsage(action, element) {
             const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
             usage[action] = (usage[action] || 0) + 1;
             localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
-            console.log('Ação rastreada:', action, 'Total:', usage[action]);
         }
 
-        // Rastrear cliques nos cards
+        // Rastrear interações
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', function() {
                 const title = this.querySelector('h3').textContent;
@@ -2531,12 +3014,113 @@ gdb ./programa
             });
         });
 
-        // Rastrear navegação entre seções
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 trackUsage('section_view', this.textContent);
+                saveCurrentSection();
             });
         });
+
+        // Carregar configurações salvas
+        window.addEventListener('load', function() {
+            loadSavedSection();
+            
+            // Contador de visitas
+            let visits = localStorage.getItem('algoritmos_visits') || 0;
+            visits = parseInt(visits) + 1;
+            localStorage.setItem('algoritmos_visits', visits);
+        });
+
+        // Notificação de novos recursos (simulada)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#00b894' : '#74b9ff'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.innerHTML = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Adicionar estilos para animações de notificação
+        const notificationStyles = document.createElement('style');
+        notificationStyles.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(notificationStyles);
+
+        // Feedback de ações
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[target="_blank"]')) {
+                showNotification('🔗 Abrindo link em nova aba...', 'info');
+            }
+        });
+
+        // Sistema de ajuda contextual
+        let helpMode = false;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F1') {
+                e.preventDefault();
+                helpMode = !helpMode;
+                
+                if (helpMode) {
+                    showNotification('💡 Modo ajuda ativado! Clique em qualquer elemento para obter ajuda.', 'info');
+                    document.body.style.cursor = 'help';
+                } else {
+                    showNotification('✅ Modo ajuda desativado.', 'success');
+                    document.body.style.cursor = 'default';
+                }
+            }
+        });
+
+        // Melhorias de UX
+        document.querySelectorAll('button, .card, .nav-tab').forEach(element => {
+            element.addEventListener('click', function() {
+                // Feedback visual
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Estado do sistema
+        window.algoritmosApp = {
+            version: '2.0.0',
+            lastUpdate: '2025-08-18',
+            features: ['AI Assistant', 'Interactive Content', 'Responsive Design'],
+            stats: {
+                totalAulas: 14,
+                totalExercicios: 2,
+                linguagens: ['C', 'Python'],
+                duracao: '80 horas'
+            }
+        };
+
+        console.log('🚀 Sistema Algoritmos e Complexidade carregado!', window.algoritmosApp);
     </script>
 </body>
 </html>
