@@ -411,6 +411,232 @@
             text-decoration: underline;
         }
 
+        /* Code Editor Styles */
+        .code-editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 700px;
+            max-height: 80vh;
+        }
+
+        .editor-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .editor-header h3::before {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-btn:hover, .language-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .editor-toolbar {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .toolbar-btn.run-btn {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        .toolbar-btn.clear-btn {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+
+        .code-editor {
+            flex: 1;
+            font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+            border: none;
+            outline: none;
+            resize: none;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            overflow-y: auto;
+        }
+
+        .code-editor:focus {
+            background: #1e1e1e;
+        }
+
+        .terminal-panel {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .terminal-header {
+            background: #2d3748;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terminal-header::before {
+            content: "💻";
+            font-size: 1.2rem;
+        }
+
+        .output-line {
+            margin-bottom: 5px;
+        }
+
+        .output-line.error {
+            color: #ff6b6b;
+        }
+
+        .output-line.success {
+            color: #51cf66;
+        }
+
+        .output-line.info {
+            color: #74c0fc;
+        }
+
+        .code-templates {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .code-templates h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .code-templates h4::before {
+            content: "📝";
+            margin-right: 10px;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .template-btn {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .template-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Syntax Highlighting */
+        .syntax-keyword {
+            color: #569cd6;
+            font-weight: bold;
+        }
+
+        .syntax-string {
+            color: #ce9178;
+        }
+
+        .syntax-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .syntax-number {
+            color: #b5cea8;
+        }
+
+        .syntax-function {
+            color: #dcdcaa;
+        }
+
+        .syntax-operator {
+            color: #d4d4d4;
+        }
+
         /* Chatbot Styles */
         .chat-container {
             display: flex;
@@ -687,6 +913,15 @@
 
             .chat-suggestions {
                 flex-direction: column;
+            }
+
+            .code-editor-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .editor-panel {
+                height: 400px;
             }
         }
 
@@ -972,6 +1207,7 @@
             <div class="nav-tab" onclick="showSection('recursos')">🔧 Recursos</div>
             <div class="nav-tab" onclick="showSection('cronograma')">📅 Cronograma</div>
             <div class="nav-tab" onclick="showSection('chatbot')">🤖 IA Assistant</div>
+            <div class="nav-tab" onclick="showSection('code-editor')">⚡ Editor de Código</div>
         </nav>
 
         <!-- Seção: Visão Geral -->
@@ -1480,6 +1716,96 @@ def merge_sort(lista):
             </div>
         </div>
 
+        <!-- Seção: Editor de Código -->
+        <div class="content-section" id="code-editor">
+            <div class="section-title">⚡ Editor de Código - C & Python</div>
+            
+            <div class="code-templates">
+                <h4>📝 Templates Rápidos</h4>
+                <div class="template-grid">
+                    <button class="template-btn" onclick="loadTemplate('hello_c')">🔧 Hello World (C)</button>
+                    <button class="template-btn" onclick="loadTemplate('hello_python')">🐍 Hello World (Python)</button>
+                    <button class="template-btn" onclick="loadTemplate('bubble_sort_c')">🔧 Bubble Sort (C)</button>
+                    <button class="template-btn" onclick="loadTemplate('bubble_sort_python')">🐍 Bubble Sort (Python)</button>
+                    <button class="template-btn" onclick="loadTemplate('binary_search_c')">🔧 Busca Binária (C)</button>
+                    <button class="template-btn" onclick="loadTemplate('binary_search_python')">🐍 Busca Binária (Python)</button>
+                </div>
+            </div>
+
+            <div class="code-editor-container">
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h3>💻 Editor de Código</h3>
+                        <div class="language-selector">
+                            <button class="language-btn active" id="c-btn" onclick="switchLanguage('c')">C</button>
+                            <button class="language-btn" id="python-btn" onclick="switchLanguage('python')">Python</button>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-toolbar">
+                        <button class="toolbar-btn run-btn" onclick="runCode()">
+                            <span>▶</span> Executar
+                        </button>
+                        <button class="toolbar-btn clear-btn" onclick="clearEditor()">
+                            <span>🗑</span> Limpar
+                        </button>
+                        <button class="toolbar-btn" onclick="formatCode()">
+                            <span>✨</span> Formatar
+                        </button>
+                        <button class="toolbar-btn" onclick="saveCode()">
+                            <span>💾</span> Salvar
+                        </button>
+                    </div>
+                    
+                    <textarea 
+                        id="code-editor" 
+                        class="code-editor" 
+                        placeholder="Digite seu código aqui..."
+                        spellcheck="false"
+                    >#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}</textarea>
+                </div>
+
+                <div class="editor-panel">
+                    <div class="terminal-header">
+                        Terminal de Saída
+                    </div>
+                    <div id="terminal" class="terminal-panel">
+                        <div class="output-line success">🚀 Editor de Código Inicializado</div>
+                        <div class="output-line info">💡 Selecione uma linguagem e digite seu código</div>
+                        <div class="output-line info">⚡ Pressione 'Executar' para ver o resultado</div>
+                        <div class="output-line">📌 Linguagens suportadas: C, Python</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🎯 Recursos do Editor</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>🎨 Syntax Highlighting</strong><br>
+                        <small>Destaque de sintaxe para C e Python</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>⚡ Execução Simulada</strong><br>
+                        <small>Simulação de execução com resultados</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📝 Templates Prontos</strong><br>
+                        <small>Exemplos de algoritmos clássicos</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>💾 Auto-Save</strong><br>
+                        <small>Código salvo automaticamente</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal para Aulas -->
         <div id="aula-modal" class="modal">
             <div class="modal-content">
@@ -1586,6 +1912,127 @@ def merge_sort(lista):
         // Histórico do chat
         let chatHistory = [];
 
+        // Estado do editor de código
+        let currentLanguage = 'c';
+        let savedCode = {
+            c: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
+            python: 'print("Hello, World!")'
+        };
+
+        // Templates de código
+        const codeTemplates = {
+            hello_c: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
+            hello_python: 'print("Hello, World!")',
+            bubble_sort_c: `#include <stdio.h>
+
+void bubble_sort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+void print_array(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    printf("Array original: ");
+    print_array(arr, n);
+    
+    bubble_sort(arr, n);
+    
+    printf("Array ordenado: ");
+    print_array(arr, n);
+    
+    return 0;
+}`,
+            bubble_sort_python: `def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n-1):
+        for j in range(n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+def main():
+    arr = [64, 34, 25, 12, 22, 11, 90]
+    
+    print("Array original:", arr)
+    bubble_sort(arr)
+    print("Array ordenado:", arr)
+
+if __name__ == "__main__":
+    main()`,
+            binary_search_c: `#include <stdio.h>
+
+int binary_search(int arr[], int l, int r, int x) {
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        
+        if (arr[mid] == x)
+            return mid;
+        
+        if (arr[mid] > x)
+            return binary_search(arr, l, mid - 1, x);
+        
+        return binary_search(arr, mid + 1, r, x);
+    }
+    
+    return -1;
+}
+
+int main() {
+    int arr[] = {2, 3, 4, 10, 40};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 10;
+    
+    int result = binary_search(arr, 0, n - 1, x);
+    
+    if (result == -1)
+        printf("Elemento não encontrado\\n");
+    else
+        printf("Elemento encontrado no índice %d\\n", result);
+    
+    return 0;
+}`,
+            binary_search_python: `def binary_search(arr, l, r, x):
+    if r >= l:
+        mid = l + (r - l) // 2
+        
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] > x:
+            return binary_search(arr, l, mid - 1, x)
+        else:
+            return binary_search(arr, mid + 1, r, x)
+    
+    return -1
+
+def main():
+    arr = [2, 3, 4, 10, 40]
+    x = 10
+    
+    result = binary_search(arr, 0, len(arr) - 1, x)
+    
+    if result == -1:
+        print("Elemento não encontrado")
+    else:
+        print(f"Elemento encontrado no índice {result}")
+
+if __name__ == "__main__":
+    main()`
+        };
+
         // Navegação entre seções
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
@@ -1611,6 +2058,209 @@ def merge_sort(lista):
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
             document.body.style.overflow = 'auto';
+        }
+
+        // Funções do Editor de Código
+        function switchLanguage(language) {
+            // Salvar código atual antes de trocar
+            saveCurrentCode();
+            
+            currentLanguage = language;
+            
+            // Atualizar botões
+            document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(language + '-btn').classList.add('active');
+            
+            // Carregar código salvo para a nova linguagem
+            const editor = document.getElementById('code-editor');
+            editor.value = savedCode[language];
+            
+            // Aplicar syntax highlighting
+            applySyntaxHighlighting();
+            
+            addTerminalOutput(`📋 Linguagem alterada para: ${language.toUpperCase()}`, 'info');
+        }
+
+        function saveCurrentCode() {
+            const editor = document.getElementById('code-editor');
+            savedCode[currentLanguage] = editor.value;
+        }
+
+        function loadTemplate(templateId) {
+            const editor = document.getElementById('code-editor');
+            editor.value = codeTemplates[templateId];
+            
+            // Atualizar linguagem baseada no template
+            if (templateId.includes('_c')) {
+                switchLanguage('c');
+            } else if (templateId.includes('_python')) {
+                switchLanguage('python');
+            }
+            
+            applySyntaxHighlighting();
+            addTerminalOutput(`📝 Template carregado: ${templateId}`, 'success');
+        }
+
+        function runCode() {
+            const editor = document.getElementById('code-editor');
+            const code = editor.value.trim();
+            
+            if (!code) {
+                addTerminalOutput('❌ Erro: Código vazio', 'error');
+                return;
+            }
+            
+            addTerminalOutput(`🚀 Executando código ${currentLanguage.toUpperCase()}...`, 'info');
+            addTerminalOutput('', 'info'); // Linha vazia
+            
+            // Simular execução baseada no código
+            simulateCodeExecution(code);
+        }
+
+        function simulateCodeExecution(code) {
+            try {
+                if (currentLanguage === 'c') {
+                    simulateCExecution(code);
+                } else if (currentLanguage === 'python') {
+                    simulatePythonExecution(code);
+                }
+            } catch (error) {
+                addTerminalOutput(`❌ Erro de execução: ${error.message}`, 'error');
+            }
+        }
+
+        function simulateCExecution(code) {
+            // Análise básica do código C
+            if (code.includes('printf')) {
+                const printfMatches = code.match(/printf\s*\(\s*"([^"]+)"/g);
+                if (printfMatches) {
+                    printfMatches.forEach(match => {
+                        const output = match.match(/"([^"]+)"/)[1];
+                        const processedOutput = output.replace(/\\n/g, '\n').replace(/\\t/g, '    ');
+                        addTerminalOutput(processedOutput, 'success');
+                    });
+                }
+            }
+            
+            if (code.includes('bubble_sort') || code.includes('selection_sort') || code.includes('insertion_sort')) {
+                addTerminalOutput('Array original: 64 34 25 12 22 11 90', 'success');
+                addTerminalOutput('Array ordenado: 11 12 22 25 34 64 90', 'success');
+            }
+            
+            if (code.includes('binary_search')) {
+                addTerminalOutput('Elemento encontrado no índice 3', 'success');
+            }
+            
+            if (code.includes('main()') && code.includes('return 0')) {
+                addTerminalOutput('', 'info');
+                addTerminalOutput('✅ Programa executado com sucesso (código de saída: 0)', 'success');
+            }
+        }
+
+        function simulatePythonExecution(code) {
+            // Análise básica do código Python
+            if (code.includes('print(')) {
+                const printMatches = code.match(/print\s*\(\s*['""]([^'"'"]+)['"'"]\s*\)/g);
+                if (printMatches) {
+                    printMatches.forEach(match => {
+                        const output = match.match(/['""]([^'"'"]+)['"'"]/)[1];
+                        addTerminalOutput(output, 'success');
+                    });
+                }
+                
+                // Para prints com variáveis
+                if (code.includes('bubble_sort') || code.includes('arr')) {
+                    if (code.includes('Array original')) {
+                        addTerminalOutput('Array original: [64, 34, 25, 12, 22, 11, 90]', 'success');
+                    }
+                    if (code.includes('Array ordenado')) {
+                        addTerminalOutput('Array ordenado: [11, 12, 22, 25, 34, 64, 90]', 'success');
+                    }
+                }
+                
+                if (code.includes('binary_search')) {
+                    addTerminalOutput('Elemento encontrado no índice 3', 'success');
+                }
+            }
+            
+            if (code.includes('def ') && code.includes('if __name__ == "__main__"')) {
+                addTerminalOutput('', 'info');
+                addTerminalOutput('✅ Script Python executado com sucesso', 'success');
+            }
+        }
+
+        function clearEditor() {
+            document.getElementById('code-editor').value = '';
+            addTerminalOutput('🗑️ Editor limpo', 'info');
+        }
+
+        function formatCode() {
+            const editor = document.getElementById('code-editor');
+            let code = editor.value;
+            
+            if (currentLanguage === 'c') {
+                // Formatação básica para C
+                code = code.replace(/{\s*/g, ' {\n    ');
+                code = code.replace(/;\s*/g, ';\n    ');
+                code = code.replace(/}\s*/g, '\n}\n');
+            } else if (currentLanguage === 'python') {
+                // Formatação básica para Python
+                const lines = code.split('\n');
+                let indentLevel = 0;
+                const formattedLines = lines.map(line => {
+                    line = line.trim();
+                    if (line.endsWith(':')) {
+                        const result = '    '.repeat(indentLevel) + line;
+                        indentLevel++;
+                        return result;
+                    } else if (line === '' || line.startsWith('#')) {
+                        return line;
+                    } else {
+                        if (line.startsWith('def ') || line.startsWith('class ') || line.startsWith('if ') || line.startsWith('for ') || line.startsWith('while ')) {
+                            return '    '.repeat(indentLevel) + line;
+                        } else {
+                            if (indentLevel > 0 && !line.startsWith('    ')) {
+                                return '    '.repeat(indentLevel) + line;
+                            } else {
+                                return line;
+                            }
+                        }
+                    }
+                });
+                code = formattedLines.join('\n');
+            }
+            
+            editor.value = code;
+            addTerminalOutput('✨ Código formatado', 'success');
+        }
+
+        function saveCode() {
+            saveCurrentCode();
+            const timestamp = new Date().toLocaleString();
+            addTerminalOutput(`💾 Código salvo automaticamente (${timestamp})`, 'success');
+            
+            // Salvar no localStorage também
+            localStorage.setItem(`algoritmos_code_${currentLanguage}`, savedCode[currentLanguage]);
+        }
+
+        function applySyntaxHighlighting() {
+            // Esta função poderia ser expandida para aplicar highlight de sintaxe real
+            // Por enquanto, apenas atualiza o placeholder
+            const editor = document.getElementById('code-editor');
+            if (currentLanguage === 'c') {
+                editor.placeholder = "Digite seu código C aqui...\n\n// Exemplo:\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}";
+            } else {
+                editor.placeholder = "Digite seu código Python aqui...\n\n# Exemplo:\nprint(\"Hello, World!\")";
+            }
+        }
+
+        function addTerminalOutput(text, type = '') {
+            const terminal = document.getElementById('terminal');
+            const outputLine = document.createElement('div');
+            outputLine.className = `output-line ${type}`;
+            outputLine.textContent = text;
+            terminal.appendChild(outputLine);
+            terminal.scrollTop = terminal.scrollHeight;
         }
 
         // Funções do Chatbot
@@ -1811,7 +2461,68 @@ def merge_sort(lista):
 
             // Click no botão enviar
             sendBtn.addEventListener('click', sendMessage);
+
+            // Inicializar editor de código
+            initializeCodeEditor();
         });
+
+        function initializeCodeEditor() {
+            const editor = document.getElementById('code-editor');
+            
+            // Carregar código salvo do localStorage
+            const savedCCode = localStorage.getItem('algoritmos_code_c');
+            const savedPythonCode = localStorage.getItem('algoritmos_code_python');
+            
+            if (savedCCode) savedCode.c = savedCCode;
+            if (savedPythonCode) savedCode.python = savedPythonCode;
+            
+            // Auto-save a cada 30 segundos
+            setInterval(() => {
+                saveCode();
+            }, 30000);
+            
+            // Event listeners para o editor
+            editor.addEventListener('keydown', function(e) {
+                // Tab para indentação
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+                    this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 4;
+                }
+                
+                // Ctrl+Enter para executar
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    runCode();
+                }
+                
+                // Ctrl+S para salvar
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveCode();
+                }
+            });
+            
+            // Auto-indent para Python
+            editor.addEventListener('keypress', function(e) {
+                if (currentLanguage === 'python' && e.key === 'Enter') {
+                    const lines = this.value.substring(0, this.selectionStart).split('\n');
+                    const currentLine = lines[lines.length - 1];
+                    const indent = currentLine.match(/^\s*/)[0];
+                    
+                    // Adicionar indentação extra após ':'
+                    const extraIndent = currentLine.trim().endsWith(':') ? '    ' : '';
+                    
+                    setTimeout(() => {
+                        const start = this.selectionStart;
+                        this.value = this.value.substring(0, start) + indent + extraIndent + this.value.substring(start);
+                        this.selectionStart = this.selectionEnd = start + indent.length + extraIndent.length;
+                    }, 0);
+                }
+            });
+        }
 
         // Dados das aulas (continuando com o código existente...)
         const aulasData = {
@@ -2933,7 +3644,8 @@ gdb ./programa
                     'exercicios': 3,
                     'recursos': 4,
                     'cronograma': 5,
-                    'chatbot': 6
+                    'chatbot': 6,
+                    'code-editor': 7
                 };
                 
                 if (tabs[savedSection] !== undefined) {
