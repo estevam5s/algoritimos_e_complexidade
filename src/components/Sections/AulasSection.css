@@ -1,0 +1,92 @@
+.aula-card {
+  background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%) !important;
+  color: white !important;
+  padding: 30px !important;
+  border-radius: 15px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.aula-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-type {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.aula-title {
+  margin-bottom: 15px !important;
+  display: flex !important;
+  align-items: center;
+}
+
+.aula-description {
+  margin-bottom: 15px !important;
+  opacity: 0.9;
+  flex-grow: 1;
+}
+
+.aula-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.aula-meta {
+  font-size: 0.9rem !important;
+  opacity: 0.8;
+}
+
+.aula-action {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+.aula-action:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: scale(1.05);
+}
+
+.pdf-downloads {
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 25px !important;
+  margin: 20px 0 !important;
+  border-radius: 15px !important;
+}
+
+.pdf-grid {
+  margin-top: 20px !important;
+}
+
+.pdf-download-btn {
+  background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%) !important;
+  color: white !important;
+  padding: 15px !important;
+  border-radius: 10px !important;
+  width: 100%;
+  transition: all 0.3s ease !important;
+}
+
+.pdf-download-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
