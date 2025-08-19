@@ -12,6 +12,7 @@ Bem-vindos ao repositório oficial da disciplina **Algoritmos e Complexidade Com
 
 Este material foi desenvolvido especialmente para os estudantes do curso de **Sistemas de Informação** e contém todo o conteúdo teórico e prático necessário para dominar os fundamentos da computação eficiente.
 
+
 ### 🎯 Por que estudar Algoritmos?
 
 A disciplina de Algoritmos e Complexidade é **fundamental** para qualquer profissional de Sistemas de Informação, pois fornece:
