@@ -411,313 +411,254 @@
             text-decoration: underline;
         }
 
-        /* ===== ESTILOS DO ASSISTENTE IA ===== */
-        .ai-assistant-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        .ai-assistant-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(102, 126, 234, 0.7); }
-            70% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(102, 126, 234, 0); }
-            100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(102, 126, 234, 0); }
-        }
-
-        .ai-chat-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            display: none;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .ai-chat-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-        }
-
-        .ai-chat-container {
-            width: 90%;
-            max-width: 500px;
-            height: 80vh;
-            max-height: 600px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        /* Chatbot Styles */
+        .chat-container {
             display: flex;
             flex-direction: column;
+            height: 600px;
+            max-height: 70vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
             overflow: hidden;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
-        .ai-chat-modal.active .ai-chat-container {
-            transform: scale(1);
-        }
-
-        .ai-chat-header {
+        .chat-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            text-align: center;
+            position: relative;
         }
 
-        .ai-chat-header h3 {
+        .chat-header h3 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
-        .ai-chat-header h3::before {
+        .chat-header h3::before {
             content: "🤖";
             margin-right: 10px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
         }
 
-        .ai-chat-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+        .chat-status {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
         }
 
-        .ai-chat-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .ai-chat-messages {
+        .chat-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
             background: #f8f9fa;
-        }
-
-        .ai-message {
-            margin-bottom: 15px;
-            animation: slideInUp 0.3s ease;
-        }
-
-        .ai-message.user {
-            text-align: right;
-        }
-
-        .ai-message.bot {
-            text-align: left;
-        }
-
-        .ai-message-content {
-            display: inline-block;
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            margin: 0 5px;
-            word-wrap: break-word;
             position: relative;
         }
 
-        .ai-message.user .ai-message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
             color: white;
         }
 
-        .ai-message.bot .ai-message-content {
-            background: white;
-            color: #333;
-            border: 1px solid #e1e8ed;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            color: white;
         }
 
-        .ai-message-time {
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #2c3e50;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-time {
             font-size: 0.8rem;
-            color: #999;
+            opacity: 0.7;
             margin-top: 5px;
         }
 
-        .ai-typing-indicator {
+        .typing-indicator {
             display: none;
-            align-items: center;
-            padding: 10px 16px;
+            padding: 15px 20px;
             background: white;
-            border-radius: 18px;
-            max-width: 80px;
+            border-radius: 20px;
+            border-bottom-left-radius: 5px;
+            margin-left: 50px;
             margin-bottom: 15px;
-            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .ai-typing-indicator.active {
+        .typing-dots {
             display: flex;
+            gap: 4px;
         }
 
-        .ai-typing-dots {
-            display: flex;
-            gap: 3px;
-        }
-
-        .ai-typing-dot {
+        .typing-dots span {
             width: 8px;
             height: 8px;
-            background: #999;
+            background: #667eea;
             border-radius: 50%;
             animation: typing 1.4s infinite;
         }
 
-        .ai-typing-dot:nth-child(2) {
+        .typing-dots span:nth-child(2) {
             animation-delay: 0.2s;
         }
 
-        .ai-typing-dot:nth-child(3) {
+        .typing-dots span:nth-child(3) {
             animation-delay: 0.4s;
         }
 
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
-        }
-
-        .ai-chat-input-container {
+        .chat-input-container {
             padding: 20px;
             background: white;
-            border-top: 1px solid #e1e8ed;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .ai-quick-suggestions {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .ai-suggestion-btn {
-            background: #f1f3f4;
-            border: 1px solid #e1e8ed;
-            padding: 8px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #555;
-        }
-
-        .ai-suggestion-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .ai-input-group {
+        .chat-input-wrapper {
             display: flex;
             gap: 10px;
             align-items: flex-end;
         }
 
-        .ai-chat-input {
+        .chat-input {
             flex: 1;
-            border: 2px solid #e1e8ed;
-            border-radius: 20px;
-            padding: 12px 16px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s ease;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
             resize: none;
-            max-height: 100px;
+            min-height: 50px;
+            max-height: 120px;
             font-family: inherit;
-        }
-
-        .ai-chat-input:focus {
-            border-color: #667eea;
-        }
-
-        .ai-send-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+            line-height: 1.4;
+            outline: none;
             transition: all 0.3s ease;
         }
 
-        .ai-send-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .chat-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .ai-send-button:disabled {
+        .chat-send-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .chat-send-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
 
-        .ai-welcome-message {
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .suggestion-chip {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .suggestion-chip:hover {
+            background: #667eea;
             color: white;
-            padding: 20px;
-            border-radius: 15px;
+            transform: translateY(-2px);
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+
+        .welcome-message h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .welcome-message p {
             margin-bottom: 20px;
-            text-align: center;
+            line-height: 1.6;
         }
 
-        .ai-welcome-message h4 {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .ai-welcome-message p {
-            opacity: 0.9;
-            margin-bottom: 0;
-        }
-
-        .ai-error-message {
-            background: #ff6b6b;
-            color: white;
-            padding: 10px 15px;
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 15px;
             border-radius: 10px;
-            margin: 10px 0;
-            text-align: center;
+            margin-bottom: 15px;
+            border-left: 4px solid #dc2626;
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -736,20 +677,15 @@
                 grid-template-columns: 1fr;
             }
 
-            .ai-assistant-button {
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
+            .chat-container {
+                height: 500px;
             }
 
-            .ai-chat-container {
-                width: 95%;
-                height: 90vh;
+            .message-content {
+                max-width: 85%;
             }
 
-            .ai-quick-suggestions {
+            .chat-suggestions {
                 flex-direction: column;
             }
         }
@@ -764,6 +700,26 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
             }
         }
 
@@ -1015,6 +971,7 @@
             <div class="nav-tab" onclick="showSection('exercicios')">💻 Exercícios</div>
             <div class="nav-tab" onclick="showSection('recursos')">🔧 Recursos</div>
             <div class="nav-tab" onclick="showSection('cronograma')">📅 Cronograma</div>
+            <div class="nav-tab" onclick="showSection('chatbot')">🤖 IA Assistant</div>
         </nav>
 
         <!-- Seção: Visão Geral -->
@@ -1438,6 +1395,91 @@ def merge_sort(lista):
             </div>
         </div>
 
+        <!-- Seção: Chatbot IA -->
+        <div class="content-section" id="chatbot">
+            <div class="section-title">🤖 IA Assistant - Algoritmos e Complexidade</div>
+            
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>Assistant Virtual da Disciplina</h3>
+                    <div class="chat-status">
+                        <span id="chat-status-text">Pronto para ajudar com suas dúvidas sobre algoritmos!</span>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <div class="welcome-message">
+                        <h4>👋 Olá! Sou seu Assistant Virtual</h4>
+                        <p>Estou aqui para ajudar com dúvidas sobre a disciplina <strong>Algoritmos e Complexidade</strong>. Posso explicar conceitos, ajudar com exercícios, esclarecer sobre as aulas e muito mais!</p>
+                        <div class="chat-suggestions">
+                            <div class="suggestion-chip" onclick="sendSuggestion('O que é análise de complexidade?')">
+                                O que é análise de complexidade?
+                            </div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Explique recursividade')">
+                                Explique recursividade
+                            </div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Diferença entre Bubble Sort e Quick Sort')">
+                                Diferença entre Bubble Sort e Quick Sort
+                            </div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Como implementar uma árvore binária?')">
+                                Como implementar uma árvore binária?
+                            </div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Exercícios da Lista 01')">
+                                Exercícios da Lista 01
+                            </div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Cronograma da disciplina')">
+                                Cronograma da disciplina
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="typing-indicator" id="typing-indicator">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            id="chat-input" 
+                            class="chat-input" 
+                            placeholder="Digite sua pergunta sobre algoritmos, estruturas de dados, exercícios..."
+                            rows="1"
+                        ></textarea>
+                        <button id="chat-send-btn" class="chat-send-btn" onclick="sendMessage()">
+                            <span>➤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🎯 Como posso te ajudar?</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📚 Explicar Conceitos</strong><br>
+                        <small>Algoritmos, complexidade, estruturas de dados</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>💻 Ajuda com Código</strong><br>
+                        <small>Implementações em C e Python</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📝 Exercícios</strong><br>
+                        <small>Dicas e orientações para listas</small>
+                    </div>
+                    <div style="padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+                        <strong>📅 Informações</strong><br>
+                        <small>Cronograma, avaliações, prazos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal para Aulas -->
         <div id="aula-modal" class="modal">
             <div class="modal-content">
@@ -1493,47 +1535,6 @@ def merge_sort(lista):
         </div>
     </div>
 
-    <!-- ===== ASSISTENTE IA ===== -->
-    <button class="ai-assistant-button" onclick="openAIChat()">🤖</button>
-
-    <div class="ai-chat-modal" id="ai-chat-modal">
-        <div class="ai-chat-container">
-            <div class="ai-chat-header">
-                <h3>Assistente de Algoritmos</h3>
-                <button class="ai-chat-close" onclick="closeAIChat()">×</button>
-            </div>
-            
-            <div class="ai-chat-messages" id="ai-chat-messages">
-                <div class="ai-welcome-message">
-                    <h4>👋 Olá! Sou seu assistente virtual</h4>
-                    <p>Estou aqui para ajudar com dúvidas sobre algoritmos, complexidade, estruturas de dados e exercícios da disciplina. Como posso ajudá-lo hoje?</p>
-                </div>
-            </div>
-            
-            <div class="ai-typing-indicator" id="ai-typing">
-                <div class="ai-typing-dots">
-                    <div class="ai-typing-dot"></div>
-                    <div class="ai-typing-dot"></div>
-                    <div class="ai-typing-dot"></div>
-                </div>
-            </div>
-            
-            <div class="ai-chat-input-container">
-                <div class="ai-quick-suggestions">
-                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Como calcular complexidade O(n)?')">Como calcular complexidade?</button>
-                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Explique recursividade')">Explique recursividade</button>
-                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Qual a diferença entre C e Python?')">C vs Python</button>
-                    <button class="ai-suggestion-btn" onclick="sendQuickMessage('Ajuda com exercícios')">Ajuda com exercícios</button>
-                </div>
-                
-                <div class="ai-input-group">
-                    <textarea class="ai-chat-input" id="ai-chat-input" placeholder="Digite sua dúvida sobre algoritmos..." rows="1"></textarea>
-                    <button class="ai-send-button" id="ai-send-btn" onclick="sendMessage()">🚀</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer class="footer">
         <p>© 2025 - Algoritmos e Complexidade Computacional | Prof. Vagner Cordeiro - ARA0174</p>
         <p>
@@ -1546,7 +1547,45 @@ def merge_sort(lista):
     </footer>
 
     <script>
-        // ===== CÓDIGO EXISTENTE =====
+        // Configurações da API Gemini
+        const GEMINI_API_KEY = 'AIzaSyCRfarEDTrIlXNPdonkf-KNAU414KrGnEQ';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+        // Contexto base sobre a disciplina
+        const COURSE_CONTEXT = `
+        Você é um assistente virtual especializado na disciplina "Algoritmos e Complexidade Computacional" (ARA0174) do curso de Sistemas de Informação, ministrada pelo Prof. Vagner Cordeiro.
+
+        INFORMAÇÕES DA DISCIPLINA:
+        - Carga Horária: 80 horas (4 horas/semana)
+        - Período: 2025.2
+        - Professor: Vagner Cordeiro
+        
+        EMENTA:
+        Unidade I (16h): Fundamentos e Funções - Conceitos básicos de algoritmos, funções, estruturas homogêneas/heterogêneas, ponteiros, análise de complexidade
+        Unidade II (16h): Recursividade - Definições recursivas, implementação, limitações e alternativas
+        Unidade III (16h): Algoritmos de Ordenação - Bubble, Selection, Insertion, Merge Sort, Quick Sort, Shell Sort
+        Unidade IV (16h): Estruturas Avançadas - Árvores binárias de busca, percursos, balanceamento, AVL, grafos
+        Unidade V (16h): Projetos e Laboratório - Representação de grafos, laboratório prático, projetos finais
+
+        AVALIAÇÃO:
+        - Prova 1: 25% (Fundamentos e análise)
+        - Prova 2: 25% (Estruturas de dados)
+        - Prova 3: 25% (Algoritmos fundamentais)
+        - Exercícios: 15% (Listas práticas)
+        - Projeto: 10% (Implementação completa)
+
+        LINGUAGENS: C e Python
+
+        EXERCÍCIOS DISPONÍVEIS:
+        - Lista 01: Análise de Complexidade (2,0 pontos, prazo 2 semanas)
+        - Lista 02: Estruturas de Dados Básicas (2,5 pontos, prazo 2 semanas)
+
+        Responda sempre de forma didática, incluindo exemplos práticos quando relevante, e mantenha o foco nos conteúdos da disciplina. Seja claro, objetivo e educational.
+        `;
+
+        // Histórico do chat
+        let chatHistory = [];
+
         // Navegação entre seções
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
@@ -1574,7 +1613,207 @@ def merge_sort(lista):
             document.body.style.overflow = 'auto';
         }
 
-        // Dados das aulas
+        // Funções do Chatbot
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Limpar input e desabilitar botão
+            input.value = '';
+            toggleSendButton(false);
+
+            // Adicionar mensagem do usuário
+            addMessage(message, 'user');
+
+            // Mostrar indicador de digitação
+            showTypingIndicator();
+
+            try {
+                // Enviar para Gemini
+                const response = await callGeminiAPI(message);
+                
+                // Esconder indicador de digitação
+                hideTypingIndicator();
+                
+                // Adicionar resposta da IA
+                addMessage(response, 'assistant');
+                
+            } catch (error) {
+                console.error('Erro ao chamar API:', error);
+                hideTypingIndicator();
+                addMessage('Desculpe, ocorreu um erro. Tente novamente mais tarde.', 'assistant', true);
+            }
+
+            // Reabilitar botão
+            toggleSendButton(true);
+        }
+
+        async function callGeminiAPI(message) {
+            // Construir contexto com histórico
+            let contextWithHistory = COURSE_CONTEXT + "\n\nHISTÓRICO DA CONVERSA:\n";
+            chatHistory.slice(-10).forEach(item => { // Últimas 10 mensagens
+                contextWithHistory += `${item.role}: ${item.content}\n`;
+            });
+            contextWithHistory += `\nUSUÁRIO: ${message}\nASSISTENTE:`;
+
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: contextWithHistory
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 2048,
+                }
+            };
+
+            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                const aiResponse = data.candidates[0].content.parts[0].text;
+                
+                // Adicionar ao histórico
+                chatHistory.push({ role: 'user', content: message });
+                chatHistory.push({ role: 'assistant', content: aiResponse });
+                
+                // Manter apenas últimas 20 mensagens
+                if (chatHistory.length > 20) {
+                    chatHistory = chatHistory.slice(-20);
+                }
+                
+                return aiResponse;
+            } else {
+                throw new Error('Resposta inválida da API');
+            }
+        }
+
+        function addMessage(content, sender, isError = false) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const welcomeMessage = messagesContainer.querySelector('.welcome-message');
+            
+            // Remover mensagem de boas-vindas na primeira interação
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? '👤' : '🤖';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (isError) {
+                contentDiv.classList.add('error-message');
+            }
+
+            // Processar markdown básico e formatação
+            const formattedContent = formatMessage(content);
+            contentDiv.innerHTML = formattedContent;
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString();
+
+            messageDiv.appendChild(avatar);
+            const contentWrapper = document.createElement('div');
+            contentWrapper.appendChild(contentDiv);
+            contentWrapper.appendChild(timeDiv);
+            messageDiv.appendChild(contentWrapper);
+
+            messagesContainer.appendChild(messageDiv);
+
+            // Scroll para a mensagem mais recente
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function formatMessage(content) {
+            // Substituições básicas para formatação
+            let formatted = content
+                // Negrito
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                // Itálico
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                // Código inline
+                .replace(/`(.*?)`/g, '<code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace;">$1</code>')
+                // Quebras de linha
+                .replace(/\n/g, '<br>')
+                // Links
+                .replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank" style="color: #3498db;">$&</a>');
+
+            // Processar blocos de código
+            formatted = formatted.replace(/```(\w+)?\n?([\s\S]*?)```/g, (match, lang, code) => {
+                return `<pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 10px 0;"><code>${code.trim()}</code></pre>`;
+            });
+
+            return formatted;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'block';
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typing-indicator').style.display = 'none';
+        }
+
+        function toggleSendButton(enabled) {
+            const sendBtn = document.getElementById('chat-send-btn');
+            sendBtn.disabled = !enabled;
+            sendBtn.style.opacity = enabled ? '1' : '0.5';
+        }
+
+        function sendSuggestion(suggestion) {
+            document.getElementById('chat-input').value = suggestion;
+            sendMessage();
+        }
+
+        // Event listeners para o chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('chat-send-btn');
+
+            // Auto-resize do textarea
+            chatInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+
+            // Enviar com Enter (Shift+Enter para nova linha)
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Click no botão enviar
+            sendBtn.addEventListener('click', sendMessage);
+        });
+
+        // Dados das aulas (continuando com o código existente...)
         const aulasData = {
             'aula01': {
                 title: '📘 Aula 01: Algoritmos - Funções e Passagem de Parâmetros',
@@ -2602,6 +2841,7 @@ gdb ./programa
         }
 
         function loadSlideContent(aulaId) {
+            // Esta função seria expandida para carregar o conteúdo real dos slides
             const slideContent = document.getElementById('slide-content');
             slideContent.innerHTML = `
                 <h3>📊 Slides da Aula ${aulaId.slice(-2)}</h3>
@@ -2610,290 +2850,7 @@ gdb ./programa
             `;
         }
 
-        // ===== SISTEMA DO ASSISTENTE IA =====
-
-        // Base de conhecimento expandida da disciplina
-        const knowledgeBase = {
-            // Conceitos fundamentais
-            'algoritmo': {
-                definition: 'Um algoritmo é uma sequência finita e ordenada de instruções não ambíguas que resolve um problema específico.',
-                examples: ['Busca binária', 'Ordenação por bolha', 'Fatorial recursivo'],
-                complexity: 'Varia conforme o algoritmo específico',
-                related: ['complexidade', 'eficiência', 'otimização']
-            },
-            'complexidade': {
-                definition: 'Complexidade computacional mede a quantidade de recursos (tempo e espaço) necessários para executar um algoritmo.',
-                examples: ['O(1) - constante', 'O(log n) - logarítmica', 'O(n) - linear', 'O(n²) - quadrática'],
-                types: ['Temporal', 'Espacial', 'Melhor caso', 'Pior caso', 'Caso médio'],
-                related: ['big-o', 'notação assintótica', 'análise']
-            },
-            'recursividade': {
-                definition: 'Recursividade é uma técnica onde uma função chama a si mesma para resolver uma versão menor do mesmo problema.',
-                components: ['Caso base', 'Caso recursivo', 'Convergência'],
-                examples: ['Fatorial', 'Fibonacci', 'Torres de Hanói'],
-                limitations: ['Stack overflow', 'Complexidade exponencial', 'Uso de memória'],
-                related: ['iteração', 'pilha', 'divide-and-conquer']
-            },
-            'ordenacao': {
-                definition: 'Algoritmos de ordenação reorganizam elementos de uma estrutura de dados em uma ordem específica.',
-                elementary: ['Bubble Sort O(n²)', 'Selection Sort O(n²)', 'Insertion Sort O(n²)'],
-                advanced: ['Merge Sort O(n log n)', 'Quick Sort O(n log n)', 'Heap Sort O(n log n)'],
-                considerations: ['Estabilidade', 'In-place', 'Adaptabilidade'],
-                related: ['comparação', 'troca', 'particionamento']
-            },
-            'estruturas': {
-                definition: 'Estruturas de dados são formas de organizar e armazenar dados para facilitar acesso e modificação.',
-                linear: ['Array', 'Lista ligada', 'Pilha', 'Fila'],
-                nonlinear: ['Árvore', 'Grafo', 'Hash table'],
-                operations: ['Inserção', 'Remoção', 'Busca', 'Atualização'],
-                related: ['ponteiros', 'memória', 'eficiência']
-            }
-        };
-
-        // Respostas predefinidas para perguntas comuns
-        const predefinedResponses = {
-            // Saudações e cumprimentos
-            'ola': 'Olá! 👋 Sou seu assistente virtual para a disciplina de Algoritmos e Complexidade. Como posso ajudá-lo hoje?',
-            'oi': 'Oi! 😊 Estou aqui para esclarecer suas dúvidas sobre algoritmos, complexidade e estruturas de dados. O que gostaria de saber?',
-            'bom dia': 'Bom dia! ☀️ Pronto para estudar algoritmos hoje? Em que posso ajudá-lo?',
-            'boa tarde': 'Boa tarde! 🌅 Como posso ajudá-lo com seus estudos de algoritmos?',
-            'boa noite': 'Boa noite! 🌙 Vamos estudar algoritmos? O que gostaria de aprender?',
-            
-            // Sobre o curso
-            'sobre o curso': 'O curso de Algoritmos e Complexidade (ARA0174) é fundamental para Sistemas de Informação. Aborda:\n\n📚 5 unidades principais:\n• Fundamentos e Funções (16h)\n• Recursividade (16h)\n• Algoritmos de Ordenação (16h)\n• Estruturas Avançadas (16h)\n• Projetos e Laboratório (16h)\n\n🎯 Objetivos: Desenvolver habilidades analíticas e implementação eficiente de algoritmos.',
-            
-            'professor': 'O Prof. Vagner Cordeiro é especialista em Algoritmos, Estruturas de Dados e Complexidade Computacional, com foco no desenvolvimento de habilidades analíticas dos estudantes.',
-            
-            'avaliacao': 'Sistema de avaliação:\n\n📊 Distribuição:\n• Prova 1: 25% (Fundamentos)\n• Prova 2: 25% (Estruturas)\n• Prova 3: 25% (Algoritmos)\n• Exercícios: 15% (Listas práticas)\n• Projeto: 10% (Implementação)\n\n✅ Critérios de aprovação:\n• Nota final ≥ 6,0\n• Frequência ≥ 75%\n• 80% dos exercícios entregues',
-            
-            // Complexidade
-            'o que e complexidade': 'Complexidade computacional mede os recursos necessários para executar um algoritmo:\n\n⏱️ **Complexidade Temporal**: Tempo de execução\n💾 **Complexidade Espacial**: Uso de memória\n\n📈 **Notações principais**:\n• O(1) - Constante\n• O(log n) - Logarítmica\n• O(n) - Linear\n• O(n log n) - Linearítmica\n• O(n²) - Quadrática\n• O(2ⁿ) - Exponencial',
-            
-            'big o': 'A notação Big-O descreve o comportamento assintótico de algoritmos:\n\n🔍 **O que representa**: Limite superior do crescimento\n📊 **Exemplos práticos**:\n• Busca linear: O(n)\n• Busca binária: O(log n)\n• Ordenação por bolha: O(n²)\n• Merge sort: O(n log n)\n\n💡 **Dica**: Foque no termo de maior ordem e ignore constantes!',
-            
-            'como calcular complexidade': 'Para calcular complexidade:\n\n🔢 **Passos básicos**:\n1. Identifique loops e operações\n2. Conte operações elementares\n3. Encontre o termo dominante\n4. Expresse em notação Big-O\n\n📝 **Exemplo prático**:\n```c\nfor(int i=0; i<n; i++) {     // n iterações\n    for(int j=0; j<n; j++) { // n iterações\n        soma += arr[i][j];   // O(1)\n    }\n}\n// Resultado: O(n²)\n```',
-            
-            // Recursividade
-            'recursividade': 'Recursividade é quando uma função chama a si mesma:\n\n🔄 **Componentes essenciais**:\n• **Caso base**: Condição de parada\n• **Caso recursivo**: Chamada com problema menor\n• **Convergência**: Garantia de chegar ao caso base\n\n📝 **Exemplo - Fatorial**:\n```c\nint fatorial(int n) {\n    if (n <= 1) return 1;        // Caso base\n    return n * fatorial(n-1);    // Caso recursivo\n}\n```',
-            
-            'quando usar recursao': 'Use recursão quando:\n\n✅ **Apropriado**:\n• Problema naturalmente recursivo\n• Estruturas hierárquicas (árvores)\n• Divide-and-conquer\n• Backtracking\n\n❌ **Evite quando**:\n• Sobreposição de subproblemas\n• Profundidade muito grande\n• Performance crítica\n• Arrays muito grandes\n\n💡 **Alternativas**: Iteração, programação dinâmica, pilha explícita',
-            
-            // Ordenação
-            'algoritmos de ordenacao': 'Principais algoritmos de ordenação:\n\n🔰 **Elementares O(n²)**:\n• Bubble Sort: Simples, mas ineficiente\n• Selection Sort: Mínimo de trocas\n• Insertion Sort: Bom para dados quase ordenados\n\n🚀 **Avançados O(n log n)**:\n• Merge Sort: Sempre O(n log n), estável\n• Quick Sort: Rápido na prática, O(n²) pior caso\n• Heap Sort: Sempre O(n log n), in-place',
-            
-            'merge sort': 'Merge Sort usa divide-and-conquer:\n\n🔄 **Funcionamento**:\n1. **Divide**: Separa array pela metade\n2. **Conquista**: Ordena recursivamente\n3. **Combina**: Merge das partes ordenadas\n\n📊 **Características**:\n• Complexidade: Sempre O(n log n)\n• Estável: Preserva ordem de elementos iguais\n• Espaço: O(n) adicional\n• Recursivo: Natural divide-and-conquer',
-            
-            'quick sort': 'Quick Sort é eficiente na prática:\n\n⚡ **Funcionamento**:\n1. Escolhe pivot\n2. Particiona array em torno do pivot\n3. Ordena recursivamente as partições\n\n📈 **Complexidade**:\n• Melhor/Médio: O(n log n)\n• Pior caso: O(n²)\n• Espaço: O(log n)\n\n🎯 **Otimizações**: Mediana-de-três, pivot aleatório, iterativo',
-            
-            // Estruturas de dados
-            'arrays': 'Arrays são estruturas homogêneas fundamentais:\n\n🏗️ **Características**:\n• Elementos do mesmo tipo\n• Acesso aleatório O(1)\n• Tamanho fixo (C) ou dinâmico (Python)\n• Memória contígua\n\n⚡ **Operações**:\n• Acesso: O(1)\n• Busca linear: O(n)\n• Busca binária: O(log n) se ordenado\n• Inserção/remoção: O(n)',
-            
-            'ponteiros': 'Ponteiros são fundamentais em C:\n\n🎯 **Conceitos**:\n• Variável que armazena endereço\n• Acesso indireto à memória\n• Essencial para estruturas dinâmicas\n\n📝 **Sintaxe básica**:\n```c\nint x = 10;\nint *ptr = &x;    // ptr aponta para x\nprintf("%d", *ptr); // Acessa valor via ponteiro\n```\n\n⚠️ **Cuidados**: Inicialização, NULL, vazamentos de memória',
-            
-            'arvores': 'Árvores são estruturas hierárquicas:\n\n🌳 **Conceitos básicos**:\n• Nós, raiz, folhas, altura\n• Árvore binária: máximo 2 filhos\n• BST: propriedade de ordenação\n\n🔍 **Operações BST**:\n• Busca, inserção, remoção: O(h)\n• Percursos: in-order, pre-order, post-order\n• Balanceamento: AVL, Red-Black',
-            
-            // Exercícios e listas
-            'exercicios': 'Temos 2 listas de exercícios:\n\n📝 **Lista 01 - Análise de Complexidade**:\n• Valor: 2,0 pontos\n• Foco: Análise teórica e prática\n• Linguagens: C e Python\n• Prazo: 2 semanas\n\n📊 **Lista 02 - Estruturas de Dados**:\n• Valor: 2,5 pontos\n• Foco: Implementação de estruturas lineares\n• Arrays dinâmicos, matrizes esparsas\n• Prazo: 2 semanas',
-            
-            'como fazer exercicios': 'Dicas para os exercícios:\n\n✅ **Estratégia de sucesso**:\n1. **Leia** todo o enunciado primeiro\n2. **Implemente** em C e Python\n3. **Teste** com casos diversos\n4. **Analise** a complexidade teoricamente\n5. **Meça** performance na prática\n6. **Compare** resultados teoria vs prática\n7. **Documente** todo o processo\n\n📋 **Estrutura do relatório**:\n• Implementação comentada\n• Análise de complexidade\n• Resultados dos testes\n• Conclusões e comparações',
-            
-            // Linguagens de programação
-            'c vs python': 'Comparação entre C e Python:\n\n⚡ **C - Performance**:\n• Compilado, muito rápido\n• Controle manual de memória\n• Sintaxe mais verbosa\n• Ideal para algoritmos críticos\n\n🐍 **Python - Produtividade**:\n• Interpretado, desenvolvimento rápido\n• Gerenciamento automático de memória\n• Sintaxe clara e concisa\n• Ideal para prototipagem\n\n🎯 **Na disciplina**: Use C para entender conceitos fundamentais e Python para experimentação rápida!',
-            
-            'compilar c': 'Para compilar código C:\n\n🔧 **Compilação básica**:\n```bash\ngcc -o programa programa.c\n```\n\n🚀 **Com otimizações**:\n```bash\ngcc -Wall -g -O2 -o programa programa.c\n```\n\n🐛 **Para debug**:\n```bash\ngcc -g -o programa programa.c\ngdb ./programa\n```\n\n💡 **Dicas**: Use flags -Wall para warnings, -g para debug, -O2 para otimização',
-            
-            // Ajuda geral
-            'ajuda': 'Posso ajudar com vários tópicos:\n\n🎯 **Conceitos teóricos**:\n• Complexidade e análise\n• Recursividade e iteração\n• Algoritmos de ordenação\n• Estruturas de dados\n\n💻 **Implementação**:\n• Código em C e Python\n• Debugging e otimização\n• Compilação e execução\n\n📝 **Exercícios**:\n• Explicação dos problemas\n• Estratégias de solução\n• Análise de resultados\n\n❓ **Como usar**: Seja específico nas perguntas para respostas mais detalhadas!',
-            
-            'dificuldades': 'Dificuldades comuns e soluções:\n\n🤔 **Complexidade**:\n• **Problema**: Confusão com notações\n• **Solução**: Pratique com exemplos simples, ignore constantes\n\n🔄 **Recursão**:\n• **Problema**: Stack overflow\n• **Solução**: Verifique caso base, considere iteração\n\n📊 **Ordenação**:\n• **Problema**: Escolher algoritmo certo\n• **Solução**: Considere tamanho dos dados e requisitos\n\n💻 **Implementação**:\n• **Problema**: Bugs em ponteiros\n• **Solução**: Inicialize ponteiros, verifique NULL\n\n💡 **Dica geral**: Comece simples, teste incrementalmente!'
-        };
-
-        // Processamento de linguagem natural simples
-        function processMessage(message) {
-            const normalized = message.toLowerCase()
-                .replace(/[^\w\s]/g, '') // Remove pontuação
-                .trim();
-
-            // Verifica correspondências exatas primeiro
-            for (const [key, response] of Object.entries(predefinedResponses)) {
-                if (normalized.includes(key)) {
-                    return response;
-                }
-            }
-
-            // Busca por palavras-chave em tópicos específicos
-            const keywords = {
-                'complexidade': ['complexidade', 'big o', 'notacao', 'temporal', 'espacial', 'analise'],
-                'recursividade': ['recursividade', 'recursao', 'recursivo', 'base', 'fibonacci', 'fatorial'],
-                'ordenacao': ['ordenacao', 'sort', 'bubble', 'quick', 'merge', 'insertion', 'selection'],
-                'estruturas': ['array', 'ponteiro', 'struct', 'arvore', 'lista', 'grafo'],
-                'exercicios': ['exercicio', 'lista', 'trabalho', 'implementar', 'codigo'],
-                'linguagens': ['python', 'compilar', 'gcc', 'debug'],
-                'aulas': ['aula', 'conteudo', 'material', 'slides', 'pdf']
-            };
-
-            for (const [topic, words] of Object.entries(keywords)) {
-                if (words.some(word => normalized.includes(word))) {
-                    return getTopicResponse(topic, normalized);
-                }
-            }
-
-            // Resposta padrão se não encontrar correspondência
-            return `Não encontrei uma resposta específica para "${message}". 🤔\n\nPosso ajudar com:\n\n📚 **Tópicos disponíveis**:\n• Complexidade e análise\n• Recursividade\n• Algoritmos de ordenação\n• Estruturas de dados\n• Exercícios e implementação\n• Linguagens C e Python\n\nTente perguntar sobre algum desses tópicos ou use as sugestões rápidas abaixo! 👇`;
-        }
-
-        function getTopicResponse(topic, message) {
-            switch (topic) {
-                case 'complexidade':
-                    if (message.includes('calcular') || message.includes('como')) {
-                        return predefinedResponses['como calcular complexidade'];
-                    }
-                    return predefinedResponses['o que e complexidade'];
-                
-                case 'recursividade':
-                    if (message.includes('quando') || message.includes('usar')) {
-                        return predefinedResponses['quando usar recursao'];
-                    }
-                    return predefinedResponses['recursividade'];
-                
-                case 'ordenacao':
-                    if (message.includes('merge')) {
-                        return predefinedResponses['merge sort'];
-                    } else if (message.includes('quick')) {
-                        return predefinedResponses['quick sort'];
-                    }
-                    return predefinedResponses['algoritmos de ordenacao'];
-                
-                case 'estruturas':
-                    if (message.includes('ponteiro')) {
-                        return predefinedResponses['ponteiros'];
-                    } else if (message.includes('arvore')) {
-                        return predefinedResponses['arvores'];
-                    }
-                    return predefinedResponses['arrays'];
-                
-                case 'exercicios':
-                    if (message.includes('como') || message.includes('fazer')) {
-                        return predefinedResponses['como fazer exercicios'];
-                    }
-                    return predefinedResponses['exercicios'];
-                
-                case 'linguagens':
-                    if (message.includes('compilar')) {
-                        return predefinedResponses['compilar c'];
-                    }
-                    return predefinedResponses['c vs python'];
-                
-                default:
-                    return predefinedResponses['ajuda'];
-            }
-        }
-
-        // Funções do chat IA
-        let chatHistory = [];
-
-        function openAIChat() {
-            document.getElementById('ai-chat-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Foca no input se não há mensagens além da boas-vindas
-            if (chatHistory.length === 0) {
-                setTimeout(() => {
-                    document.getElementById('ai-chat-input').focus();
-                }, 300);
-            }
-        }
-
-        function closeAIChat() {
-            document.getElementById('ai-chat-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function sendQuickMessage(message) {
-            document.getElementById('ai-chat-input').value = message;
-            sendMessage();
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('ai-chat-input');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            // Adiciona mensagem do usuário
-            addMessage(message, 'user');
-            input.value = '';
-            
-            // Mostra indicador de digitação
-            showTypingIndicator();
-            
-            // Simula delay de processamento
-            setTimeout(() => {
-                hideTypingIndicator();
-                const response = processMessage(message);
-                addMessage(response, 'bot');
-                
-                // Salva no histórico
-                chatHistory.push({ user: message, bot: response, timestamp: new Date() });
-            }, 1000 + Math.random() * 1000); // 1-2 segundos de delay
-        }
-
-        function addMessage(text, sender) {
-            const messagesContainer = document.getElementById('ai-chat-messages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `ai-message ${sender}`;
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'ai-message-content';
-            
-            // Processa markdown básico
-            const processedText = text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>')
-                .replace(/`(.*?)`/g, '<code>$1</code>')
-                .replace(/\n/g, '<br>');
-            
-            contentDiv.innerHTML = processedText;
-            messageDiv.appendChild(contentDiv);
-            
-            // Adiciona timestamp
-            const timeDiv = document.createElement('div');
-            timeDiv.className = 'ai-message-time';
-            timeDiv.textContent = new Date().toLocaleTimeString('pt-BR', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-            messageDiv.appendChild(timeDiv);
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function showTypingIndicator() {
-            document.getElementById('ai-typing').classList.add('active');
-            const messagesContainer = document.getElementById('ai-chat-messages');
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function hideTypingIndicator() {
-            document.getElementById('ai-typing').classList.remove('active');
-        }
-
-        // Event listeners para o chat
-        document.getElementById('ai-chat-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-
-        document.getElementById('ai-chat-input').addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-        });
-
-        // Event listeners gerais
+        // Event listeners para modais
         document.addEventListener('DOMContentLoaded', function() {
             // Fechar modal ao clicar no X
             document.querySelectorAll('.close').forEach(closeBtn => {
@@ -2911,13 +2868,6 @@ gdb ./programa
                         document.body.style.overflow = 'auto';
                     }
                 });
-            });
-
-            // Fechar chat IA ao clicar fora
-            document.getElementById('ai-chat-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeAIChat();
-                }
             });
 
             // Animações de entrada
@@ -2945,16 +2895,11 @@ gdb ./programa
         // Navegação por teclado
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                // Fechar chat IA primeiro, depois outros modais
-                if (document.getElementById('ai-chat-modal').classList.contains('active')) {
-                    closeAIChat();
-                } else {
-                    // Fechar todos os modais abertos
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                    document.body.style.overflow = 'auto';
-                }
+                // Fechar todos os modais abertos
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                document.body.style.overflow = 'auto';
             }
         });
 
@@ -2972,7 +2917,7 @@ gdb ./programa
             });
         });
 
-        // Auto-save da navegação
+        // Auto-save da navegação no localStorage
         function saveCurrentSection() {
             const activeSection = document.querySelector('.content-section.active').id;
             localStorage.setItem('algoritmos_current_section', activeSection);
@@ -2987,7 +2932,8 @@ gdb ./programa
                     'aulas': 2,
                     'exercicios': 3,
                     'recursos': 4,
-                    'cronograma': 5
+                    'cronograma': 5,
+                    'chatbot': 6
                 };
                 
                 if (tabs[savedSection] !== undefined) {
@@ -2999,14 +2945,33 @@ gdb ./programa
             }
         }
 
+        // Carregar seção salva ao inicializar
+        window.addEventListener('load', loadSavedSection);
+
+        // Salvar seção atual ao navegar
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', saveCurrentSection);
+        });
+
+        // Contador de visitantes (simulado)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('algoritmos_visitor_count') || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem('algoritmos_visitor_count', count);
+            console.log(`Visita número: ${count}`);
+        }
+
+        window.addEventListener('load', updateVisitorCount);
+
         // Analytics simples
         function trackUsage(action, element) {
             const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
             usage[action] = (usage[action] || 0) + 1;
             localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
+            console.log('Ação rastreada:', action, 'Total:', usage[action]);
         }
 
-        // Rastrear interações
+        // Rastrear cliques nos cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', function() {
                 const title = this.querySelector('h3').textContent;
@@ -3014,113 +2979,54 @@ gdb ./programa
             });
         });
 
+        // Rastrear navegação entre seções
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 trackUsage('section_view', this.textContent);
-                saveCurrentSection();
             });
         });
 
-        // Carregar configurações salvas
-        window.addEventListener('load', function() {
-            loadSavedSection();
-            
-            // Contador de visitas
-            let visits = localStorage.getItem('algoritmos_visits') || 0;
-            visits = parseInt(visits) + 1;
-            localStorage.setItem('algoritmos_visits', visits);
-        });
-
-        // Notificação de novos recursos (simulada)
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#00b894' : '#74b9ff'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 10px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-                z-index: 10000;
-                animation: slideInRight 0.3s ease;
-                max-width: 300px;
-            `;
-            notification.innerHTML = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease forwards';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Adicionar estilos para animações de notificação
-        const notificationStyles = document.createElement('style');
-        notificationStyles.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(notificationStyles);
-
-        // Feedback de ações
+        // Scroll suave para âncoras dentro dos modais
         document.addEventListener('click', function(e) {
-            if (e.target.matches('a[target="_blank"]')) {
-                showNotification('🔗 Abrindo link em nova aba...', 'info');
-            }
-        });
-
-        // Sistema de ajuda contextual
-        let helpMode = false;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F1') {
+            if (e.target.matches('a[href^="#"]')) {
                 e.preventDefault();
-                helpMode = !helpMode;
-                
-                if (helpMode) {
-                    showNotification('💡 Modo ajuda ativado! Clique em qualquer elemento para obter ajuda.', 'info');
-                    document.body.style.cursor = 'help';
-                } else {
-                    showNotification('✅ Modo ajuda desativado.', 'success');
-                    document.body.style.cursor = 'default';
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             }
         });
 
-        // Melhorias de UX
-        document.querySelectorAll('button, .card, .nav-tab').forEach(element => {
-            element.addEventListener('click', function() {
-                // Feedback visual
-                this.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
+        // Melhorar acessibilidade
+        document.addEventListener('keydown', function(e) {
+            // Navegação por tab nos modais
+            if (e.key === 'Tab') {
+                const modal = document.querySelector('.modal:not([style*="display: none"])');
+                if (modal) {
+                    const focusableElements = modal.querySelectorAll(
+                        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                    );
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
 
-        // Estado do sistema
-        window.algoritmosApp = {
-            version: '2.0.0',
-            lastUpdate: '2025-08-18',
-            features: ['AI Assistant', 'Interactive Content', 'Responsive Design'],
-            stats: {
-                totalAulas: 14,
-                totalExercicios: 2,
-                linguagens: ['C', 'Python'],
-                duracao: '80 horas'
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstElement) {
+                            lastElement.focus();
+                            e.preventDefault();
+                        }
+                    } else {
+                        if (document.activeElement === lastElement) {
+                            firstElement.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
             }
-        };
-
-        console.log('🚀 Sistema Algoritmos e Complexidade carregado!', window.algoritmosApp);
+        });
     </script>
 </body>
 </html>
