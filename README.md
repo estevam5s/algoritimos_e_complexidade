@@ -6,6 +6,7 @@
 **Período:** 2025.2  
 **Carga Horária:** 80 horas (4 horas/semana)  
 
+
 ## 👨‍🏫 Apresentação da Disciplina
 
 Bem-vindos ao repositório oficial da disciplina **Algoritmos e Complexidade Computacional**! 
