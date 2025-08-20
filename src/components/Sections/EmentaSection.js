@@ -56,10 +56,10 @@ const EmentaSection = () => {
   ];
 
   const avaliacoes = [
-    { title: 'Prova 1: 35%', subtitle: 'Fundamentos e estruturas de dados', color: '#74b9ff' },
-    { title: 'Prova 2: 35%', subtitle: 'Algoritmos fundamentais', color: '#6c5ce7' },
-    { title: 'Exercícios: 20%', subtitle: 'Listas práticas', color: '#00b894' },
-    { title: 'Projeto: 10%', subtitle: 'Implementação completa', color: '#fdcb6e' }
+    { title: 'AV: 100%', subtitle: 'Fundamentos e estruturas de dados', color: '#74b9ff' },
+    { title: 'AVS: 100%', subtitle: 'Algoritmos fundamentais', color: '#6c5ce7' },
+    // { title: 'Exercícios: 20%', subtitle: 'Listas práticas', color: '#00b894' },
+    // { title: 'Projeto: 10%', subtitle: 'Implementação completa', color: '#fdcb6e' }
   ];
 
   return (

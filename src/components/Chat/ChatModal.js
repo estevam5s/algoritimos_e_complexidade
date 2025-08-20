@@ -52,11 +52,11 @@ EXERCÍCIOS DISPONÍVEIS:
 - Lista 04: Algoritmos de Ordenação (3,0 pontos, prazo 06/10/2025)
 
 AVALIAÇÃO:
-- Prova 1: 25% (Fundamentos e análise)
-- Prova 2: 25% (Estruturas de dados)
-- Prova 3: 25% (Algoritmos fundamentais)
-- Exercícios: 15% (Listas práticas)
-- Projeto: 10% (Implementação completa)
+- AV: 100% (Fundamentos e análise)
+- AVS: 100% (Estruturas de dados)
+// - Prova 3: 25% (Algoritmos fundamentais)
+// - Exercícios: 15% (Listas práticas)
+// - Projeto: 10% (Implementação completa)
 
 LINGUAGENS: C e Python
 
