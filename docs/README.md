@@ -1,7 +1,7 @@
 
-# Algoritmos e Complexidade Computacional - ReactJS
+# Algoritmos e Complexidade - ReactJS
 
-Plataforma educacional desenvolvida em ReactJS para a disciplina ARA0174 - Algoritmos e Complexidade Computacional.
+Plataforma educacional desenvolvida em ReactJS para a disciplina ARA0174 - Algoritmos e Complexidade.
 
 ## 🚀 Características
 
@@ -84,7 +84,7 @@ src/
 
 ## 🎓 Disciplina
 
-**ARA0174 - Algoritmos e Complexidade Computacional**
+**ARA0174 - Algoritmos e Complexidade**
 - **Professor**: Vagner Cordeiro
 - **Carga Horária**: 80 horas (4h/semana)
 - **Período**: 2025.2

@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <Paper className="header" elevation={3}>
       <Typography variant="h3" component="h1" className="header-title">
-        Algoritmos e Complexidade Computacional
+        Algoritmos e Complexidade
       </Typography>
       <Typography variant="h5" className="header-subtitle">
         ARA0174 - Sistemas de Informação

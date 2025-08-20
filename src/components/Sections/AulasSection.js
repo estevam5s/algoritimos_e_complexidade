@@ -19,64 +19,82 @@ const AulasSection = ({ onOpenAulaModal }) => {
     setNotification({ ...notification, open: false });
   };
 
-  // Função para download de PDFs
-  const downloadPDF = async (pdfPath, pdfName) => {
+  // Função melhorada para abrir PDF diretamente
+  const openPDF = (pdfPath, pdfName) => {
     try {
-      showNotification(`🔄 Iniciando download: ${pdfName}`, 'info');
+      showNotification(`📖 Abrindo: ${pdfName}`, 'info');
       
-      const response = await fetch(pdfPath);
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('Arquivo não encontrado no servidor');
-        } else {
-          throw new Error(`Erro do servidor: ${response.status}`);
-        }
-      }
+      // Construir o caminho completo do PDF
+      const fullPath = `${window.location.origin}${pdfPath}`;
       
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = pdfName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      // Abrir em nova aba com parâmetros específicos para PDF
+      const newWindow = window.open(fullPath, '_blank', 'noopener,noreferrer');
       
-      showNotification(`✅ Download concluído: ${pdfName}`, 'success');
-    } catch (error) {
-      console.error('Erro no download:', error);
-      if (error.message.includes('não encontrado')) {
-        showNotification(`📂 ${pdfName} não está disponível ainda. Os PDFs serão adicionados em breve!`, 'warning');
+      if (newWindow) {
+        // Verificar se a janela foi aberta com sucesso
+        setTimeout(() => {
+          if (newWindow.closed) {
+            showNotification(`❌ Não foi possível abrir: ${pdfName}. Tente fazer o download.`, 'warning');
+          } else {
+            showNotification(`✅ ${pdfName} aberto com sucesso`, 'success');
+          }
+        }, 1000);
       } else {
-        showNotification(`❌ Erro ao baixar: ${pdfName}. Tente novamente mais tarde.`, 'error');
+        throw new Error('Popup bloqueado');
       }
+    } catch (error) {
+      console.error('Erro ao abrir PDF:', error);
+      showNotification(`⚠️ ${pdfName} não disponível ainda. Tente fazer o download direto ou verifique se seu navegador não bloqueou o popup.`, 'warning');
     }
   };
 
-  // Função para abrir PDF em nova aba
-  const openPDF = async (pdfPath, pdfName) => {
+  // Função melhorada para download direto do PDF
+  const downloadPDF = (pdfPath, pdfName) => {
     try {
-      showNotification(`🔄 Verificando: ${pdfName}`, 'info');
+      showNotification(`🔄 Iniciando download: ${pdfName}`, 'info');
       
-      const response = await fetch(pdfPath, { method: 'HEAD' });
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('Arquivo não encontrado no servidor');
-        } else {
-          throw new Error(`Erro do servidor: ${response.status}`);
-        }
-      }
+      // Criar link de download direto
+      const link = document.createElement('a');
+      link.href = `${window.location.origin}${pdfPath}`;
+      link.download = pdfName;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
       
-      window.open(pdfPath, '_blank');
-      showNotification(`📖 Abrindo: ${pdfName}`, 'success');
+      // Adicionar ao DOM temporariamente e clicar
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      showNotification(`✅ Download iniciado: ${pdfName}`, 'success');
     } catch (error) {
-      console.error('Erro ao abrir PDF:', error);
-      if (error.message.includes('não encontrado')) {
-        showNotification(`📂 ${pdfName} não está disponível ainda. Os PDFs serão adicionados em breve!`, 'warning');
+      console.error('Erro no download:', error);
+      showNotification(`❌ Erro ao baixar: ${pdfName}. Arquivo pode não estar disponível ainda.`, 'error');
+    }
+  };
+
+  // Função para abrir código fonte diretamente no GitHub
+  const openSourceCode = (codePath, codeName) => {
+    try {
+      // Para códigos, podemos usar o GitHub raw ou local
+      const githubRawUrl = `https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main${codePath}`;
+      
+      showNotification(`🔄 Abrindo código: ${codeName}`, 'info');
+      
+      const newWindow = window.open(githubRawUrl, '_blank', 'noopener,noreferrer');
+      
+      if (newWindow) {
+        setTimeout(() => {
+          if (!newWindow.closed) {
+            showNotification(`✅ Código aberto: ${codeName}`, 'success');
+          }
+        }, 1000);
       } else {
-        showNotification(`❌ Erro ao abrir: ${pdfName}. Tente novamente mais tarde.`, 'error');
+        // Fallback: tentar abrir local
+        window.open(`${window.location.origin}${codePath}`, '_blank', 'noopener,noreferrer');
       }
+    } catch (error) {
+      console.error('Erro ao abrir código:', error);
+      showNotification(`❌ Erro ao abrir código: ${codeName}`, 'error');
     }
   };
 
@@ -273,10 +291,10 @@ const AulasSection = ({ onOpenAulaModal }) => {
           alignItems: 'center',
           mb: 3
         }}>
-          📥 Downloads PDFs
+          📥 Downloads PDFs - Acesso Direto
         </Typography>
         <Typography sx={{ mb: 3, color: '#34495e' }}>
-          Todos os PDFs estão disponíveis para visualização e download:
+          Clique para abrir diretamente os PDFs das aulas ou fazer download:
         </Typography>
         
         <Box sx={{ 
@@ -295,22 +313,29 @@ const AulasSection = ({ onOpenAulaModal }) => {
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
             • <strong>💾 Download:</strong> Baixar o arquivo para seu dispositivo
           </Typography>
+          <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
+            • <strong>⚠️ Importante:</strong> Alguns PDFs podem não estar disponíveis ainda
+          </Typography>
         </Box>
+
         <Grid container spacing={2}>
           {[
-            { file: 'aula01.pdf', name: 'Aula 01 PDF' },
-            { file: 'aula02.pdf', name: 'Aula 02 PDF' },
-            { file: 'aula03.pdf', name: 'Aula 03 PDF' },
-            { file: 'aula04.pdf', name: 'Aula 04 PDF' },
-            { file: 'aula13.pdf', name: 'Aula 13 PDF' },
-            { file: 'aula14.pdf', name: 'Aula 14 PDF' },
-            { file: 'aulas09-12.pdf', name: 'Aulas 09-12 PDF' }
+            { file: 'aula01.pdf', name: 'Aula 01 - Algoritmos e Funções' },
+            { file: 'aula02.pdf', name: 'Aula 02 - Estruturas de Dados' },
+            { file: 'aula03.pdf', name: 'Aula 03 - Análise de Algoritmos' },
+            { file: 'aula04.pdf', name: 'Aula 04 - Recursividade' },
+            { file: 'aula13.pdf', name: 'Aula 13 - Laboratório' },
+            { file: 'aula14.pdf', name: 'Aula 14 - Projetos Finais' },
+            { file: 'aulas09-12.pdf', name: 'Aulas 09-12 - Árvores e Grafos' }
           ].map((pdf, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Button
                   variant="contained"
-                  onClick={() => openPDF(`/aulas/pdf/${pdf.file}`, pdf.name)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openPDF(`/aulas/pdf/${pdf.file}`, pdf.name);
+                  }}
                   startIcon={<OpenIcon />}
                   sx={{
                     width: '100%',
@@ -327,11 +352,14 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  📖 Abrir {pdf.name}
+                  📖 Abrir PDF
                 </Button>
                 <Button
                   variant="outlined"
-                  onClick={() => downloadPDF(`/aulas/pdf/${pdf.file}`, pdf.file)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    downloadPDF(`/aulas/pdf/${pdf.file}`, pdf.file);
+                  }}
                   startIcon={<DownloadIcon />}
                   sx={{
                     width: '100%',
@@ -374,7 +402,10 @@ const AulasSection = ({ onOpenAulaModal }) => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Button
                   variant="contained"
-                  onClick={() => openPDF(`/aulas/pdf/${slide.file}`, slide.name)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openPDF(`/aulas/pdf/${slide.file}`, slide.name);
+                  }}
                   startIcon={<OpenIcon />}
                   sx={{
                     width: '100%',
@@ -391,11 +422,14 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  🎯 Abrir {slide.name}
+                  🎯 Abrir Slides
                 </Button>
                 <Button
                   variant="outlined"
-                  onClick={() => downloadPDF(`/aulas/pdf/${slide.file}`, slide.file)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    downloadPDF(`/aulas/pdf/${slide.file}`, slide.file);
+                  }}
                   startIcon={<DownloadIcon />}
                   sx={{
                     width: '100%',
@@ -419,7 +453,69 @@ const AulasSection = ({ onOpenAulaModal }) => {
           ))}
         </Grid>
         
-        {/* Aviso sobre disponibilidade dos PDFs */}
+        {/* Seção de exemplos de código */}
+        <Typography variant="h6" sx={{ 
+          mt: 4, 
+          mb: 2, 
+          color: '#2c3e50', 
+          fontWeight: 'bold' 
+        }}>
+          💻 Códigos de Exemplo
+        </Typography>
+        <Grid container spacing={2}>
+          {[
+            { 
+              file: '/exemplos/c/complexidade/exemplos_complexidade.c', 
+              name: 'Exemplos C - Complexidade',
+              type: 'C'
+            },
+            { 
+              file: '/exemplos/python/complexidade/exemplos_complexidade.py', 
+              name: 'Exemplos Python - Complexidade',
+              type: 'Python'
+            },
+            { 
+              file: '/exemplos/c/estruturas/array_dinamico.c', 
+              name: 'Array Dinâmico em C',
+              type: 'C'
+            },
+            { 
+              file: '/exemplos/python/estruturas/array_dinamico.py', 
+              name: 'Array Dinâmico em Python',
+              type: 'Python'
+            }
+          ].map((code, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openSourceCode(code.file, code.name);
+                }}
+                startIcon={<OpenIcon />}
+                sx={{
+                  width: '100%',
+                  background: code.type === 'C' 
+                    ? 'linear-gradient(135deg, #00b894 0%, #00cec9 100%)'
+                    : 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+                  color: 'white',
+                  padding: '12px 16px',
+                  borderRadius: '10px',
+                  transition: 'all 0.3s ease',
+                  fontSize: '0.85rem',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
+                  }
+                }}
+              >
+                {code.type === 'C' ? '⚙️' : '🐍'} Ver Código {code.type}
+              </Button>
+            </Grid>
+          ))}
+        </Grid>
+        
+        {/* Aviso sobre disponibilidade dos materiais */}
         <Box sx={{ 
           mt: 4, 
           p: 3, 
@@ -432,8 +528,8 @@ const AulasSection = ({ onOpenAulaModal }) => {
             📚 Status dos Materiais
           </Typography>
           <Typography variant="body2" sx={{ color: '#d35400', mb: 2 }}>
-            Os PDFs estão sendo preparados e serão disponibilizados gradualmente. 
-            Enquanto isso, você pode acessar todo o conteúdo através dos cards das aulas acima! 
+            Os materiais estão sendo disponibilizados gradualmente. Se algum arquivo não abrir, 
+            pode ser que ainda não esteja disponível ou o caminho não esteja correto. 
           </Typography>
           <Typography variant="body2" sx={{ color: '#e67e22', fontWeight: 'bold' }}>
             💡 Dica: Use a IA do ChatBot para tirar dúvidas sobre qualquer conteúdo das aulas!

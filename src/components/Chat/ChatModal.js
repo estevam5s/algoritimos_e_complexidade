@@ -18,7 +18,7 @@ const GEMINI_API_KEY = 'AIzaSyCRfarEDTrIlXNPdonkf-KNAU414KrGnEQ';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 const COURSE_CONTEXT = `
-Você é um assistente virtual especializado na disciplina "Algoritmos e Complexidade Computacional" (ARA0174) do curso de Sistemas de Informação, ministrada pelo Prof. Vagner Cordeiro.
+Você é um assistente virtual especializado na disciplina "Algoritmos e Complexidade" (ARA0174) do curso de Sistemas de Informação, ministrada pelo Prof. Vagner Cordeiro.
 
 INFORMAÇÕES DA DISCIPLINA:
 - Carga Horária: 80 horas (4 horas/semana)

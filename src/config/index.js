@@ -1,7 +1,7 @@
 
 // Configurações do projeto
 export const CONFIG = {
-  APP_NAME: 'Algoritmos e Complexidade Computacional',
+  APP_NAME: 'Algoritmos e Complexidade',
   VERSION: '1.0.0',
   PROFESSOR: 'Vagner Cordeiro',
   DISCIPLINA: 'ARA0174',

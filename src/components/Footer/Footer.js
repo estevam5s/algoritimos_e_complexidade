@@ -16,7 +16,7 @@ const Footer = () => {
     >
       <Container>
         <Typography variant="body1" gutterBottom>
-          © 2025 - Algoritmos e Complexidade Computacional | Prof. Vagner Cordeiro - ARA0174
+          © 2025 - Algoritmos e Complexidade | Prof. Vagner Cordeiro - ARA0174
         </Typography>
         <Box sx={{ mt: 2 }}>
           <Link 

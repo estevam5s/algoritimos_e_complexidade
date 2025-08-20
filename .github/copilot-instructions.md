@@ -38,4 +38,4 @@ Este é um material didático completo para a disciplina de Algoritmos e Complex
 
 ## 📚 Material Desenvolvido
 
-Este workspace contém material completo e didático para ensino de algoritmos e complexidade computacional, com foco nas linguagens C e Python conforme solicitado.
+Este workspace contém material completo e didático para ensino de Algoritmos e Complexidade, com foco nas linguagens C e Python conforme solicitado.

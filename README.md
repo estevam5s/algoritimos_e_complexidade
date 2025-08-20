@@ -1,4 +1,4 @@
-# Algoritmos e Complexidade Computacional
+# Algoritmos e Complexidade
 
 **Curso:** Sistemas de Informação  
 **Disciplina:** ARA0174 - Algoritmos e Complexidade  
@@ -9,7 +9,7 @@
 
 ## 👨‍🏫 Apresentação da Disciplina
 
-Bem-vindos ao repositório oficial da disciplina **Algoritmos e Complexidade Computacional**! 
+Bem-vindos ao repositório oficial da disciplina **Algoritmos e Complexidade**! 
 
 Este material foi desenvolvido especialmente para os estudantes do curso de **Sistemas de Informação** e contém todo o conteúdo teórico e prático necessário para dominar os fundamentos da computação eficiente.
 

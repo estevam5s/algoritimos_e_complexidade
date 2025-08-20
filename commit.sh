@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Script para fazer commit individual de cada arquivo do projeto React
-# Algoritmos e Complexidade Computacional
+# Algoritmos e Complexidade
 
 echo "🚀 Iniciando commits individuais dos arquivos..."
-echo "📍 Projeto: Algoritmos e Complexidade Computacional - ReactJS"
+echo "📍 Projeto: Algoritmos e Complexidade - ReactJS"
 echo ""
 
 # Função para fazer commit de um arquivo

@@ -2,6 +2,38 @@ import React from 'react';
 import { Paper, Typography, Grid, Button, Box } from '@mui/material';
 
 const RecursosSection = ({ onOpenDocsModal }) => {
+  // Função melhorada para abrir código fonte
+  const openSourceCode = (codeFile, codeName) => {
+    try {
+      // Tentar GitHub Raw primeiro (mais confiável)
+      const githubRawUrl = `https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main${codeFile}`;
+      
+      console.log(`Tentando abrir: ${githubRawUrl}`);
+      
+      const newWindow = window.open(githubRawUrl, '_blank', 'noopener,noreferrer');
+      
+      if (newWindow) {
+        // Verificar se abriu com sucesso após um breve delay
+        setTimeout(() => {
+          if (newWindow.closed) {
+            console.log('Tentativa GitHub falhou, tentando local...');
+            // Fallback: tentar caminho local
+            window.open(`${window.location.origin}${codeFile}`, '_blank', 'noopener,noreferrer');
+          }
+        }, 1000);
+      } else {
+        // Se popup foi bloqueado, tentar local
+        window.open(`${window.location.origin}${codeFile}`, '_blank', 'noopener,noreferrer');
+      }
+    } catch (error) {
+      console.error('Erro ao abrir código:', error);
+      // Último recurso: copiar URL para clipboard
+      navigator.clipboard.writeText(`https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main${codeFile}`)
+        .then(() => alert(`Não foi possível abrir automaticamente. URL copiada para o clipboard: ${codeFile}`))
+        .catch(() => alert(`Não foi possível abrir: ${codeFile}`));
+    }
+  };
+
   const recursos = [
     {
       id: 'exemplos-c',
@@ -56,7 +88,6 @@ const RecursosSection = ({ onOpenDocsModal }) => {
             <Paper 
               className="recurso-card" 
               elevation={2}
-              onClick={recurso.action}
               sx={{
                 background: 'linear-gradient(135deg, #00b894 0%, #00cec9 100%)',
                 color: 'white',
@@ -156,8 +187,10 @@ def merge_sort(lista):
                 </Typography>
                 {recurso.link ? (
                   <Button 
-                    href={recurso.link}
-                    target="_blank"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openSourceCode(recurso.link, recurso.title);
+                    }}
                     variant="contained" 
                     sx={{ 
                       background: 'rgba(255, 255, 255, 0.2)', 
@@ -173,6 +206,12 @@ def merge_sort(lista):
                   </Button>
                 ) : (
                   <Button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (recurso.action) {
+                        recurso.action();
+                      }
+                    }}
                     variant="contained" 
                     sx={{ 
                       background: 'rgba(255, 255, 255, 0.2)', 
@@ -193,6 +232,90 @@ def merge_sort(lista):
         ))}
       </Grid>
 
+      {/* Seção adicional com mais códigos de exemplo */}
+      <Paper elevation={2} sx={{ 
+        background: 'rgba(255, 255, 255, 0.1)', 
+        padding: '25px', 
+        margin: '20px 0', 
+        borderRadius: '15px' 
+      }}>
+        <Typography variant="h5" gutterBottom>💻 Biblioteca de Códigos</Typography>
+        <Typography variant="body1" sx={{ mb: 3, color: '#34495e' }}>
+          Acesse diretamente os códigos de exemplo organizados por categoria:
+        </Typography>
+        
+        <Grid container spacing={2}>
+          {[
+            { 
+              name: 'Algoritmos Básicos (C)', 
+              path: '/exemplos/c/basicos/',
+              files: ['busca_linear.c', 'busca_binaria.c', 'ordenacao.c'],
+              color: '#00b894'
+            },
+            { 
+              name: 'Algoritmos Básicos (Python)', 
+              path: '/exemplos/python/basicos/',
+              files: ['busca_linear.py', 'busca_binaria.py', 'ordenacao.py'],
+              color: '#6c5ce7'
+            },
+            { 
+              name: 'Estruturas de Dados (C)', 
+              path: '/exemplos/c/estruturas/',
+              files: ['array_dinamico.c', 'lista_ligada.c', 'pilha.c'],
+              color: '#fd79a8'
+            },
+            { 
+              name: 'Estruturas de Dados (Python)', 
+              path: '/exemplos/python/estruturas/',
+              files: ['array_dinamico.py', 'lista_ligada.py', 'pilha.py'],
+              color: '#fdcb6e'
+            }
+          ].map((categoria, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Paper sx={{ 
+                p: 2, 
+                background: `${categoria.color}15`,
+                border: `2px solid ${categoria.color}`,
+                borderRadius: '10px',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)'
+                }
+              }}>
+                <Typography variant="h6" sx={{ 
+                  color: categoria.color, 
+                  fontWeight: 'bold',
+                  mb: 2
+                }}>
+                  {categoria.name}
+                </Typography>
+                {categoria.files.map((file, fileIndex) => (
+                  <Button
+                    key={fileIndex}
+                    onClick={() => openSourceCode(`${categoria.path}${file}`, file)}
+                    sx={{
+                      width: '100%',
+                      justifyContent: 'flex-start',
+                      mb: 1,
+                      color: categoria.color,
+                      textTransform: 'none',
+                      fontSize: '0.8rem',
+                      '&:hover': {
+                        background: `${categoria.color}20`,
+                        transform: 'translateX(5px)'
+                      }
+                    }}
+                  >
+                    📄 {file}
+                  </Button>
+                ))}
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
+
       <Paper elevation={2} sx={{ 
         background: 'rgba(255, 255, 255, 0.1)', 
         padding: '25px', 
@@ -206,6 +329,7 @@ def merge_sort(lista):
               <Button
                 href={recurso.url}
                 target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   width: '100%',
                   height: '100px',
