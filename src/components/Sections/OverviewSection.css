@@ -1,16 +1,19 @@
 .highlight-box {
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%) !important;
-  padding: 25px !important;
+  padding: 35px !important;
   border-radius: 15px !important;
-  margin: 20px 0 !important;
+  margin: 30px 0 !important;
   border-left: 5px solid #e17055;
+  width: 100% !important;
 }
 
 .highlight-title {
   color: #2d3436 !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 20px !important;
   display: flex !important;
   align-items: center;
+  font-size: 1.8rem !important;
+  width: 100%;
 }
 
 .highlight-title::before {
@@ -21,12 +24,15 @@
 .highlight-list {
   list-style: none;
   padding-left: 0;
+  width: 100%;
 }
 
 .highlight-list li {
-  margin-bottom: 8px;
-  padding-left: 20px;
+  margin-bottom: 12px;
+  padding-left: 25px;
   position: relative;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .highlight-list li::before {
@@ -34,19 +40,25 @@
   position: absolute;
   left: 0;
   color: #e17055;
+  font-weight: bold;
 }
 
 .stats-grid {
-  margin: 25px 0 !important;
+  margin: 35px 0 !important;
+  width: 100% !important;
 }
 
 .stat-item {
   text-align: center;
-  padding: 20px !important;
+  padding: 30px !important;
   background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 15px !important;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .stat-item:hover {
@@ -58,26 +70,35 @@
   font-weight: bold !important;
   color: #3498db !important;
   display: block;
+  font-size: 3rem !important;
+  margin-bottom: 10px;
 }
 
 .stat-label {
   color: #7f8c8d !important;
   margin-top: 5px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600;
 }
 
 .methodology {
-  margin-top: 20px !important;
+  margin-top: 35px !important;
+  width: 100% !important;
 }
 
 .methodology-card {
   background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%) !important;
   color: white !important;
-  padding: 30px !important;
+  padding: 35px !important;
   border-radius: 15px !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
   transition: all 0.3s ease;
   cursor: pointer;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .methodology-card:hover {
@@ -85,16 +106,83 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
+.methodology-card h6 {
+  font-size: 1.4rem !important;
+  margin-bottom: 15px !important;
+  font-weight: bold;
+}
+
+.methodology-card .MuiTypography-root {
+  font-size: 1.1rem !important;
+  line-height: 1.6;
+}
+
+/* Melhorar espaçamento do conteúdo principal */
+.content-section p {
+  font-size: 1.1rem !important;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.content-section strong {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* Responsividade específica */
 @media (max-width: 768px) {
   .highlight-box {
-    padding: 15px !important;
+    padding: 25px !important;
+    margin: 20px 0 !important;
+  }
+  
+  .highlight-title {
+    font-size: 1.5rem !important;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .highlight-title::before {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .methodology-card {
+    padding: 25px !important;
+  }
+  
+  .methodology-card h6 {
+    font-size: 1.2rem !important;
+  }
+  
+  .stat-item {
+    padding: 20px !important;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem !important;
+  }
+  
+  .stat-label {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-box {
+    padding: 20px !important;
+  }
+  
+  .highlight-list li {
+    font-size: 1rem;
+    padding-left: 20px;
   }
   
   .methodology-card {
     padding: 20px !important;
   }
   
-  .stat-item {
-    padding: 15px !important;
+  .stat-number {
+    font-size: 2rem !important;
   }
 }

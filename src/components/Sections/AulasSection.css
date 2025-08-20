@@ -18,6 +18,45 @@
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
+.aula-card-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.aula-card-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.aula-card-enhanced:hover::after {
+  left: 100%;
+}
+
+.aula-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.aula-card-enhanced:hover .aula-actions {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .card-type {
   background: rgba(255, 255, 255, 0.2);
   padding: 5px 12px;
@@ -89,4 +128,232 @@
 .pdf-download-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Animations */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-content {
+  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.slide-content:hover::before {
+  left: 100%;
+}
+
+.slide-content:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.markdown-content {
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.markdown-content:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.quick-download-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.download-category {
+  margin-bottom: 20px;
+}
+
+.download-category:last-child {
+  margin-bottom: 0;
+}
+
+.download-button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.download-button:hover {
+  transform: translateX(5px);
+}
+
+/* Topic chips */
+.topic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.topic-chip {
+  font-size: 0.65rem !important;
+  height: 22px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 11px !important;
+}
+
+/* Enhanced hover effects */
+.enhanced-hover {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.enhanced-hover:hover::before {
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .aula-card-enhanced {
+    margin-bottom: 20px;
+  }
+  
+  .aula-actions {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.7);
+    margin-top: 15px;
+    border-radius: 10px;
+  }
+  
+  .slide-content,
+  .markdown-content {
+    padding: 15px;
+  }
+  
+  .topic-chips {
+    gap: 4px;
+  }
+  
+  .topic-chip {
+    font-size: 0.6rem !important;
+    height: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-section {
+    padding: 15px !important;
+  }
+  
+  .aula-card-enhanced {
+    padding: 20px !important;
+  }
+  
+  .slide-content,
+  .markdown-content {
+    padding: 12px;
+  }
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Focus states for accessibility */
+.aula-card-enhanced:focus,
+.slide-content:focus,
+.markdown-content:focus,
+.download-button:focus {
+  outline: 3px solid rgba(102, 126, 234, 0.5);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .aula-card-enhanced,
+  .slide-content,
+  .markdown-content {
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .aula-card-enhanced,
+  .slide-content,
+  .markdown-content,
+  .download-button,
+  .aula-actions {
+    transition: none;
+  }
+  
+  .aula-card-enhanced::after,
+  .slide-content::before {
+    display: none;
+  }
 }

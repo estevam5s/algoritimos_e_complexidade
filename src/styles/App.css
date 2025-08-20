@@ -10,11 +10,105 @@ body {
   color: #333;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .App {
   min-height: 100vh;
-  padding: 20px;
+  padding: 15px;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Container principal com largura total */
+.main-content {
+  max-width: 100% !important;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.content-section {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 20px !important;
+  padding: 40px !important;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: none !important;
+}
+
+.content-section:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.section-title {
+  color: #2c3e50 !important;
+  margin-bottom: 30px !important;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #3498db;
+  display: flex !important;
+  align-items: center;
+  position: relative;
+  font-size: 2.5rem !important;
+  width: 100%;
+}
+
+.section-title::before {
+  margin-right: 15px;
+  font-size: 2rem;
+}
+
+/* Garantir que todos os elementos Grid usem largura total */
+.MuiContainer-root {
+  max-width: none !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.MuiGrid-container {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Garantir que todas as seções usem largura total */
+.content-section > .MuiGrid-container,
+.content-section > .MuiBox-root,
+.content-section > div {
+  width: 100% !important;
+}
+
+/* Melhorar tipografia para largura total */
+.content-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.content-section ul, 
+.content-section ol {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.content-section li {
+  margin-bottom: 8px;
+}
+
+/* Remover limitações de largura do Material-UI */
+.MuiContainer-maxWidthXl {
+  max-width: none !important;
+}
+
+.MuiContainer-maxWidthLg {
+  max-width: none !important;
 }
 
 /* Animations */
@@ -75,42 +169,28 @@ body {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 .animated {
   animation: slideInUp 0.6s ease forwards;
-}
-
-.main-content {
-  max-width: 1400px !important;
-  margin: 0 auto;
-}
-
-.content-section {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border-radius: 20px !important;
-  padding: 30px !important;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
-  transition: all 0.3s ease;
-}
-
-.content-section:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
-}
-
-.section-title {
-  color: #2c3e50 !important;
-  margin-bottom: 20px !important;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #3498db;
-  display: flex !important;
-  align-items: center;
-  position: relative;
-}
-
-.section-title::before {
-  margin-right: 15px;
-  font-size: 2rem;
 }
 
 /* Improved Cards */
@@ -163,15 +243,6 @@ body {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
 }
 
 /* Scrollbar Styling */
@@ -256,48 +327,6 @@ body {
   background-clip: text;
 }
 
-/* Enhanced Mobile Responsiveness */
-@media (max-width: 768px) {
-  .App {
-    padding: 10px;
-  }
-  
-  .content-section {
-    padding: 20px !important;
-    margin-bottom: 20px;
-  }
-  
-  .section-title {
-    font-size: 1.5rem !important;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .section-title::before {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-  
-  .card-hover-effect:hover {
-    transform: translateY(-4px) scale(1.01);
-  }
-}
-
-@media (max-width: 480px) {
-  .content-section {
-    padding: 15px !important;
-    border-radius: 15px !important;
-  }
-  
-  .heading-primary {
-    font-size: 1.8rem;
-  }
-  
-  .heading-secondary {
-    font-size: 1.4rem;
-  }
-}
-
 /* Enhanced Button Styles */
 .btn-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -343,17 +372,6 @@ body {
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
   animation: modalSlideIn 0.3s ease;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
 }
 
 /* Code Highlighting */
@@ -423,6 +441,106 @@ body {
 
 .skip-link:focus {
   top: 6px;
+}
+
+/* Melhorias específicas para navegação */
+.navigation-container + * {
+  margin-top: 20px;
+}
+
+/* Responsividade aprimorada */
+@media (min-width: 1400px) {
+  .App {
+    padding: 25px;
+  }
+  
+  .main-content {
+    padding: 0 30px;
+  }
+  
+  .content-section {
+    padding: 50px !important;
+  }
+  
+  .section-title {
+    font-size: 2.8rem !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 0 10px;
+  }
+  
+  .content-section {
+    padding: 35px !important;
+  }
+}
+
+@media (max-width: 968px) {
+  .card-hover-effect:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
+  }
+  
+  .main-content {
+    padding: 0 5px;
+  }
+  
+  .content-section {
+    padding: 25px !important;
+    border-radius: 15px !important;
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 2rem !important;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 25px !important;
+  }
+  
+  .section-title::before {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .card-hover-effect:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    padding: 5px;
+  }
+  
+  .main-content {
+    padding: 0;
+  }
+  
+  .content-section {
+    padding: 20px !important;
+    border-radius: 12px !important;
+    margin-bottom: 15px;
+  }
+  
+  .section-title {
+    font-size: 1.7rem !important;
+  }
+  
+  .heading-primary {
+    font-size: 1.8rem;
+  }
+  
+  .heading-secondary {
+    font-size: 1.4rem;
+  }
 }
 
 /* High Contrast Mode */
