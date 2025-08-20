@@ -11,7 +11,8 @@ const AulasSection = ({ onOpenAulaModal }) => {
       type: 'PDF + MARKDOWN',
       duration: '4 horas',
       level: 'Fundamentos',
-      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)'
+      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)',
+      isPdf: true
     },
     {
       id: 'aula02',
@@ -20,7 +21,8 @@ const AulasSection = ({ onOpenAulaModal }) => {
       type: 'PDF + MARKDOWN',
       duration: '4 horas',
       level: 'Estruturas',
-      color: 'linear-gradient(135deg, #00b894 0%, #00cec9 100%)'
+      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)',
+      isPdf: true
     },
     {
       id: 'aula03',
@@ -29,7 +31,8 @@ const AulasSection = ({ onOpenAulaModal }) => {
       type: 'PDF + MARKDOWN',
       duration: '4 horas',
       level: 'Análise',
-      color: 'linear-gradient(135deg, #fdcb6e 0%, #e17055 100%)'
+      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)',
+      isPdf: true
     },
     {
       id: 'aula04',
@@ -38,97 +41,18 @@ const AulasSection = ({ onOpenAulaModal }) => {
       type: 'PDF + MARKDOWN',
       duration: '4 horas',
       level: 'Recursão',
-      color: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)'
+      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)',
+      isPdf: true
     },
     {
-      id: 'aula05',
-      title: '🔄 Aula 05: Desenvolvendo Algoritmos com Recursividade',
-      description: 'Backtracking, permutações, N-rainhas e algoritmos recursivos complexos.',
+      id: 'aulas05-14',
+      title: '📚 Aulas 05-14: Conteúdo Avançado',
+      description: 'Recursividade avançada, algoritmos de ordenação, árvores, grafos e projetos práticos.',
       type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Recursão Avançada',
-      color: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)'
-    },
-    {
-      id: 'aula06',
-      title: '⚠️ Aula 06: Quando Não Usar Recursividade',
-      description: 'Limitações da recursão, otimizações e conversão para algoritmos iterativos.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Otimização',
-      color: 'linear-gradient(135deg, #e17055 0%, #d63031 100%)'
-    },
-    {
-      id: 'aula07',
-      title: '📊 Aula 07: Análise Ordenação Elementar e Mergesort',
-      description: 'Bubble Sort, Selection Sort, Insertion Sort e Merge Sort com análise completa.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Ordenação',
-      color: 'linear-gradient(135deg, #00cec9 0%, #55a3ff 100%)'
-    },
-    {
-      id: 'aula08',
-      title: '⚡ Aula 08: Quicksort e Shellsort',
-      description: 'Quick Sort com diferentes pivôs, Shell Sort e comparação de algoritmos.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Ordenação Avançada',
-      color: 'linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)'
-    },
-    {
-      id: 'aula09',
-      title: '🌳 Aula 09: Árvore Binária de Busca',
-      description: 'Conceitos, implementação e operações em árvores binárias de busca.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Estruturas Avançadas',
-      color: 'linear-gradient(135deg, #55a3ff 0%, #74b9ff 100%)'
-    },
-    {
-      id: 'aula10',
-      title: '🔍 Aula 10: Percurso em Árvores Binárias',
-      description: 'Percursos em ordem, pré-ordem, pós-ordem e por nível.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Árvores',
-      color: 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%)'
-    },
-    {
-      id: 'aula11',
-      title: '⚖️ Aula 11: Balanceamento de Árvore e Árvore AVL',
-      description: 'Rotações, fator de balanceamento e implementação de árvores AVL.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Árvores Balanceadas',
-      color: 'linear-gradient(135deg, #00b894 0%, #55efc4 100%)'
-    },
-    {
-      id: 'aula12',
-      title: '🕸️ Aula 12: Grafos - Conceitos e Representação',
-      description: 'Definições, representações, DFS, BFS e algoritmos em grafos.',
-      type: 'MARKDOWN',
-      duration: '4 horas',
-      level: 'Grafos',
-      color: 'linear-gradient(135deg, #e17055 0%, #fab1a0 100%)'
-    },
-    {
-      id: 'aula13',
-      title: '🔬 Aula 13: Roteiro de Laboratório',
-      description: 'Laboratórios práticos com implementações completas e análises.',
-      type: 'PDF + MARKDOWN',
-      duration: '4 horas',
-      level: 'Laboratório',
-      color: 'linear-gradient(135deg, #6c5ce7 0%, #74b9ff 100%)'
-    },
-    {
-      id: 'aula14',
-      title: '🚀 Aula 14: Projetos Finais',
-      description: 'Desenvolvimento de projetos complexos aplicando todos os conceitos.',
-      type: 'PDF + MARKDOWN',
-      duration: '4 horas',
-      level: 'Projetos',
-      color: 'linear-gradient(135deg, #fd79a8 0%, #e84393 100%)'
+      duration: '40 horas',
+      level: 'Avançado',
+      color: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
+      isPdf: false
     },
     {
       id: 'slides',
@@ -147,6 +71,14 @@ const AulasSection = ({ onOpenAulaModal }) => {
     window.open('/slides', '_blank');
   };
 
+  const handleCardClick = (aula) => {
+    if (aula.isSlides) {
+      openSlidesModal();
+    } else {
+      onOpenAulaModal(aula.id);
+    }
+  };
+
   return (
     <Paper className="content-section" elevation={3}>
       <Typography variant="h4" className="section-title">
@@ -159,7 +91,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
             <Paper 
               className="aula-card" 
               elevation={2}
-              onClick={() => aula.isSlides ? openSlidesModal() : onOpenAulaModal(aula.id)}
+              onClick={() => handleCardClick(aula)}
               sx={{
                 background: aula.color,
                 color: 'white',
