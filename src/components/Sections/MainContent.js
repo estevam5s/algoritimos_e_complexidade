@@ -42,7 +42,15 @@ const MainContent = ({
   };
 
   return (
-    <Container maxWidth="xl" className="main-content">
+    <Container 
+      maxWidth={false} 
+      className="main-content"
+      sx={{
+        maxWidth: 'none !important',
+        width: '100%',
+        padding: '0 !important',
+      }}
+    >
       {renderSection()}
     </Container>
   );
