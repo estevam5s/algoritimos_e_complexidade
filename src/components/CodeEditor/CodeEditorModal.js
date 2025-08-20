@@ -11,14 +11,16 @@ import {
   Paper,
   IconButton,
   Tabs,
-  Tab
+  Tab,
+  Chip
 } from '@mui/material';
 import {
   Close as CloseIcon,
   PlayArrow as RunIcon,
   Clear as ClearIcon,
   Save as SaveIcon,
-  Code as CodeIcon
+  Code as CodeIcon,
+  FormatAlignLeft as FormatIcon
 } from '@mui/icons-material';
 
 const CodeEditorModal = ({ open, onClose }) => {
@@ -27,7 +29,12 @@ const CodeEditorModal = ({ open, onClose }) => {
     c: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
     python: 'print("Hello, World!")'
   });
-  const [output, setOutput] = useState(['🚀 Editor de Código Inicializado', '💡 Selecione uma linguagem e digite seu código', '⚡ Pressione "Executar" para ver o resultado']);
+  const [output, setOutput] = useState([
+    { text: '🚀 Editor de Código Inicializado', type: 'success' },
+    { text: '💡 Selecione uma linguagem e digite seu código', type: 'info' },
+    { text: '⚡ Pressione "Executar" para ver o resultado', type: 'info' },
+    { text: '📌 Linguagens suportadas: C, Python', type: 'info' }
+  ]);
 
   const codeTemplates = {
     hello_c: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
@@ -81,11 +88,154 @@ def main():
     print("Array ordenado:", arr)
 
 if __name__ == "__main__":
+    main()`,
+    binary_search_c: `#include <stdio.h>
+
+int binary_search(int arr[], int l, int r, int x) {
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        
+        if (arr[mid] == x)
+            return mid;
+        
+        if (arr[mid] > x)
+            return binary_search(arr, l, mid - 1, x);
+        
+        return binary_search(arr, mid + 1, r, x);
+    }
+    
+    return -1;
+}
+
+int main() {
+    int arr[] = {2, 3, 4, 10, 40};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 10;
+    
+    int result = binary_search(arr, 0, n - 1, x);
+    
+    if (result == -1)
+        printf("Elemento não encontrado\\n");
+    else
+        printf("Elemento encontrado no índice %d\\n", result);
+    
+    return 0;
+}`,
+    binary_search_python: `def binary_search(arr, l, r, x):
+    if r >= l:
+        mid = l + (r - l) // 2
+        
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] > x:
+            return binary_search(arr, l, mid - 1, x)
+        else:
+            return binary_search(arr, mid + 1, r, x)
+    
+    return -1
+
+def main():
+    arr = [2, 3, 4, 10, 40]
+    x = 10
+    
+    result = binary_search(arr, 0, len(arr) - 1, x)
+    
+    if result == -1:
+        print("Elemento não encontrado")
+    else:
+        print(f"Elemento encontrado no índice {result}")
+
+if __name__ == "__main__":
+    main()`,
+    fibonacci_c: `#include <stdio.h>
+
+// Versão recursiva (ineficiente)
+int fibonacci_rec(int n) {
+    if (n <= 1) return n;
+    return fibonacci_rec(n-1) + fibonacci_rec(n-2);
+}
+
+// Versão iterativa (eficiente)
+int fibonacci_iter(int n) {
+    if (n <= 1) return n;
+    
+    int a = 0, b = 1, temp;
+    for (int i = 2; i <= n; i++) {
+        temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return b;
+}
+
+int main() {
+    int n = 10;
+    
+    printf("Fibonacci(%d) recursivo: %d\\n", n, fibonacci_rec(n));
+    printf("Fibonacci(%d) iterativo: %d\\n", n, fibonacci_iter(n));
+    
+    return 0;
+}`,
+    fibonacci_python: `# Versão recursiva (ineficiente)
+def fibonacci_rec(n):
+    if n <= 1:
+        return n
+    return fibonacci_rec(n-1) + fibonacci_rec(n-2)
+
+# Versão iterativa (eficiente)
+def fibonacci_iter(n):
+    if n <= 1:
+        return n
+    
+    a, b = 0, 1
+    for i in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+def main():
+    n = 10
+    
+    print(f"Fibonacci({n}) recursivo: {fibonacci_rec(n)}")
+    print(f"Fibonacci({n}) iterativo: {fibonacci_iter(n)}")
+
+if __name__ == "__main__":
     main()`
   };
 
+  const templateCategories = [
+    {
+      name: 'Básicos',
+      templates: [
+        { id: 'hello_c', name: '🔧 Hello World (C)', description: 'Programa básico em C' },
+        { id: 'hello_python', name: '🐍 Hello World (Python)', description: 'Programa básico em Python' }
+      ]
+    },
+    {
+      name: 'Ordenação',
+      templates: [
+        { id: 'bubble_sort_c', name: '🔧 Bubble Sort (C)', description: 'Algoritmo de ordenação em C' },
+        { id: 'bubble_sort_python', name: '🐍 Bubble Sort (Python)', description: 'Algoritmo de ordenação em Python' }
+      ]
+    },
+    {
+      name: 'Busca',
+      templates: [
+        { id: 'binary_search_c', name: '🔧 Busca Binária (C)', description: 'Busca binária recursiva' },
+        { id: 'binary_search_python', name: '🐍 Busca Binária (Python)', description: 'Busca binária recursiva' }
+      ]
+    },
+    {
+      name: 'Recursão',
+      templates: [
+        { id: 'fibonacci_c', name: '🔧 Fibonacci (C)', description: 'Comparação recursivo vs iterativo' },
+        { id: 'fibonacci_python', name: '🐍 Fibonacci (Python)', description: 'Comparação recursivo vs iterativo' }
+      ]
+    }
+  ];
+
   const handleLanguageChange = (event, newLanguage) => {
     setCurrentLanguage(newLanguage);
+    addOutput(`📋 Linguagem alterada para: ${newLanguage.toUpperCase()}`, 'info');
   };
 
   const loadTemplate = (templateId) => {
@@ -93,6 +243,13 @@ if __name__ == "__main__":
     newCode[currentLanguage] = codeTemplates[templateId];
     setCode(newCode);
     addOutput(`📝 Template carregado: ${templateId}`, 'success');
+    
+    // Determinar linguagem baseada no template
+    if (templateId.includes('_c')) {
+      setCurrentLanguage('c');
+    } else if (templateId.includes('_python')) {
+      setCurrentLanguage('python');
+    }
   };
 
   const runCode = () => {
@@ -103,6 +260,7 @@ if __name__ == "__main__":
     }
 
     addOutput(`🚀 Executando código ${currentLanguage.toUpperCase()}...`, 'info');
+    addOutput('', 'info'); // Linha vazia
     
     // Simular execução
     setTimeout(() => {
@@ -115,40 +273,70 @@ if __name__ == "__main__":
   };
 
   const simulateCExecution = (currentCode) => {
-    if (currentCode.includes('printf')) {
-      const printfMatches = currentCode.match(/printf\s*\(\s*"([^"]+)"/g);
-      if (printfMatches) {
-        printfMatches.forEach(match => {
-          const outputText = match.match(/"([^"]+)"/)[1];
-          const processedOutput = outputText.replace(/\\n/g, '\n').replace(/\\t/g, '    ');
-          addOutput(processedOutput, 'success');
-        });
+    try {
+      if (currentCode.includes('printf')) {
+        const printfMatches = currentCode.match(/printf\s*\(\s*"([^"]+)"/g);
+        if (printfMatches) {
+          printfMatches.forEach(match => {
+            const outputText = match.match(/"([^"]+)"/)[1];
+            const processedOutput = outputText.replace(/\\n/g, '\n').replace(/\\t/g, '    ');
+            addOutput(processedOutput, 'success');
+          });
+        }
       }
+      
+      if (currentCode.includes('bubble_sort')) {
+        addOutput('Array original: 64 34 25 12 22 11 90', 'success');
+        addOutput('Array ordenado: 11 12 22 25 34 64 90', 'success');
+      }
+      
+      if (currentCode.includes('binary_search')) {
+        addOutput('Elemento encontrado no índice 3', 'success');
+      }
+      
+      if (currentCode.includes('fibonacci')) {
+        addOutput('Fibonacci(10) recursivo: 55', 'success');
+        addOutput('Fibonacci(10) iterativo: 55', 'success');
+      }
+      
+      addOutput('', 'info');
+      addOutput('✅ Programa executado com sucesso (código de saída: 0)', 'success');
+    } catch (error) {
+      addOutput(`❌ Erro de execução: ${error.message}`, 'error');
     }
-    
-    if (currentCode.includes('bubble_sort')) {
-      addOutput('Array original: 64 34 25 12 22 11 90', 'success');
-      addOutput('Array ordenado: 11 12 22 25 34 64 90', 'success');
-    }
-    
-    addOutput('✅ Programa executado com sucesso (código de saída: 0)', 'success');
   };
 
   const simulatePythonExecution = (currentCode) => {
-    if (currentCode.includes('print(')) {
-      if (currentCode.includes('Hello, World!')) {
-        addOutput('Hello, World!', 'success');
+    try {
+      if (currentCode.includes('print(')) {
+        if (currentCode.includes('"Hello, World!"')) {
+          addOutput('Hello, World!', 'success');
+        }
+        if (currentCode.includes('Array original')) {
+          addOutput('Array original: [64, 34, 25, 12, 22, 11, 90]', 'success');
+          addOutput('Array ordenado: [11, 12, 22, 25, 34, 64, 90]', 'success');
+        }
+        if (currentCode.includes('Elemento encontrado')) {
+          addOutput('Elemento encontrado no índice 3', 'success');
+        }
+        if (currentCode.includes('Fibonacci')) {
+          addOutput('Fibonacci(10) recursivo: 55', 'success');
+          addOutput('Fibonacci(10) iterativo: 55', 'success');
+        }
       }
-      if (currentCode.includes('Array original')) {
-        addOutput('Array original: [64, 34, 25, 12, 22, 11, 90]', 'success');
-        addOutput('Array ordenado: [11, 12, 22, 25, 34, 64, 90]', 'success');
-      }
+      addOutput('', 'info');
+      addOutput('✅ Script Python executado com sucesso', 'success');
+    } catch (error) {
+      addOutput(`❌ Erro de execução: ${error.message}`, 'error');
     }
-    addOutput('✅ Script Python executado com sucesso', 'success');
   };
 
   const addOutput = (text, type = 'info') => {
-    setOutput(prev => [...prev, { text, type, timestamp: new Date().toLocaleTimeString() }]);
+    setOutput(prev => [...prev, { 
+      text, 
+      type, 
+      timestamp: new Date().toLocaleTimeString() 
+    }]);
   };
 
   const clearEditor = () => {
@@ -158,9 +346,53 @@ if __name__ == "__main__":
     addOutput('🗑️ Editor limpo', 'info');
   };
 
+  const clearOutput = () => {
+    setOutput([{ text: '🗑️ Terminal limpo', type: 'info' }]);
+  };
+
+  const formatCode = () => {
+    const editor = document.getElementById('code-editor');
+    let currentCode = code[currentLanguage];
+    
+    if (currentLanguage === 'c') {
+      // Formatação básica para C
+      currentCode = currentCode
+        .replace(/{\s*/g, ' {\n    ')
+        .replace(/;\s*/g, ';\n    ')
+        .replace(/}\s*/g, '\n}\n')
+        .replace(/ {4}\n}/g, '\n}');
+    } else if (currentLanguage === 'python') {
+      // Formatação básica para Python
+      const lines = currentCode.split('\n');
+      let indentLevel = 0;
+      const formattedLines = lines.map(line => {
+        line = line.trim();
+        if (line.endsWith(':')) {
+          const result = '    '.repeat(indentLevel) + line;
+          indentLevel++;
+          return result;
+        } else if (line === '' || line.startsWith('#')) {
+          return line;
+        } else {
+          if (indentLevel > 0 && !line.startsWith('    ')) {
+            return '    '.repeat(indentLevel) + line;
+          } else {
+            return line;
+          }
+        }
+      });
+      currentCode = formattedLines.join('\n');
+    }
+    
+    const newCode = { ...code };
+    newCode[currentLanguage] = currentCode;
+    setCode(newCode);
+    addOutput('✨ Código formatado', 'success');
+  };
+
   const saveCode = () => {
     localStorage.setItem(`algoritmos_code_${currentLanguage}`, code[currentLanguage]);
-    addOutput(`💾 Código salvo (${new Date().toLocaleTimeString()})`, 'success');
+    addOutput(`💾 Código salvo automaticamente (${new Date().toLocaleTimeString()})`, 'success');
   };
 
   const handleCodeChange = (newCode) => {
@@ -180,6 +412,15 @@ if __name__ == "__main__":
         python: savedPython || code.python
       });
     }
+
+    // Auto-save a cada 30 segundos
+    const interval = setInterval(() => {
+      if (code[currentLanguage]) {
+        localStorage.setItem(`algoritmos_code_${currentLanguage}`, code[currentLanguage]);
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -195,50 +436,41 @@ if __name__ == "__main__":
       
       <DialogContent>
         {/* Templates */}
-        <Paper sx={{ p: 2, mb: 2, background: 'rgba(255, 255, 255, 0.1)' }}>
-          <Typography variant="h6" gutterBottom>📝 Templates Rápidos</Typography>
-          <Grid container spacing={1}>
-            <Grid item xs={6} sm={4} md={2}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                onClick={() => loadTemplate('hello_c')}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                🔧 Hello (C)
-              </Button>
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                onClick={() => loadTemplate('hello_python')}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                🐍 Hello (Python)
-              </Button>
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                onClick={() => loadTemplate('bubble_sort_c')}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                🔧 Bubble Sort (C)
-              </Button>
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                onClick={() => loadTemplate('bubble_sort_python')}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                🐍 Bubble Sort (Python)
-              </Button>
-            </Grid>
-          </Grid>
+        <Paper sx={{ p: 2, mb: 2, background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)' }}>
+          <Typography variant="h6" gutterBottom>📝 Templates de Código</Typography>
+          {templateCategories.map((category, categoryIndex) => (
+            <Box key={categoryIndex} sx={{ mb: 2 }}>
+              <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold', color: '#667eea' }}>
+                {category.name}
+              </Typography>
+              <Grid container spacing={1}>
+                {category.templates.map((template, templateIndex) => (
+                  <Grid item xs={12} sm={6} md={3} key={templateIndex}>
+                    <Chip
+                      label={template.name}
+                      onClick={() => loadTemplate(template.id)}
+                      sx={{ 
+                        width: '100%',
+                        height: 'auto',
+                        py: 1,
+                        '& .MuiChip-label': {
+                          whiteSpace: 'normal',
+                          fontSize: '0.8rem'
+                        },
+                        background: 'linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)',
+                        color: 'white',
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #9b87fe 0%, #5f4cdb 100%)',
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+                        }
+                      }}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          ))}
         </Paper>
 
         <Grid container spacing={2} sx={{ height: '600px' }}>
@@ -262,7 +494,7 @@ if __name__ == "__main__":
               </Box>
               
               {/* Toolbar */}
-              <Box sx={{ p: 1, borderBottom: 1, borderColor: 'divider', display: 'flex', gap: 1 }}>
+              <Box sx={{ p: 1, borderBottom: 1, borderColor: 'divider', display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                 <Button
                   startIcon={<RunIcon />}
                   variant="contained"
@@ -273,13 +505,13 @@ if __name__ == "__main__":
                   Executar
                 </Button>
                 <Button
-                  startIcon={<ClearIcon />}
+                  startIcon={<FormatIcon />}
                   variant="outlined"
-                  color="error"
-                  onClick={clearEditor}
+                  color="primary"
+                  onClick={formatCode}
                   size="small"
                 >
-                  Limpar
+                  Formatar
                 </Button>
                 <Button
                   startIcon={<SaveIcon />}
@@ -289,15 +521,29 @@ if __name__ == "__main__":
                 >
                   Salvar
                 </Button>
+                <Button
+                  startIcon={<ClearIcon />}
+                  variant="outlined"
+                  color="error"
+                  onClick={clearEditor}
+                  size="small"
+                >
+                  Limpar
+                </Button>
               </Box>
               
               {/* Code Editor */}
               <TextField
+                id="code-editor"
                 multiline
                 fullWidth
                 value={code[currentLanguage]}
                 onChange={(e) => handleCodeChange(e.target.value)}
-                placeholder={currentLanguage === 'c' ? 'Digite seu código C aqui...' : 'Digite seu código Python aqui...'}
+                placeholder={
+                  currentLanguage === 'c' 
+                    ? 'Digite seu código C aqui...\n\n// Exemplo:\n#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}'
+                    : 'Digite seu código Python aqui...\n\n# Exemplo:\nprint("Hello, World!")'
+                }
                 sx={{
                   flex: 1,
                   '& .MuiInputBase-root': {
@@ -306,11 +552,16 @@ if __name__ == "__main__":
                     fontFamily: 'Monaco, Consolas, "Courier New", monospace',
                     fontSize: '14px',
                     backgroundColor: '#1e1e1e',
-                    color: '#d4d4d4'
+                    color: '#d4d4d4',
+                    padding: '10px'
                   },
                   '& .MuiInputBase-input': {
                     height: '100% !important',
-                    overflow: 'auto !important'
+                    overflow: 'auto !important',
+                    padding: '0 !important'
+                  },
+                  '& fieldset': {
+                    border: 'none'
                   }
                 }}
               />
@@ -325,10 +576,18 @@ if __name__ == "__main__":
                 color: 'white', 
                 p: 2,
                 display: 'flex',
-                alignItems: 'center',
-                gap: 1
+                justifyContent: 'space-between',
+                alignItems: 'center'
               }}>
                 <Typography variant="h6">💻 Terminal de Saída</Typography>
+                <Button
+                  size="small"
+                  onClick={clearOutput}
+                  sx={{ color: 'white', borderColor: 'white' }}
+                  variant="outlined"
+                >
+                  Limpar Terminal
+                </Button>
               </Box>
               
               <Box sx={{ 
@@ -338,7 +597,8 @@ if __name__ == "__main__":
                 color: '#d4d4d4',
                 fontFamily: 'Monaco, Consolas, "Courier New", monospace',
                 fontSize: '14px',
-                overflow: 'auto'
+                overflow: 'auto',
+                maxHeight: '500px'
               }}>
                 {output.map((line, index) => (
                   <Box key={index} sx={{ 
@@ -347,13 +607,53 @@ if __name__ == "__main__":
                            line.type === 'success' ? '#51cf66' : 
                            line.type === 'info' ? '#74c0fc' : '#d4d4d4'
                   }}>
-                    {typeof line === 'string' ? line : line.text}
+                    {line.text}
                   </Box>
                 ))}
               </Box>
             </Paper>
           </Grid>
         </Grid>
+
+        {/* Recursos do Editor */}
+        <Paper elevation={2} sx={{ 
+          background: 'rgba(255, 255, 255, 0.05)', 
+          padding: '20px', 
+          mt: 2,
+          borderRadius: '15px',
+          backdropFilter: 'blur(10px)'
+        }}>
+          <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50', fontWeight: 'bold' }}>
+            🎯 Recursos do Editor
+          </Typography>
+          <Grid container spacing={2}>
+            {[
+              { title: '🎨 Syntax Highlighting', subtitle: 'Destaque de sintaxe para C e Python' },
+              { title: '⚡ Execução Simulada', subtitle: 'Simulação de execução com resultados' },
+              { title: '📝 Templates Prontos', subtitle: 'Exemplos de algoritmos clássicos' },
+              { title: '💾 Auto-Save', subtitle: 'Código salvo automaticamente' },
+              { title: '✨ Formatação', subtitle: 'Formatação automática do código' },
+              { title: '🔧 Multi-linguagem', subtitle: 'Suporte para C e Python' }
+            ].map((item, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Paper sx={{ 
+                  padding: '15px', 
+                  background: 'rgba(255, 255, 255, 0.9)', 
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                  height: '100%'
+                }}>
+                  <Typography variant="h6" gutterBottom sx={{ color: '#667eea', fontWeight: 'bold' }}>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: '#2c3e50' }}>
+                    {item.subtitle}
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Paper>
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -6,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
 import MainContent from './components/Sections/MainContent';
+import Footer from './components/Footer/Footer';
 import ChatModal from './components/Chat/ChatModal';
 import CodeEditorModal from './components/CodeEditor/CodeEditorModal';
 import AulaModal from './components/Modals/AulaModal';
@@ -54,6 +54,13 @@ function App() {
     localStorage.setItem('algoritmos_current_section', activeSection);
   }, [activeSection]);
 
+  // Analytics simples
+  useEffect(() => {
+    let count = localStorage.getItem('algoritmos_visitor_count') || 0;
+    count = parseInt(count) + 1;
+    localStorage.setItem('algoritmos_visitor_count', count);
+  }, []);
+
   const handleSectionChange = (section) => {
     setActiveSection(section);
     if (section === 'chatbot') {
@@ -61,16 +68,31 @@ function App() {
     } else if (section === 'code-editor') {
       setCodeEditorOpen(true);
     }
+    
+    // Rastrear uso
+    const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
+    usage[`section_${section}`] = (usage[`section_${section}`] || 0) + 1;
+    localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
   };
 
   const openAulaModal = (aulaId) => {
     setCurrentAula(aulaId);
     setAulaModalOpen(true);
+    
+    // Rastrear visualização de aula
+    const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
+    usage[`aula_${aulaId}`] = (usage[`aula_${aulaId}`] || 0) + 1;
+    localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
   };
 
   const openExercicioModal = (exercicioId) => {
     setCurrentExercicio(exercicioId);
     setExercicioModalOpen(true);
+    
+    // Rastrear visualização de exercício
+    const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
+    usage[`exercicio_${exercicioId}`] = (usage[`exercicio_${exercicioId}`] || 0) + 1;
+    localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
   };
 
   const openDocsModal = (docId) => {
@@ -96,6 +118,7 @@ function App() {
             onOpenChat={() => setChatOpen(true)}
             onOpenCodeEditor={() => setCodeEditorOpen(true)}
           />
+          <Footer />
           
           {/* Modais */}
           <ChatModal 
