@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Container } from '@mui/material';
 import OverviewSection from './OverviewSection';
@@ -7,6 +6,8 @@ import AulasSection from './AulasSection';
 import ExerciciosSection from './ExerciciosSection';
 import RecursosSection from './RecursosSection';
 import CronogramaSection from './CronogramaSection';
+import ChatSection from './ChatSection';
+import CodeEditorSection from './CodeEditorSection';
 import './MainContent.css';
 
 const MainContent = ({ 
@@ -32,9 +33,9 @@ const MainContent = ({
       case 'cronograma':
         return <CronogramaSection />;
       case 'chatbot':
-        return <div>Chat será aberto em modal</div>;
+        return <ChatSection />;
       case 'code-editor':
-        return <div>Editor de código será aberto em modal</div>;
+        return <CodeEditorSection />;
       default:
         return <OverviewSection />;
     }

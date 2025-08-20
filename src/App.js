@@ -6,8 +6,6 @@ import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
 import MainContent from './components/Sections/MainContent';
 import Footer from './components/Footer/Footer';
-import ChatModal from './components/Chat/ChatModal';
-import CodeEditorModal from './components/CodeEditor/CodeEditorModal';
 import AulaModal from './components/Modals/AulaModal';
 import ExercicioModal from './components/Modals/ExercicioModal';
 import DocsModal from './components/Modals/DocsModal';
@@ -32,8 +30,6 @@ const theme = createTheme({
 
 function App() {
   const [activeSection, setActiveSection] = useState('overview');
-  const [chatOpen, setChatOpen] = useState(false);
-  const [codeEditorOpen, setCodeEditorOpen] = useState(false);
   const [aulaModalOpen, setAulaModalOpen] = useState(false);
   const [exercicioModalOpen, setExercicioModalOpen] = useState(false);
   const [docsModalOpen, setDocsModalOpen] = useState(false);
@@ -63,11 +59,6 @@ function App() {
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
-    if (section === 'chatbot') {
-      setChatOpen(true);
-    } else if (section === 'code-editor') {
-      setCodeEditorOpen(true);
-    }
     
     // Rastrear uso
     const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
@@ -115,20 +106,10 @@ function App() {
             onOpenAulaModal={openAulaModal}
             onOpenExercicioModal={openExercicioModal}
             onOpenDocsModal={openDocsModal}
-            onOpenChat={() => setChatOpen(true)}
-            onOpenCodeEditor={() => setCodeEditorOpen(true)}
           />
           <Footer />
           
           {/* Modais */}
-          <ChatModal 
-            open={chatOpen} 
-            onClose={() => setChatOpen(false)} 
-          />
-          <CodeEditorModal 
-            open={codeEditorOpen} 
-            onClose={() => setCodeEditorOpen(false)} 
-          />
           <AulaModal 
             open={aulaModalOpen} 
             onClose={() => setAulaModalOpen(false)}
