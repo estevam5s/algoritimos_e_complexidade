@@ -56,10 +56,9 @@ const EmentaSection = () => {
   ];
 
   const avaliacoes = [
-    { title: 'Prova 1: 25%', subtitle: 'Fundamentos e análise', color: '#74b9ff' },
-    { title: 'Prova 2: 25%', subtitle: 'Estruturas de dados', color: '#6c5ce7' },
-    { title: 'Prova 3: 25%', subtitle: 'Algoritmos fundamentais', color: '#fd79a8' },
-    { title: 'Exercícios: 15%', subtitle: 'Listas práticas', color: '#00b894' },
+    { title: 'Prova 1: 35%', subtitle: 'Fundamentos e estruturas de dados', color: '#74b9ff' },
+    { title: 'Prova 2: 35%', subtitle: 'Algoritmos fundamentais', color: '#6c5ce7' },
+    { title: 'Exercícios: 20%', subtitle: 'Listas práticas', color: '#00b894' },
     { title: 'Projeto: 10%', subtitle: 'Implementação completa', color: '#fdcb6e' }
   ];
 
@@ -134,7 +133,7 @@ const EmentaSection = () => {
         </Typography>
         <Grid container spacing={2}>
           {avaliacoes.map((avaliacao, index) => (
-            <Grid item xs={12} sm={6} md={2.4} key={index}>
+            <Grid item xs={12} sm={6} md={3} key={index}>
               <Paper sx={{ 
                 textAlign: 'center', 
                 padding: '20px', 

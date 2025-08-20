@@ -12,25 +12,25 @@ const CronogramaSection = () => {
     {
       periodo: 'Semanas 5-8: Recursividade',
       titulo: '🔄 Pensamento Recursivo',
-      descricao: 'Aulas 05-06: Recursividade avançada, otimizações e limitações. Prova 1 na semana 8.',
+      descricao: 'Aulas 05-06: Recursividade avançada, otimizações e limitações.',
       color: '#764ba2'
     },
     {
       periodo: 'Semanas 9-12: Ordenação',
       titulo: '📊 Algoritmos de Ordenação',
-      descricao: 'Aulas 07-08: Algoritmos elementares, Merge Sort, Quick Sort e Shell Sort. Segunda lista de exercícios.',
+      descricao: 'Aulas 07-08: Algoritmos elementares, Merge Sort, Quick Sort e Shell Sort. Prova 1 na semana 12.',
       color: '#fd79a8'
     },
     {
       periodo: 'Semanas 13-16: Estruturas Avançadas',
       titulo: '🌳 Árvores e Grafos',
-      descricao: 'Aulas 09-12: Árvores binárias, AVL e introdução a grafos. Prova 2 na semana 16.',
+      descricao: 'Aulas 09-12: Árvores binárias, AVL e introdução a grafos.',
       color: '#00b894'
     },
     {
       periodo: 'Semanas 17-20: Laboratório',
       titulo: '🔬 Prática Intensiva',
-      descricao: 'Aulas 13-14: Laboratório prático e desenvolvimento de projetos finais. Prova 3 na semana 20.',
+      descricao: 'Aulas 13-14: Laboratório prático e desenvolvimento de projetos finais. Prova 2 na semana 20.',
       color: '#fdcb6e'
     }
   ];
@@ -172,12 +172,11 @@ const CronogramaSection = () => {
         </Typography>
         <Grid container spacing={2}>
           {[
-            { semana: 'Semana 8', evento: 'Prova 1', descricao: 'Fundamentos e análise', color: '#e74c3c' },
-            { semana: 'Semana 16', evento: 'Prova 2', descricao: 'Estruturas de dados', color: '#f39c12' },
-            { semana: 'Semana 20', evento: 'Prova 3', descricao: 'Algoritmos fundamentais', color: '#27ae60' },
+            { semana: 'Semana 12', evento: 'Prova 1', descricao: 'Fundamentos e estruturas de dados', color: '#e74c3c' },
+            { semana: 'Semana 20', evento: 'Prova 2', descricao: 'Algoritmos fundamentais', color: '#27ae60' },
             { semana: 'Final', evento: 'Projeto', descricao: 'Apresentação final', color: '#8e44ad' }
           ].map((marco, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <Paper sx={{
                 padding: '15px',
                 background: `${marco.color}15`,

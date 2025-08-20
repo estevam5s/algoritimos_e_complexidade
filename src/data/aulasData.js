@@ -656,14 +656,14 @@ export const exerciciosData = {
   'lista01': {
     title: 'Lista de Exercícios 01: Análise de Complexidade',
     description: 'Exercícios focados em análise teórica e prática de algoritmos em C e Python.',
-    prazo: '25 de agosto de 2025',
+    prazo: '2 semanas',
     valor: '2,0 pontos',
     content: `
     <h1>Lista de Exercícios 01: Análise de Complexidade</h1>
     
     <p><strong>Professor:</strong> Vagner Cordeiro<br>
     <strong>Disciplina:</strong> ARA0174 - Algoritmos e Complexidade<br>
-    <strong>Data de Entrega:</strong> 25 de agosto de 2025<br>
+    <strong>Data de Entrega:</strong> 2 semanas<br>
     <strong>Valor:</strong> 2,0 pontos</p>
 
     <h2>📋 Instruções Gerais</h2>
@@ -792,14 +792,14 @@ void funcao(int n) {
   'lista02': {
     title: 'Lista de Exercícios 02: Estruturas de Dados Básicas',
     description: 'Implementação de estruturas lineares, arrays dinâmicos e análise de performance.',
-    prazo: '08 de setembro de 2025',
+    prazo: '2 semanas',
     valor: '2,5 pontos',
     content: `
     <h1>Lista de Exercícios 02: Estruturas de Dados Básicas</h1>
     
     <p><strong>Professor:</strong> Vagner Cordeiro<br>
     <strong>Disciplina:</strong> ARA0174 - Algoritmos e Complexidade<br>
-    <strong>Data de Entrega:</strong> 08 de setembro de 2025<br>
+    <strong>Data de Entrega:</strong> 2 semanas<br>
     <strong>Valor:</strong> 2,5 pontos</p>
 
     <h2>📋 Instruções Gerais</h2>
@@ -866,14 +866,14 @@ void funcao(int n) {
   'lista03': {
     title: 'Lista de Exercícios 03: Algoritmos Recursivos',
     description: 'Implementação e análise de algoritmos recursivos com casos práticos.',
-    prazo: '22 de setembro de 2025',
+    prazo: '2 semanas',
     valor: '2,0 pontos',
     content: `
     <h1>Lista de Exercícios 03: Algoritmos Recursivos</h1>
     
     <p><strong>Professor:</strong> Vagner Cordeiro<br>
     <strong>Disciplina:</strong> ARA0174 - Algoritmos e Complexidade<br>
-    <strong>Data de Entrega:</strong> 22 de setembro de 2025<br>
+    <strong>Data de Entrega:</strong> 2 semanas<br>
     <strong>Valor:</strong> 2,0 pontos</p>
 
     <h2>📝 Exercícios</h2>
@@ -908,14 +908,14 @@ void funcao(int n) {
   'lista04': {
     title: 'Lista de Exercícios 04: Algoritmos de Ordenação',
     description: 'Implementação e comparação de diferentes algoritmos de ordenação.',
-    prazo: '06 de outubro de 2025',
+    prazo: '2 semanas',
     valor: '3,0 pontos',
     content: `
     <h1>Lista de Exercícios 04: Algoritmos de Ordenação</h1>
     
     <p><strong>Professor:</strong> Vagner Cordeiro<br>
     <strong>Disciplina:</strong> ARA0174 - Algoritmos e Complexidade<br>
-    <strong>Data de Entrega:</strong> 06 de outubro de 2025<br>
+    <strong>Data de Entrega:</strong> 2 semanas<br>
     <strong>Valor:</strong> 3,0 pontos</p>
 
     <h2>📝 Exercícios</h2>

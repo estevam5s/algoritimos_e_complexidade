@@ -749,6 +749,7 @@ Unidade V (16h): Projetos e Laboratório
 📖 CONTEÚDO DETALHADO DAS AULAS:
 ${generateDetailedContext()}
 
+// Encontre a seção AVALIAÇÃO: e substitua por:
 📝 EXERCÍCIOS E AVALIAÇÕES:
 Listas de Exercícios:
 - Lista 01: Análise de Complexidade (2,0 pontos, prazo 25/08/2025)
@@ -757,10 +758,9 @@ Listas de Exercícios:
 - Lista 04: Algoritmos de Ordenação (3,0 pontos, prazo 06/10/2025)
 
 Sistema de Avaliação:
-- Prova 1: 25% (Fundamentos, funções, análise de complexidade)
-- Prova 2: 25% (Estruturas de dados, ponteiros, recursividade)
-- Prova 3: 25% (Algoritmos de ordenação, árvores, grafos)
-- Exercícios: 15% (Listas práticas com implementações)
+- Prova 1: 35% (Fundamentos e estruturas de dados)
+- Prova 2: 35% (Algoritmos fundamentais)
+- Exercícios: 20% (Listas práticas com implementações)
 - Projeto Final: 10% (Sistema completo demonstrando todos os conceitos)
 
 💻 LINGUAGENS E FERRAMENTAS:
