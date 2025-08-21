@@ -19,56 +19,145 @@ const AulasSection = ({ onOpenAulaModal }) => {
     setNotification({ ...notification, open: false });
   };
 
-  // Função melhorada para abrir PDF diretamente
-  const openPDF = (pdfPath, pdfName) => {
+  // Função melhorada para abrir PDF em nova aba
+  const openPDF = async (pdfPath, pdfName) => {
     try {
-      showNotification(`📖 Abrindo: ${pdfName}`, 'info');
+      showNotification(`📖 Tentando abrir: ${pdfName}`, 'info');
       
-      // Construir o caminho completo do PDF
-      const fullPath = `${window.location.origin}${pdfPath}`;
-      
-      // Abrir em nova aba com parâmetros específicos para PDF
-      const newWindow = window.open(fullPath, '_blank', 'noopener,noreferrer');
-      
-      if (newWindow) {
-        // Verificar se a janela foi aberta com sucesso
-        setTimeout(() => {
-          if (newWindow.closed) {
-            showNotification(`❌ Não foi possível abrir: ${pdfName}. Tente fazer o download.`, 'warning');
-          } else {
-            showNotification(`✅ ${pdfName} aberto com sucesso`, 'success');
+      // Construir URLs alternativas para tentar
+      const urls = [
+        `${window.location.origin}${pdfPath}`, // Local primeiro
+        `https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main/public${pdfPath}`, // GitHub Raw
+        `https://github.com/cordeirotelecom/algoritimos_e_complexidade/blob/main/public${pdfPath}?raw=true` // GitHub Raw alternativo
+      ];
+
+      let opened = false;
+
+      for (const url of urls) {
+        try {
+          console.log(`Tentando abrir PDF em: ${url}`);
+          
+          // Verificar se o arquivo existe fazendo uma requisição HEAD
+          const response = await fetch(url, { method: 'HEAD' });
+          
+          if (response.ok) {
+            // Arquivo existe, tentar abrir
+            const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+            
+            if (newWindow) {
+              opened = true;
+              showNotification(`✅ ${pdfName} aberto com sucesso`, 'success');
+              break;
+            }
           }
-        }, 1000);
-      } else {
-        throw new Error('Popup bloqueado');
+        } catch (fetchError) {
+          console.log(`Falha ao acessar: ${url}`, fetchError);
+          continue; // Tentar próxima URL
+        }
       }
+
+      if (!opened) {
+        // Se não conseguiu abrir de nenhuma forma, oferecer download
+        showNotification(`⚠️ Não foi possível abrir o PDF. Tentando download...`, 'warning');
+        downloadPDF(pdfPath, pdfName);
+      }
+
     } catch (error) {
       console.error('Erro ao abrir PDF:', error);
-      showNotification(`⚠️ ${pdfName} não disponível ainda. Tente fazer o download direto ou verifique se seu navegador não bloqueou o popup.`, 'warning');
+      showNotification(`❌ Erro ao abrir: ${pdfName}. O arquivo pode não estar disponível.`, 'error');
+    }
+  };
+
+  // Função para forçar abertura do PDF com diferentes estratégias
+  const forceOpenPDF = (pdfPath, pdfName) => {
+    // Estratégia 1: Link direto GitHub Pages (se houver)
+    const githubPagesUrl = `https://cordeirotelecom.github.io/algoritimos_e_complexidade${pdfPath}`;
+    
+    // Estratégia 2: GitHub Raw
+    const githubRawUrl = `https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main/public${pdfPath}`;
+    
+    // Estratégia 3: Local
+    const localUrl = `${window.location.origin}${pdfPath}`;
+
+    showNotification(`🔄 Forçando abertura: ${pdfName}`, 'info');
+
+    // Tentar GitHub Pages primeiro
+    let newWindow = window.open(githubPagesUrl, '_blank', 'noopener,noreferrer');
+    
+    if (!newWindow || newWindow.closed) {
+      // Se GitHub Pages falhou, tentar GitHub Raw
+      setTimeout(() => {
+        newWindow = window.open(githubRawUrl, '_blank', 'noopener,noreferrer');
+        
+        if (!newWindow || newWindow.closed) {
+          // Se GitHub Raw falhou, tentar local
+          setTimeout(() => {
+            newWindow = window.open(localUrl, '_blank', 'noopener,noreferrer');
+            
+            if (!newWindow || newWindow.closed) {
+              showNotification(`❌ Não foi possível abrir ${pdfName}. Popup pode estar bloqueado.`, 'error');
+            } else {
+              showNotification(`✅ ${pdfName} aberto (local)`, 'success');
+            }
+          }, 500);
+        } else {
+          showNotification(`✅ ${pdfName} aberto (GitHub)`, 'success');
+        }
+      }, 500);
+    } else {
+      showNotification(`✅ ${pdfName} aberto (GitHub Pages)`, 'success');
     }
   };
 
   // Função melhorada para download direto do PDF
-  const downloadPDF = (pdfPath, pdfName) => {
+  const downloadPDF = async (pdfPath, pdfName) => {
     try {
       showNotification(`🔄 Iniciando download: ${pdfName}`, 'info');
       
-      // Criar link de download direto
-      const link = document.createElement('a');
-      link.href = `${window.location.origin}${pdfPath}`;
-      link.download = pdfName;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      
-      // Adicionar ao DOM temporariamente e clicar
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      showNotification(`✅ Download iniciado: ${pdfName}`, 'success');
+      // URLs para tentar o download
+      const downloadUrls = [
+        `${window.location.origin}${pdfPath}`,
+        `https://raw.githubusercontent.com/cordeirotelecom/algoritimos_e_complexidade/main/public${pdfPath}`,
+        `https://github.com/cordeirotelecom/algoritimos_e_complexidade/raw/main/public${pdfPath}`
+      ];
+
+      let downloaded = false;
+
+      for (const url of downloadUrls) {
+        try {
+          // Verificar se o arquivo existe
+          const response = await fetch(url, { method: 'HEAD' });
+          
+          if (response.ok) {
+            // Criar link de download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = pdfName.replace(/[^a-zA-Z0-9]/g, '_') + '.pdf';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            
+            // Adicionar ao DOM temporariamente e clicar
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            downloaded = true;
+            showNotification(`✅ Download iniciado: ${pdfName}`, 'success');
+            break;
+          }
+        } catch (fetchError) {
+          console.log(`Falha no download de: ${url}`, fetchError);
+          continue;
+        }
+      }
+
+      if (!downloaded) {
+        showNotification(`❌ Não foi possível baixar: ${pdfName}. Arquivo não encontrado.`, 'error');
+      }
+
     } catch (error) {
       console.error('Erro no download:', error);
-      showNotification(`❌ Erro ao baixar: ${pdfName}. Arquivo pode não estar disponível ainda.`, 'error');
+      showNotification(`❌ Erro ao baixar: ${pdfName}`, 'error');
     }
   };
 
@@ -311,10 +400,13 @@ const AulasSection = ({ onOpenAulaModal }) => {
             • <strong>📖 Abrir:</strong> Visualizar o PDF diretamente no navegador
           </Typography>
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
+            • <strong>🚀 Forçar Abertura:</strong> Tentar diferentes métodos para abrir
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
             • <strong>💾 Download:</strong> Baixar o arquivo para seu dispositivo
           </Typography>
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
-            • <strong>⚠️ Importante:</strong> Alguns PDFs podem não estar disponíveis ainda
+            • <strong>⚠️ Importante:</strong> Alguns PDFs podem estar no GitHub
           </Typography>
         </Box>
 
@@ -344,7 +436,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     padding: '12px 16px',
                     borderRadius: '10px',
                     transition: 'all 0.3s ease',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
@@ -353,6 +445,30 @@ const AulasSection = ({ onOpenAulaModal }) => {
                   }}
                 >
                   📖 Abrir PDF
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    forceOpenPDF(`/aulas/pdf/${pdf.file}`, pdf.name);
+                  }}
+                  startIcon={<OpenIcon />}
+                  sx={{
+                    width: '100%',
+                    borderColor: '#74b9ff',
+                    color: '#0984e3',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    fontSize: '0.75rem',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      borderColor: '#0984e3',
+                      background: 'rgba(116, 185, 255, 0.1)',
+                      transform: 'translateY(-1px)'
+                    }
+                  }}
+                >
+                  🚀 Forçar Abertura
                 </Button>
                 <Button
                   variant="outlined"
@@ -367,7 +483,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#e84393',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#e84393',
@@ -414,7 +530,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     padding: '12px 16px',
                     borderRadius: '10px',
                     transition: 'all 0.3s ease',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
@@ -423,6 +539,30 @@ const AulasSection = ({ onOpenAulaModal }) => {
                   }}
                 >
                   🎯 Abrir Slides
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    forceOpenPDF(`/aulas/pdf/${slide.file}`, slide.name);
+                  }}
+                  startIcon={<OpenIcon />}
+                  sx={{
+                    width: '100%',
+                    borderColor: '#74b9ff',
+                    color: '#0984e3',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    fontSize: '0.75rem',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      borderColor: '#0984e3',
+                      background: 'rgba(116, 185, 255, 0.1)',
+                      transform: 'translateY(-1px)'
+                    }
+                  }}
+                >
+                  🚀 Forçar Slides
                 </Button>
                 <Button
                   variant="outlined"
@@ -437,7 +577,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#e17055',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#e17055',
@@ -528,8 +668,8 @@ const AulasSection = ({ onOpenAulaModal }) => {
             📚 Status dos Materiais
           </Typography>
           <Typography variant="body2" sx={{ color: '#d35400', mb: 2 }}>
-            Os materiais estão sendo disponibilizados gradualmente. Se algum arquivo não abrir, 
-            pode ser que ainda não esteja disponível ou o caminho não esteja correto. 
+            Os materiais estão sendo disponibilizados gradualmente. Se algum arquivo não abrir com o botão normal, 
+            use o botão "🚀 Forçar Abertura" que tentará diferentes métodos. 
           </Typography>
           <Typography variant="body2" sx={{ color: '#e67e22', fontWeight: 'bold' }}>
             💡 Dica: Use a IA do ChatBot para tirar dúvidas sobre qualquer conteúdo das aulas!
