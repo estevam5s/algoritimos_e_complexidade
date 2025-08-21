@@ -8,6 +8,7 @@ import RecursosSection from './RecursosSection';
 import CronogramaSection from './CronogramaSection';
 import ChatSection from './ChatSection';
 import CodeEditorSection from './CodeEditorSection';
+import ExerciseGeneratorSection from './ExerciseGeneratorSection'; // NOVO
 import './MainContent.css';
 
 const MainContent = ({ 
@@ -16,7 +17,8 @@ const MainContent = ({
   onOpenExercicioModal, 
   onOpenDocsModal,
   onOpenChat,
-  onOpenCodeEditor 
+  onOpenCodeEditor,
+  onOpenExerciseGenerator // NOVO
 }) => {
   const renderSection = () => {
     switch (activeSection) {
@@ -36,6 +38,8 @@ const MainContent = ({
         return <ChatSection />;
       case 'code-editor':
         return <CodeEditorSection />;
+      case 'exercise-generator': // NOVO
+        return <ExerciseGeneratorSection onOpenExerciseGenerator={onOpenExerciseGenerator} />;
       default:
         return <OverviewSection />;
     }

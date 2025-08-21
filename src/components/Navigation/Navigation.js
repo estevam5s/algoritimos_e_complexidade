@@ -8,9 +8,10 @@ const Navigation = ({ activeSection, onSectionChange }) => {
     { id: 'ementa', label: '📋 Ementa' },
     { id: 'aulas', label: '🎓 Aulas' },
     { id: 'exercicios', label: '💻 Exercícios' },
+    { id: 'exercise-generator', label: '🤖 Gerador IA' }, // NOVO
     { id: 'recursos', label: '🔧 Recursos' },
     { id: 'cronograma', label: '📅 Cronograma' },
-    { id: 'chatbot', label: '🤖 IA Assistant' },
+    { id: 'chatbot', label: '💬 IA Assistant' },
     { id: 'code-editor', label: '⚡ Editor de Código' }
   ];
 

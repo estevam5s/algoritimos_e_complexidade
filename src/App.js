@@ -9,6 +9,7 @@ import Footer from './components/Footer/Footer';
 import AulaModal from './components/Modals/AulaModal';
 import ExercicioModal from './components/Modals/ExercicioModal';
 import DocsModal from './components/Modals/DocsModal';
+import ExerciseGeneratorModal from './components/ExerciseGenerator/ExerciseGeneratorModal'; // NOVO
 import './styles/App.css';
 
 const theme = createTheme({
@@ -33,6 +34,7 @@ function App() {
   const [aulaModalOpen, setAulaModalOpen] = useState(false);
   const [exercicioModalOpen, setExercicioModalOpen] = useState(false);
   const [docsModalOpen, setDocsModalOpen] = useState(false);
+  const [exerciseGeneratorModalOpen, setExerciseGeneratorModalOpen] = useState(false); // NOVO
   const [currentAula, setCurrentAula] = useState('aula01');
   const [currentExercicio, setCurrentExercicio] = useState('lista01');
   const [currentDoc, setCurrentDoc] = useState('compilacao');
@@ -91,6 +93,16 @@ function App() {
     setDocsModalOpen(true);
   };
 
+  // NOVO: Função para abrir gerador de exercícios
+  const openExerciseGeneratorModal = () => {
+    setExerciseGeneratorModalOpen(true);
+    
+    // Rastrear uso do gerador
+    const usage = JSON.parse(localStorage.getItem('algoritmos_usage') || '{}');
+    usage['exercise_generator'] = (usage['exercise_generator'] || 0) + 1;
+    localStorage.setItem('algoritmos_usage', JSON.stringify(usage));
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -106,6 +118,7 @@ function App() {
             onOpenAulaModal={openAulaModal}
             onOpenExercicioModal={openExercicioModal}
             onOpenDocsModal={openDocsModal}
+            onOpenExerciseGenerator={openExerciseGeneratorModal} // NOVO
           />
           <Footer />
           
@@ -125,6 +138,11 @@ function App() {
             open={docsModalOpen} 
             onClose={() => setDocsModalOpen(false)}
             docId={currentDoc}
+          />
+          {/* NOVO: Modal do gerador de exercícios */}
+          <ExerciseGeneratorModal
+            open={exerciseGeneratorModalOpen}
+            onClose={() => setExerciseGeneratorModalOpen(false)}
           />
         </div>
       </Router>
