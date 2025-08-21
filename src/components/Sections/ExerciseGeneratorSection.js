@@ -1,50 +1,50 @@
 import React from 'react';
 import { Paper, Typography, Button, Box, Grid } from '@mui/material';
 import { 
-  AutoFixHigh as AutoFixHighIcon,
+  Quiz as QuizIcon,
   Psychology as PsychologyIcon,
   Analytics as AnalyticsIcon,
   School as SchoolIcon,
-  Settings as SettingsIcon,
-  History as HistoryIcon 
+  Assignment as AssignmentIcon,
+  EmojiEvents as TrophyIcon 
 } from '@mui/icons-material';
 
 const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
   const features = [
     {
-      icon: <PsychologyIcon />,
-      title: 'IA Avançada',
-      description: 'Motor de IA com controle de criatividade (temperatura 0.1-1.0)',
+      icon: <QuizIcon />,
+      title: 'Quiz Interativo',
+      description: 'Sistema de quiz onde você responde e recebe feedback imediato',
       color: '#667eea'
     },
     {
-      icon: <AnalyticsIcon />,
-      title: 'Análise Inteligente',
-      description: 'Categorização automática e análise de resultados',
+      icon: <PsychologyIcon />,
+      title: 'IA Adaptativa',
+      description: 'IA que gera exercícios baseados no conteúdo real das aulas',
       color: '#e74c3c'
     },
     {
-      icon: <SettingsIcon />,
-      title: 'Configuração Avançada',
-      description: 'Múltiplas opções de personalização e configuração',
+      icon: <TrophyIcon />,
+      title: 'Avaliação de Nível',
+      description: 'Sistema que avalia seu nível de conhecimento automaticamente',
       color: '#2ecc71'
     },
     {
-      icon: <HistoryIcon />,
-      title: 'Sistema Anti-Repetição',
-      description: 'Histórico inteligente para evitar exercícios duplicados',
+      icon: <AnalyticsIcon />,
+      title: 'Análise Detalhada',
+      description: 'Feedback completo com análise por categoria e recomendações',
       color: '#f39c12'
     },
     {
       icon: <SchoolIcon />,
-      title: 'Categorização Automática',
-      description: 'Exercícios categorizados automaticamente (Conceitual, Aplicativa, etc.)',
+      title: 'Conteúdo Real',
+      description: 'Exercícios baseados no material real das aulas da disciplina',
       color: '#9b59b6'
     },
     {
-      icon: <AutoFixHighIcon />,
-      title: 'Prompt Builder',
-      description: 'Construção inteligente de prompts baseada em configurações',
+      icon: <AssignmentIcon />,
+      title: 'Correção Automática',
+      description: 'Sistema inteligente de correção com explicações detalhadas',
       color: '#1abc9c'
     }
   ];
@@ -52,7 +52,7 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
   return (
     <Paper className="content-section" elevation={3}>
       <Typography variant="h4" className="section-title">
-        🤖 Gerador Avançado de Exercícios com IA
+        🎯 Quiz Interativo com IA
       </Typography>
 
       {/* Hero Section */}
@@ -65,16 +65,17 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
         mb: 4
       }}>
         <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-          🚀 Sistema Inteligente
+          🧠 Teste Seus Conhecimentos
         </Typography>
         <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Crie exercícios únicos e personalizados usando Inteligência Artificial avançada
+          Sistema inteligente que gera exercícios baseados no conteúdo real das aulas,
+          corrige automaticamente e avalia seu nível de conhecimento
         </Typography>
         <Button
           variant="contained"
           size="large"
           onClick={onOpenExerciseGenerator}
-          startIcon={<AutoFixHighIcon />}
+          startIcon={<QuizIcon />}
           sx={{
             background: 'rgba(255, 255, 255, 0.2)',
             backdropFilter: 'blur(10px)',
@@ -92,8 +93,64 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
             }
           }}
         >
-          Abrir Gerador Avançado
+          Iniciar Quiz Interativo
         </Button>
+      </Paper>
+
+      {/* Como Funciona */}
+      <Paper elevation={2} sx={{
+        background: 'rgba(255, 255, 255, 0.1)',
+        padding: '30px',
+        borderRadius: '15px',
+        mb: 4,
+        backdropFilter: 'blur(10px)'
+      }}>
+        <Typography variant="h5" gutterBottom sx={{ 
+          color: '#2c3e50', 
+          fontWeight: 'bold',
+          textAlign: 'center',
+          mb: 3
+        }}>
+          🎯 Como Funciona o Quiz
+        </Typography>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="h2" sx={{ color: '#667eea', mb: 2 }}>1️⃣</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50', fontWeight: 'bold' }}>
+                Configure
+              </Typography>
+              <Typography sx={{ color: '#34495e' }}>
+                Escolha as aulas, número de questões e nível de dificuldade
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="h2" sx={{ color: '#e74c3c', mb: 2 }}>2️⃣</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50', fontWeight: 'bold' }}>
+                Responda
+              </Typography>
+              <Typography sx={{ color: '#34495e' }}>
+                Responda as questões uma por uma e receba feedback imediato
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="h2" sx={{ color: '#2ecc71', mb: 2 }}>3️⃣</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50', fontWeight: 'bold' }}>
+                Avalie
+              </Typography>
+              <Typography sx={{ color: '#34495e' }}>
+                Veja seu desempenho, nível de conhecimento e recomendações
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
       </Paper>
 
       {/* Features Grid */}
@@ -103,7 +160,7 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
         mb: 3, 
         textAlign: 'center' 
       }}>
-        🎯 Funcionalidades Avançadas
+        🚀 Recursos Avançados
       </Typography>
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -163,11 +220,12 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
         ))}
       </Grid>
 
-      {/* Technical Specs */}
+      {/* Níveis de Conhecimento */}
       <Paper elevation={2} sx={{
         background: 'rgba(255, 255, 255, 0.1)',
         padding: '30px',
         borderRadius: '15px',
+        mb: 4,
         backdropFilter: 'blur(10px)'
       }}>
         <Typography variant="h5" gutterBottom sx={{ 
@@ -176,60 +234,56 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
           textAlign: 'center',
           mb: 3
         }}>
-          ⚙️ Especificações Técnicas
+          🏆 Níveis de Conhecimento
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom sx={{ color: '#667eea', fontWeight: 'bold' }}>
-              🧠 Motor de IA
-            </Typography>
-            <ul style={{ color: '#34495e', lineHeight: 1.8 }}>
-              <li><strong>Modelo:</strong> Gemini 2.0 Flash</li>
-              <li><strong>Controle de Temperatura:</strong> 0.1 - 1.0</li>
-              <li><strong>TopK/TopP:</strong> Configuração automática</li>
-              <li><strong>Tokens:</strong> Até 4000 tokens por geração</li>
-              <li><strong>Contexto:</strong> Material completo da disciplina</li>
-            </ul>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ textAlign: 'center', p: 2, background: 'rgba(231, 76, 60, 0.1)', borderRadius: '10px' }}>
+              <Typography variant="h4" sx={{ mb: 1 }}>📖</Typography>
+              <Typography variant="h6" sx={{ color: '#e74c3c', fontWeight: 'bold' }}>
+                Insuficiente
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#34495e' }}>
+                Abaixo de 60%
+              </Typography>
+            </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom sx={{ color: '#e74c3c', fontWeight: 'bold' }}>
-              📊 Categorias de Exercícios
-            </Typography>
-            <ul style={{ color: '#34495e', lineHeight: 1.8 }}>
-              <li><strong>Conceitual:</strong> Fundamentos teóricos</li>
-              <li><strong>Comparativa:</strong> Análise entre algoritmos</li>
-              <li><strong>Aplicativa:</strong> Problemas práticos</li>
-              <li><strong>Analítica:</strong> Complexidade e performance</li>
-              <li><strong>Estratégica:</strong> Escolha de soluções</li>
-            </ul>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ textAlign: 'center', p: 2, background: 'rgba(243, 156, 18, 0.1)', borderRadius: '10px' }}>
+              <Typography variant="h4" sx={{ mb: 1 }}>📚</Typography>
+              <Typography variant="h6" sx={{ color: '#f39c12', fontWeight: 'bold' }}>
+                Regular
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#34495e' }}>
+                60% - 74%
+              </Typography>
+            </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom sx={{ color: '#2ecc71', fontWeight: 'bold' }}>
-              🎛️ Configurações Disponíveis
-            </Typography>
-            <ul style={{ color: '#34495e', lineHeight: 1.8 }}>
-              <li><strong>Quantidade:</strong> 1-20 exercícios</li>
-              <li><strong>Tipo:</strong> Múltipla escolha, V/F, Dissertativa</li>
-              <li><strong>Complexidade:</strong> Básico, Médio, Avançado</li>
-              <li><strong>Foco:</strong> Conceitos, Aplicação, Casos práticos</li>
-              <li><strong>Dificuldade Gradual:</strong> Progressão automática</li>
-            </ul>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ textAlign: 'center', p: 2, background: 'rgba(52, 152, 219, 0.1)', borderRadius: '10px' }}>
+              <Typography variant="h4" sx={{ mb: 1 }}>👍</Typography>
+              <Typography variant="h6" sx={{ color: '#3498db', fontWeight: 'bold' }}>
+                Bom
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#34495e' }}>
+                75% - 89%
+              </Typography>
+            </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom sx={{ color: '#f39c12', fontWeight: 'bold' }}>
-              💾 Funcionalidades Extras
-            </Typography>
-            <ul style={{ color: '#34495e', lineHeight: 1.8 }}>
-              <li><strong>Histórico Persistente:</strong> LocalStorage</li>
-              <li><strong>Anti-Repetição:</strong> Análise de similaridade</li>
-              <li><strong>Exportação:</strong> JSON estruturado</li>
-              <li><strong>Análise:</strong> Métricas detalhadas</li>
-              <li><strong>Auto-Save:</strong> Configurações salvas</li>
-            </ul>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ textAlign: 'center', p: 2, background: 'rgba(46, 204, 113, 0.1)', borderRadius: '10px' }}>
+              <Typography variant="h4" sx={{ mb: 1 }}>🏆</Typography>
+              <Typography variant="h6" sx={{ color: '#2ecc71', fontWeight: 'bold' }}>
+                Excelente
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#34495e' }}>
+                90% ou mais
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Paper>
@@ -237,7 +291,7 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
       {/* Call to Action */}
       <Box sx={{ textAlign: 'center', mt: 4 }}>
         <Typography variant="h6" gutterBottom sx={{ color: '#2c3e50' }}>
-          Pronto para gerar exercícios únicos e inteligentes?
+          Pronto para testar seus conhecimentos em Algoritmos e Complexidade?
         </Typography>
         <Button
           variant="contained"
@@ -259,7 +313,7 @@ const ExerciseGeneratorSection = ({ onOpenExerciseGenerator }) => {
             }
           }}
         >
-          Começar a Gerar Exercícios
+          Começar Quiz Agora
         </Button>
       </Box>
     </Paper>

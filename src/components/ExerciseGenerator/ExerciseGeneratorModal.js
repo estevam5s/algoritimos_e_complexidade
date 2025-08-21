@@ -19,14 +19,18 @@ import {
   FormControlLabel,
   TextField,
   CircularProgress,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  LinearProgress,
   Card,
   CardContent,
   Alert,
-  Tooltip
+  Radio,
+  RadioGroup,
+  FormGroup,
+  Checkbox,
+  LinearProgress,
+  Stepper,
+  Step,
+  StepLabel,
+  Divider
 } from '@mui/material';
 import {
   Close as CloseIcon,
@@ -35,14 +39,18 @@ import {
   AutoFixHigh as AutoFixHighIcon,
   History as HistoryIcon,
   Clear as ClearIcon,
-  Download as DownloadIcon,
-  ExpandMore as ExpandMoreIcon,
   PlayArrow as PlayArrowIcon,
-  Refresh as RefreshIcon,
+  CheckCircle as CheckCircleIcon,
+  Cancel as CancelIcon,
   Analytics as AnalyticsIcon,
   School as SchoolIcon,
-  Quiz as QuizIcon
+  Quiz as QuizIcon,
+  NavigateNext as NavigateNextIcon,
+  NavigateBefore as NavigateBeforeIcon,
+  EmojiEvents as TrophyIcon,
+  Assignment as AssignmentIcon
 } from '@mui/icons-material';
+import { aulasData } from '../../data/aulasData'; // Importar dados reais das aulas
 import './ExerciseGeneratorModal.css';
 
 const GEMINI_API_KEY = 'AIzaSyCRfarEDTrIlXNPdonkf-KNAU414KrGnEQ';
@@ -52,12 +60,11 @@ const ExerciseGeneratorModal = ({ open, onClose }) => {
   // Estados principais
   const [exerciseConfig, setExerciseConfig] = useState({
     quantidade: 5,
-    materias: ['algoritmos', 'estruturas'],
+    aulasIncluidas: ['aula01', 'aula02'], // Aulas específicas
     complexidade: 'medio',
     temperatura: 0.7,
     tipoQuestao: 'multipla_escolha',
     focoConteudo: 'geral',
-    evitarRepetidas: true,
     incluirExplicacoes: true,
     dificuldadeGradual: false,
     topK: 40,
@@ -65,64 +72,34 @@ const ExerciseGeneratorModal = ({ open, onClose }) => {
   });
 
   const [generatedExercises, setGeneratedExercises] = useState([]);
-  const [exerciseHistory, setExerciseHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentView, setCurrentView] = useState('config'); // config, exercises, analysis
-  const [analysisData, setAnalysisData] = useState(null);
+  const [currentView, setCurrentView] = useState('config'); // config, quiz, results
   const [errors, setErrors] = useState([]);
+
+  // Estados do quiz
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({}); // { questionId: answer }
+  const [quizResults, setQuizResults] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [quizStartTime, setQuizStartTime] = useState(null);
+  const [questionStartTime, setQuestionStartTime] = useState(null);
 
   // Refs
   const scrollRef = useRef(null);
 
-  // Configurações de temperatura
-  const temperatureLabels = {
-    0.1: { label: 'Muito Conservadora', description: 'Exercícios padrão e previsíveis' },
-    0.3: { label: 'Conservadora', description: 'Exercícios bem estruturados' },
-    0.5: { label: 'Equilibrada', description: 'Mix de criatividade e estrutura' },
-    0.7: { label: 'Criativa', description: 'Exercícios inovadores' },
-    0.9: { label: 'Muito Criativa', description: 'Exercícios únicos e desafiadores' }
-  };
-
-  // Categorias de exercícios
-  const categories = {
-    conceitual: { 
-      name: 'Conceitual', 
-      color: '#3498db',
-      description: 'Exercícios sobre conceitos teóricos fundamentais'
-    },
-    comparativa: { 
-      name: 'Comparativa', 
-      color: '#e74c3c',
-      description: 'Comparação entre diferentes algoritmos e estruturas'
-    },
-    aplicativa: { 
-      name: 'Aplicativa', 
-      color: '#2ecc71',
-      description: 'Aplicação prática de algoritmos em problemas reais'
-    },
-    analitica: { 
-      name: 'Analítica', 
-      color: '#f39c12',
-      description: 'Análise de complexidade e performance'
-    },
-    estrategica: { 
-      name: 'Estratégica', 
-      color: '#9b59b6',
-      description: 'Escolha de algoritmos e estratégias de solução'
-    }
+  // Níveis de conhecimento
+  const knowledgeLevels = {
+    excelente: { min: 90, label: 'Excelente', color: '#27ae60', emoji: '🏆' },
+    bom: { min: 75, label: 'Bom', color: '#3498db', emoji: '👍' },
+    regular: { min: 60, label: 'Regular', color: '#f39c12', emoji: '📚' },
+    insuficiente: { min: 0, label: 'Insuficiente', color: '#e74c3c', emoji: '📖' }
   };
 
   // Carregar dados salvos
   useEffect(() => {
     const savedConfig = localStorage.getItem('exercise_generator_config');
-    const savedHistory = localStorage.getItem('exercise_generator_history');
-    
     if (savedConfig) {
       setExerciseConfig(JSON.parse(savedConfig));
-    }
-    
-    if (savedHistory) {
-      setExerciseHistory(JSON.parse(savedHistory));
     }
   }, []);
 
@@ -131,103 +108,97 @@ const ExerciseGeneratorModal = ({ open, onClose }) => {
     localStorage.setItem('exercise_generator_config', JSON.stringify(exerciseConfig));
   }, [exerciseConfig]);
 
-  // Salvar histórico
-  useEffect(() => {
-    localStorage.setItem('exercise_generator_history', JSON.stringify(exerciseHistory));
-  }, [exerciseHistory]);
+  // Função para extrair conteúdo das aulas selecionadas
+  const getSelectedClassContent = () => {
+    let content = '';
+    exerciseConfig.aulasIncluidas.forEach(aulaId => {
+      if (aulasData[aulaId]) {
+        const aula = aulasData[aulaId];
+        content += `\n=== ${aula.title} ===\n`;
+        // Converter HTML para texto e extrair conceitos principais
+        const textContent = aula.content
+          .replace(/<[^>]*>/g, ' ')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&amp;/g, '&')
+          .replace(/\s+/g, ' ')
+          .trim();
+        content += textContent + '\n\n';
+      }
+    });
+    return content;
+  };
 
-  // Atualizar configurações automaticamente baseadas na temperatura
-  useEffect(() => {
-    const temp = exerciseConfig.temperatura;
-    setExerciseConfig(prev => ({
-      ...prev,
-      topK: Math.round(20 + (temp * 40)), // 20-60
-      topP: Math.round((0.6 + (temp * 0.4)) * 100) / 100 // 0.6-1.0
-    }));
-  }, [exerciseConfig.temperatura]);
-
-  // Função para gerar prompt inteligente
+  // Função para gerar prompt inteligente baseado no conteúdo real
   const buildIntelligentPrompt = () => {
-    const { quantidade, materias, complexidade, tipoQuestao, focoConteudo, incluirExplicacoes, dificuldadeGradual } = exerciseConfig;
+    const { quantidade, complexidade, tipoQuestao, focoConteudo, incluirExplicacoes, dificuldadeGradual } = exerciseConfig;
+    
+    // Obter conteúdo das aulas selecionadas
+    const classContent = getSelectedClassContent();
     
     let prompt = `Você é um EXPERT em geração de exercícios educacionais para a disciplina "Algoritmos e Complexidade" (ARA0174).
 
 🎯 CONFIGURAÇÃO SOLICITADA:
 - Quantidade: ${quantidade} exercícios
-- Matérias: ${materias.join(', ')}
+- Aulas incluídas: ${exerciseConfig.aulasIncluidas.join(', ')}
 - Complexidade: ${complexidade}
 - Tipo: ${tipoQuestao}
 - Foco: ${focoConteudo}
 - Dificuldade gradual: ${dificuldadeGradual ? 'SIM' : 'NÃO'}
 - Incluir explicações: ${incluirExplicacoes ? 'SIM' : 'NÃO'}
 
-📚 CONTEÚDO ESPECÍFICO DA DISCIPLINA:
-- Algoritmos fundamentais e análise de complexidade
-- Estruturas de dados homogêneas e heterogêneas
-- Recursividade e backtracking
-- Algoritmos de ordenação (Bubble, Selection, Merge, Quick, Shell)
-- Árvores binárias, BST, AVL
-- Grafos e algoritmos de busca (DFS, BFS)
-- Análise de performance e otimização
+📚 CONTEÚDO ESPECÍFICO DAS AULAS SELECIONADAS:
+${classContent}
 
-🎯 DISTRIBUIÇÃO OBRIGATÓRIA POR CATEGORIA:
-- Conceitual: ${Math.ceil(quantidade * 0.3)} exercícios
-- Aplicativa: ${Math.ceil(quantidade * 0.3)} exercícios  
-- Analítica: ${Math.ceil(quantidade * 0.2)} exercícios
-- Comparativa: ${Math.ceil(quantidade * 0.1)} exercícios
-- Estratégica: ${Math.ceil(quantidade * 0.1)} exercícios
+🎯 INSTRUÇÕES PARA GERAÇÃO:
+1. Use APENAS o conteúdo das aulas fornecidas acima
+2. Crie exercícios que testem conceitos específicos dessas aulas
+3. NÃO forneça as respostas corretas no JSON (será usado para quiz interativo)
+4. Inclua explicações detalhadas para feedback pós-resposta
+5. Varie a dificuldade conforme configuração
+
+🎯 DISTRIBUIÇÃO POR CATEGORIA:
+- Conceitual: ${Math.ceil(quantidade * 0.4)} exercícios (conceitos fundamentais)
+- Aplicativa: ${Math.ceil(quantidade * 0.3)} exercícios (aplicação prática)  
+- Analítica: ${Math.ceil(quantidade * 0.3)} exercícios (análise e comparação)
 
 `;
-
-    // Adicionar histórico para evitar repetições
-    if (exerciseConfig.evitarRepetidas && exerciseHistory.length > 0) {
-      const recentExercises = exerciseHistory.slice(-20).map(ex => ex.question).join('\n- ');
-      prompt += `\n❌ EVITAR QUESTÕES SIMILARES A ESTAS RECENTES:\n- ${recentExercises}\n`;
-    }
 
     // Instruções específicas por tipo
     if (tipoQuestao === 'multipla_escolha') {
       prompt += `\n📝 FORMATO MÚLTIPLA ESCOLHA:
 - 4 alternativas (A, B, C, D)
 - Apenas 1 alternativa correta
-- Distratores plausíveis e educativos
-- Alternativas balanceadas em tamanho`;
+- Distratores plausíveis baseados em erros comuns
+- Todas as alternativas devem ser da mesma categoria/tema`;
     } else if (tipoQuestao === 'verdadeiro_falso') {
       prompt += `\n📝 FORMATO VERDADEIRO/FALSO:
-- Afirmações claras e precisas
-- Evitar palavras absolutas (sempre, nunca)
-- Incluir justificativa para a resposta`;
-    } else {
-      prompt += `\n📝 FORMATO DISSERTATIVO:
-- Questões abertas que exigem análise
-- Critérios claros de avaliação
-- Possibilidade de múltiplas abordagens corretas`;
+- Afirmações claras sobre conceitos das aulas
+- Evitar palavras absolutas desnecessárias
+- Basear em conceitos específicos do conteúdo`;
     }
 
-    prompt += `\n\n🎯 INSTRUÇÃO FINAL:
-Gere EXATAMENTE ${quantidade} exercícios únicos, inovadores e tecnicamente precisos. 
-Distribua entre as categorias especificadas.
-Use o formato JSON estruturado conforme exemplo:
-
+    prompt += `\n\n🎯 FORMATO JSON OBRIGATÓRIO:
 {
   "exercises": [
     {
       "id": "ex1",
       "type": "${tipoQuestao}",
-      "category": "conceitual",
-      "difficulty": "basico",
-      "question": "Questão específica e técnica...",
+      "category": "conceitual|aplicativa|analitica",
+      "difficulty": "basico|medio|avancado",
+      "question": "Questão específica baseada no conteúdo das aulas...",
       "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
       "correct_answer": "A",
-      "explanation": "Explicação detalhada...",
-      "reference": "Aula 01 - Algoritmos Fundamentais",
-      "complexity": "O(n)",
-      "tags": ["algoritmos", "complexidade"]
+      "explanation": "Explicação detalhada referenciando o conteúdo da aula...",
+      "aula_reference": "aula01|aula02|etc",
+      "points": 1
     }
   ]
 }
 
-Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o conhecimento profundo dos estudantes!`;
+❌ IMPORTANTE: NÃO incluir "correct_answer" no JSON final - será usado para quiz interativo!
+
+Gere exercícios ÚNICOS, PRECISOS e baseados EXCLUSIVAMENTE no conteúdo fornecido das aulas!`;
 
     return prompt;
   };
@@ -287,31 +258,24 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
         throw new Error('Estrutura de exercícios inválida');
       }
 
-      // Adicionar metadados
+      // Adicionar metadados e processar exercícios
       const enhancedExercises = exercisesData.exercises.map((ex, index) => ({
         ...ex,
         id: `ex_${Date.now()}_${index}`,
         generated_at: new Date().toISOString(),
-        config_used: { ...exerciseConfig }
+        config_used: { ...exerciseConfig },
+        points: ex.points || 1,
+        time_limit: 60 // 60 segundos por questão
       }));
 
       setGeneratedExercises(enhancedExercises);
-      
-      // Adicionar ao histórico
-      const newHistoryEntry = {
-        timestamp: new Date().toISOString(),
-        config: { ...exerciseConfig },
-        exercises: enhancedExercises,
-        count: enhancedExercises.length
-      };
-      
-      setExerciseHistory(prev => [...prev.slice(-49), newHistoryEntry]);
-      
-      // Gerar análise
-      generateAnalysis(enhancedExercises);
-      
-      // Mudar para visualização dos exercícios
-      setCurrentView('exercises');
+      setCurrentView('quiz');
+      setCurrentQuestionIndex(0);
+      setUserAnswers({});
+      setQuizResults(null);
+      setShowResult(false);
+      setQuizStartTime(new Date());
+      setQuestionStartTime(new Date());
       
     } catch (error) {
       console.error('Erro ao gerar exercícios:', error);
@@ -321,102 +285,189 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
     }
   };
 
-  // Função para gerar análise
-  const generateAnalysis = (exercises) => {
-    const categoryCount = {};
-    const difficultyCount = {};
-    const typeCount = {};
+  // Função para responder questão
+  const answerQuestion = (answer) => {
+    const currentQuestion = generatedExercises[currentQuestionIndex];
+    const responseTime = new Date() - questionStartTime;
     
-    exercises.forEach(ex => {
-      categoryCount[ex.category] = (categoryCount[ex.category] || 0) + 1;
-      difficultyCount[ex.difficulty] = (difficultyCount[ex.difficulty] || 0) + 1;
-      typeCount[ex.type] = (typeCount[ex.type] || 0) + 1;
-    });
+    setUserAnswers(prev => ({
+      ...prev,
+      [currentQuestion.id]: {
+        answer,
+        responseTime,
+        timestamp: new Date().toISOString()
+      }
+    }));
 
-    setAnalysisData({
-      totalExercises: exercises.length,
-      categoryDistribution: categoryCount,
-      difficultyDistribution: difficultyCount,
-      typeDistribution: typeCount,
-      averageComplexity: exercises.length > 0 ? 'O(n log n)' : 'N/A',
-      generationTime: new Date().toLocaleTimeString(),
-      configUsed: { ...exerciseConfig }
-    });
+    setShowResult(true);
   };
 
-  // Função para limpar histórico
-  const clearHistory = () => {
-    setExerciseHistory([]);
-    localStorage.removeItem('exercise_generator_history');
+  // Função para próxima questão
+  const nextQuestion = () => {
+    if (currentQuestionIndex < generatedExercises.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+      setShowResult(false);
+      setQuestionStartTime(new Date());
+    } else {
+      // Finalizar quiz
+      finishQuiz();
+    }
   };
 
-  // Função para exportar exercícios
-  const exportExercises = () => {
-    const dataStr = JSON.stringify(generatedExercises, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `exercicios_${Date.now()}.json`;
-    link.click();
+  // Função para questão anterior
+  const previousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(prev => prev - 1);
+      setShowResult(false);
+      setQuestionStartTime(new Date());
+    }
+  };
+
+  // Função para finalizar quiz
+  const finishQuiz = () => {
+    const totalTime = new Date() - quizStartTime;
+    let correctAnswers = 0;
+    let totalPoints = 0;
+    let earnedPoints = 0;
+    
+    const questionResults = generatedExercises.map(question => {
+      const userAnswer = userAnswers[question.id];
+      const isCorrect = userAnswer && userAnswer.answer === question.correct_answer;
+      
+      totalPoints += question.points;
+      if (isCorrect) {
+        correctAnswers++;
+        earnedPoints += question.points;
+      }
+      
+      return {
+        questionId: question.id,
+        question: question.question,
+        userAnswer: userAnswer?.answer || 'Não respondida',
+        correctAnswer: question.correct_answer,
+        isCorrect,
+        points: question.points,
+        earnedPoints: isCorrect ? question.points : 0,
+        responseTime: userAnswer?.responseTime || 0,
+        explanation: question.explanation,
+        category: question.category
+      };
+    });
+
+    const percentage = (correctAnswers / generatedExercises.length) * 100;
+    const pointsPercentage = (earnedPoints / totalPoints) * 100;
+    
+    // Determinar nível de conhecimento
+    let knowledgeLevel = 'insuficiente';
+    Object.entries(knowledgeLevels).forEach(([level, config]) => {
+      if (pointsPercentage >= config.min) {
+        knowledgeLevel = level;
+      }
+    });
+
+    // Análise por categoria
+    const categoryAnalysis = {};
+    questionResults.forEach(result => {
+      if (!categoryAnalysis[result.category]) {
+        categoryAnalysis[result.category] = { correct: 0, total: 0 };
+      }
+      categoryAnalysis[result.category].total++;
+      if (result.isCorrect) {
+        categoryAnalysis[result.category].correct++;
+      }
+    });
+
+    const results = {
+      totalQuestions: generatedExercises.length,
+      correctAnswers,
+      percentage,
+      pointsPercentage,
+      knowledgeLevel,
+      totalTime,
+      averageTime: totalTime / generatedExercises.length,
+      questionResults,
+      categoryAnalysis,
+      completedAt: new Date().toISOString()
+    };
+
+    setQuizResults(results);
+    setCurrentView('results');
+
+    // Salvar resultado no histórico
+    const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+    history.push(results);
+    localStorage.setItem('quiz_history', JSON.stringify(history.slice(-50))); // Manter últimos 50
+  };
+
+  // Função para reiniciar quiz
+  const restartQuiz = () => {
+    setCurrentView('config');
+    setGeneratedExercises([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+    setQuizResults(null);
+    setShowResult(false);
   };
 
   // Render da configuração
   const renderConfiguration = () => (
     <Box className="exercise-config">
       <Typography variant="h6" gutterBottom className="config-section-title">
-        🎛️ Configurações Avançadas
+        🎛️ Configurações do Quiz Interativo
       </Typography>
 
-      {/* Controle de Criatividade */}
+      {/* Seleção de Aulas */}
       <Paper className="config-section" elevation={2}>
         <Typography variant="h6" gutterBottom>
-          🧠 Controle de Criatividade da IA
+          📚 Selecionar Aulas para o Quiz
         </Typography>
         
-        <Box className="temperature-container">
-          <Slider
-            value={exerciseConfig.temperatura}
-            onChange={(e, value) => setExerciseConfig(prev => ({ ...prev, temperatura: value }))}
-            min={0.1}
-            max={1.0}
-            step={0.1}
-            marks={[
-              { value: 0.1, label: 'Conservadora' },
-              { value: 0.5, label: 'Equilibrada' },
-              { value: 1.0, label: 'Criativa' }
-            ]}
-            className="temperature-slider"
-          />
-          
-          <Box className="temp-info">
-            <Typography variant="h6" className="temp-value">
-              {exerciseConfig.temperatura}
-            </Typography>
-            <Typography variant="body2" className="temp-description">
-              {temperatureLabels[exerciseConfig.temperatura]?.description || 'Configuração personalizada'}
-            </Typography>
-            <Typography variant="caption" className="temp-technical">
-              topK: {exerciseConfig.topK} | topP: {exerciseConfig.topP}
-            </Typography>
-          </Box>
+        <Typography variant="body2" sx={{ mb: 2, color: '#666' }}>
+          Escolha as aulas que serão base para gerar os exercícios:
+        </Typography>
+        
+        <Box className="aulas-selection">
+          {Object.entries(aulasData).map(([aulaId, aula]) => (
+            <FormControlLabel
+              key={aulaId}
+              control={
+                <Checkbox
+                  checked={exerciseConfig.aulasIncluidas.includes(aulaId)}
+                  onChange={(e) => {
+                    const newAulas = e.target.checked
+                      ? [...exerciseConfig.aulasIncluidas, aulaId]
+                      : exerciseConfig.aulasIncluidas.filter(id => id !== aulaId);
+                    setExerciseConfig(prev => ({ ...prev, aulasIncluidas: newAulas }));
+                  }}
+                />
+              }
+              label={
+                <Box>
+                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                    {aula.title}
+                  </Typography>
+                </Box>
+              }
+              sx={{ width: '100%', mb: 1 }}
+            />
+          ))}
         </Box>
       </Paper>
 
-      {/* Configurações de Conteúdo */}
+      {/* Configurações Básicas */}
       <Paper className="config-section" elevation={2}>
         <Typography variant="h6" gutterBottom>
-          📚 Configurações de Conteúdo
+          ⚙️ Configurações do Quiz
         </Typography>
         
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
               type="number"
-              label="Quantidade de Exercícios"
+              label="Número de Questões"
               value={exerciseConfig.quantidade}
               onChange={(e) => setExerciseConfig(prev => ({ ...prev, quantidade: parseInt(e.target.value) }))}
-              inputProps={{ min: 1, max: 20 }}
+              inputProps={{ min: 3, max: 15 }}
               fullWidth
             />
           </Grid>
@@ -445,8 +496,6 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
               >
                 <MenuItem value="multipla_escolha">Múltipla Escolha</MenuItem>
                 <MenuItem value="verdadeiro_falso">Verdadeiro/Falso</MenuItem>
-                <MenuItem value="dissertativa">Dissertativa</MenuItem>
-                <MenuItem value="misto">Misto</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -461,92 +510,50 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
                 <MenuItem value="geral">Mix Geral</MenuItem>
                 <MenuItem value="conceitos">Conceitos Fundamentais</MenuItem>
                 <MenuItem value="aplicacao">Aplicação Prática</MenuItem>
-                <MenuItem value="casos_praticos">Casos Práticos</MenuItem>
+                <MenuItem value="analise">Análise e Comparação</MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </Grid>
 
-        {/* Matérias Selecionadas */}
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="subtitle1" gutterBottom>Seções/Aulas:</Typography>
-          <Box className="materias-chips">
-            {['algoritmos', 'estruturas', 'recursividade', 'ordenacao', 'arvores', 'grafos'].map(materia => (
-              <Chip
-                key={materia}
-                label={materia.charAt(0).toUpperCase() + materia.slice(1)}
-                variant={exerciseConfig.materias.includes(materia) ? 'filled' : 'outlined'}
-                onClick={() => {
-                  const newMaterias = exerciseConfig.materias.includes(materia)
-                    ? exerciseConfig.materias.filter(m => m !== materia)
-                    : [...exerciseConfig.materias, materia];
-                  setExerciseConfig(prev => ({ ...prev, materias: newMaterias }));
-                }}
-                className={exerciseConfig.materias.includes(materia) ? 'chip-selected' : 'chip-unselected'}
+        {/* Opções Avançadas */}
+        <Box sx={{ mt: 3 }}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={exerciseConfig.dificuldadeGradual}
+                onChange={(e) => setExerciseConfig(prev => ({ ...prev, dificuldadeGradual: e.target.checked }))}
               />
-            ))}
-          </Box>
+            }
+            label="Dificuldade Gradual (fácil → difícil)"
+          />
         </Box>
       </Paper>
 
-      {/* Opções Avançadas */}
+      {/* Controle de Criatividade */}
       <Paper className="config-section" elevation={2}>
         <Typography variant="h6" gutterBottom>
-          ⚙️ Opções Avançadas
+          🧠 Criatividade da IA
         </Typography>
         
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={exerciseConfig.evitarRepetidas}
-                  onChange={(e) => setExerciseConfig(prev => ({ ...prev, evitarRepetidas: e.target.checked }))}
-                />
-              }
-              label="Sistema Anti-Repetição"
-            />
-          </Grid>
+        <Box className="temperature-container">
+          <Slider
+            value={exerciseConfig.temperatura}
+            onChange={(e, value) => setExerciseConfig(prev => ({ ...prev, temperatura: value }))}
+            min={0.1}
+            max={1.0}
+            step={0.1}
+            marks={[
+              { value: 0.1, label: 'Conservadora' },
+              { value: 0.5, label: 'Equilibrada' },
+              { value: 1.0, label: 'Criativa' }
+            ]}
+            className="temperature-slider"
+          />
           
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={exerciseConfig.incluirExplicacoes}
-                  onChange={(e) => setExerciseConfig(prev => ({ ...prev, incluirExplicacoes: e.target.checked }))}
-                />
-              }
-              label="Incluir Explicações"
-            />
-          </Grid>
-          
-          <Grid item xs={12} sm={6}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={exerciseConfig.dificuldadeGradual}
-                  onChange={(e) => setExerciseConfig(prev => ({ ...prev, dificuldadeGradual: e.target.checked }))}
-                />
-              }
-              label="Dificuldade Gradual"
-            />
-          </Grid>
-        </Grid>
-        
-        {/* Histórico */}
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="body2">
-            Histórico: {exerciseHistory.length} sessões salvas
+          <Typography variant="body2" className="temp-description" sx={{ textAlign: 'center', mt: 2 }}>
+            Temperatura: {exerciseConfig.temperatura} | TopK: {exerciseConfig.topK} | TopP: {exerciseConfig.topP}
           </Typography>
-          <Button
-            startIcon={<ClearIcon />}
-            onClick={clearHistory}
-            variant="outlined"
-            color="warning"
-            size="small"
-          >
-            Limpar Histórico
-          </Button>
         </Box>
       </Paper>
 
@@ -556,219 +563,318 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
           variant="contained"
           size="large"
           onClick={generateExercises}
-          disabled={loading}
+          disabled={loading || exerciseConfig.aulasIncluidas.length === 0}
           className="generate-button"
-          startIcon={loading ? <CircularProgress size={20} /> : <PsychologyIcon />}
+          startIcon={loading ? <CircularProgress size={20} /> : <PlayArrowIcon />}
         >
-          {loading ? 'Gerando Exercícios Inteligentes...' : 'Gerar Exercícios com IA'}
+          {loading ? 'Gerando Quiz...' : 'Iniciar Quiz Interativo'}
         </Button>
+        
+        {exerciseConfig.aulasIncluidas.length === 0 && (
+          <Typography variant="body2" color="error" sx={{ mt: 2, textAlign: 'center' }}>
+            Selecione pelo menos uma aula para gerar o quiz
+          </Typography>
+        )}
       </Box>
     </Box>
   );
 
-  // Render dos exercícios gerados
-  const renderExercises = () => (
-    <Box className="exercises-container">
-      <Box className="exercises-header">
-        <Typography variant="h6">
-          📝 Exercícios Gerados ({generatedExercises.length})
-        </Typography>
-        <Box>
+  // Render do quiz
+  const renderQuiz = () => {
+    const currentQuestion = generatedExercises[currentQuestionIndex];
+    const isAnswered = userAnswers[currentQuestion?.id];
+    const progress = ((currentQuestionIndex + 1) / generatedExercises.length) * 100;
+
+    return (
+      <Box className="quiz-container">
+        {/* Header do Quiz */}
+        <Paper className="quiz-header" elevation={2}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+            <Typography variant="h6">
+              📝 Quiz Interativo - Questão {currentQuestionIndex + 1} de {generatedExercises.length}
+            </Typography>
+            <Chip 
+              label={currentQuestion?.category} 
+              color="primary" 
+              variant="outlined"
+            />
+          </Box>
+          
+          <LinearProgress 
+            variant="determinate" 
+            value={progress} 
+            sx={{ height: 8, borderRadius: 4 }}
+          />
+          
+          <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
+            Progresso: {Math.round(progress)}%
+          </Typography>
+        </Paper>
+
+        {/* Questão */}
+        <Paper className="question-card" elevation={2}>
+          <CardContent>
+            <Typography variant="h6" className="question-text" gutterBottom>
+              {currentQuestion?.question}
+            </Typography>
+
+            {/* Opções de Resposta */}
+            {currentQuestion?.type === 'multipla_escolha' && (
+              <RadioGroup
+                value={isAnswered?.answer || ''}
+                onChange={(e) => !showResult && answerQuestion(e.target.value)}
+                disabled={showResult}
+              >
+                {currentQuestion.options?.map((option, index) => {
+                  const optionLetter = option.charAt(0);
+                  const isCorrect = optionLetter === currentQuestion.correct_answer;
+                  const isSelected = isAnswered?.answer === optionLetter;
+                  
+                  return (
+                    <FormControlLabel
+                      key={index}
+                      value={optionLetter}
+                      control={<Radio />}
+                      label={option}
+                      className={`option-item ${showResult ? (isCorrect ? 'correct' : isSelected ? 'incorrect' : '') : ''}`}
+                      disabled={showResult}
+                    />
+                  );
+                })}
+              </RadioGroup>
+            )}
+
+            {currentQuestion?.type === 'verdadeiro_falso' && (
+              <RadioGroup
+                value={isAnswered?.answer || ''}
+                onChange={(e) => !showResult && answerQuestion(e.target.value)}
+                disabled={showResult}
+                row
+              >
+                <FormControlLabel
+                  value="V"
+                  control={<Radio />}
+                  label="✅ Verdadeiro"
+                  className={`option-item ${showResult ? (currentQuestion.correct_answer === 'V' ? 'correct' : isAnswered?.answer === 'V' ? 'incorrect' : '') : ''}`}
+                />
+                <FormControlLabel
+                  value="F"
+                  control={<Radio />}
+                  label="❌ Falso"
+                  className={`option-item ${showResult ? (currentQuestion.correct_answer === 'F' ? 'correct' : isAnswered?.answer === 'F' ? 'incorrect' : '') : ''}`}
+                />
+              </RadioGroup>
+            )}
+
+            {/* Feedback da Resposta */}
+            {showResult && (
+              <Box className="answer-feedback" sx={{ mt: 3 }}>
+                <Alert 
+                  severity={isAnswered?.answer === currentQuestion.correct_answer ? 'success' : 'error'}
+                  icon={isAnswered?.answer === currentQuestion.correct_answer ? <CheckCircleIcon /> : <CancelIcon />}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    {isAnswered?.answer === currentQuestion.correct_answer ? '🎉 Correto!' : '❌ Incorreto'}
+                  </Typography>
+                  
+                  <Typography variant="body2">
+                    <strong>Resposta correta:</strong> {currentQuestion.correct_answer}
+                  </Typography>
+                  
+                  {currentQuestion.explanation && (
+                    <Box sx={{ mt: 2 }}>
+                      <Typography variant="body2">
+                        <strong>📖 Explicação:</strong> {currentQuestion.explanation}
+                      </Typography>
+                    </Box>
+                  )}
+                  
+                  {currentQuestion.aula_reference && (
+                    <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>
+                      📚 Referência: {currentQuestion.aula_reference}
+                    </Typography>
+                  )}
+                </Alert>
+              </Box>
+            )}
+          </CardContent>
+        </Paper>
+
+        {/* Navegação */}
+        <Box className="quiz-navigation">
           <Button
-            startIcon={<AnalyticsIcon />}
-            onClick={() => setCurrentView('analysis')}
+            startIcon={<NavigateBeforeIcon />}
+            onClick={previousQuestion}
+            disabled={currentQuestionIndex === 0}
             variant="outlined"
-            sx={{ mr: 1 }}
           >
-            Ver Análise
+            Anterior
           </Button>
+
+          {showResult && (
+            <Button
+              endIcon={currentQuestionIndex === generatedExercises.length - 1 ? <TrophyIcon /> : <NavigateNextIcon />}
+              onClick={nextQuestion}
+              variant="contained"
+              color="primary"
+            >
+              {currentQuestionIndex === generatedExercises.length - 1 ? 'Ver Resultados' : 'Próxima'}
+            </Button>
+          )}
+
+          {!showResult && !isAnswered && (
+            <Button
+              onClick={() => answerQuestion('')}
+              variant="outlined"
+              color="warning"
+            >
+              Pular Questão
+            </Button>
+          )}
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render dos resultados
+  const renderResults = () => {
+    if (!quizResults) return null;
+
+    const level = knowledgeLevels[quizResults.knowledgeLevel];
+    const minutes = Math.floor(quizResults.totalTime / 60000);
+    const seconds = Math.floor((quizResults.totalTime % 60000) / 1000);
+
+    return (
+      <Box className="results-container">
+        {/* Resultado Principal */}
+        <Paper className="main-result" elevation={3}>
+          <Box className="result-header">
+            <Typography variant="h4" className="result-emoji">
+              {level.emoji}
+            </Typography>
+            <Typography variant="h5" className="result-title" sx={{ color: level.color }}>
+              Nível: {level.label}
+            </Typography>
+            <Typography variant="h3" className="result-score" sx={{ color: level.color }}>
+              {Math.round(quizResults.percentage)}%
+            </Typography>
+          </Box>
+
+          <Divider sx={{ my: 3 }} />
+
+          {/* Estatísticas */}
+          <Grid container spacing={3}>
+            <Grid item xs={6} sm={3}>
+              <Box className="stat-box">
+                <Typography variant="h6">{quizResults.correctAnswers}</Typography>
+                <Typography variant="caption">Acertos</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Box className="stat-box">
+                <Typography variant="h6">{quizResults.totalQuestions - quizResults.correctAnswers}</Typography>
+                <Typography variant="caption">Erros</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Box className="stat-box">
+                <Typography variant="h6">{minutes}:{seconds.toString().padStart(2, '0')}</Typography>
+                <Typography variant="caption">Tempo Total</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Box className="stat-box">
+                <Typography variant="h6">{Math.round(quizResults.averageTime / 1000)}s</Typography>
+                <Typography variant="caption">Tempo Médio</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Paper>
+
+        {/* Análise por Categoria */}
+        <Paper className="category-analysis" elevation={2}>
+          <Typography variant="h6" gutterBottom>
+            📊 Análise por Categoria
+          </Typography>
+          
+          <Grid container spacing={2}>
+            {Object.entries(quizResults.categoryAnalysis).map(([category, data]) => {
+              const percentage = (data.correct / data.total) * 100;
+              return (
+                <Grid item xs={12} sm={4} key={category}>
+                  <Box className="category-result">
+                    <Typography variant="subtitle1" sx={{ textTransform: 'capitalize', fontWeight: 'bold' }}>
+                      {category}
+                    </Typography>
+                    <LinearProgress 
+                      variant="determinate" 
+                      value={percentage}
+                      sx={{ height: 8, borderRadius: 4, my: 1 }}
+                    />
+                    <Typography variant="body2">
+                      {data.correct}/{data.total} ({Math.round(percentage)}%)
+                    </Typography>
+                  </Box>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Paper>
+
+        {/* Recomendações */}
+        <Paper className="recommendations" elevation={2}>
+          <Typography variant="h6" gutterBottom>
+            💡 Recomendações de Estudo
+          </Typography>
+          
+          {quizResults.knowledgeLevel === 'excelente' && (
+            <Alert severity="success">
+              🏆 Excelente desempenho! Você domina muito bem os conceitos. Continue praticando com exercícios mais avançados.
+            </Alert>
+          )}
+          
+          {quizResults.knowledgeLevel === 'bom' && (
+            <Alert severity="info">
+              👍 Bom trabalho! Você tem uma base sólida. Foque nas categorias onde teve mais dificuldade para aprimorar ainda mais.
+            </Alert>
+          )}
+          
+          {quizResults.knowledgeLevel === 'regular' && (
+            <Alert severity="warning">
+              📚 Performance regular. Revise os conceitos fundamentais e pratique mais exercícios. Foque especialmente em conceitos básicos.
+            </Alert>
+          )}
+          
+          {quizResults.knowledgeLevel === 'insuficiente' && (
+            <Alert severity="error">
+              📖 É importante revisar o material das aulas. Recomendo voltar ao conteúdo teórico antes de tentar novos exercícios.
+            </Alert>
+          )}
+        </Paper>
+
+        {/* Ações */}
+        <Box className="result-actions">
           <Button
-            startIcon={<DownloadIcon />}
-            onClick={exportExercises}
             variant="contained"
-            color="success"
+            onClick={restartQuiz}
+            startIcon={<AssignmentIcon />}
+            size="large"
           >
-            Exportar
+            Novo Quiz
+          </Button>
+          
+          <Button
+            variant="outlined"
+            onClick={() => setCurrentView('config')}
+            startIcon={<SettingsIcon />}
+            size="large"
+          >
+            Configurar Novo
           </Button>
         </Box>
       </Box>
-
-      <Box className="exercises-list">
-        {generatedExercises.map((exercise, index) => (
-          <Card key={exercise.id} className="exercise-card" elevation={2}>
-            <CardContent>
-              <Box className="exercise-header">
-                <Box className="exercise-meta">
-                  <Chip
-                    label={categories[exercise.category]?.name || exercise.category}
-                    sx={{
-                      backgroundColor: categories[exercise.category]?.color || '#gray',
-                      color: 'white',
-                      mr: 1
-                    }}
-                    size="small"
-                  />
-                  <Chip
-                    label={exercise.difficulty}
-                    variant="outlined"
-                    size="small"
-                  />
-                  {exercise.complexity && (
-                    <Chip
-                      label={exercise.complexity}
-                      variant="outlined"
-                      size="small"
-                      sx={{ ml: 1 }}
-                    />
-                  )}
-                </Box>
-                <Typography variant="h6" className="exercise-number">
-                  #{index + 1}
-                </Typography>
-              </Box>
-
-              <Typography variant="body1" className="exercise-question">
-                {exercise.question}
-              </Typography>
-
-              {exercise.options && (
-                <Box className="exercise-options">
-                  {exercise.options.map((option, optIndex) => (
-                    <Typography
-                      key={optIndex}
-                      variant="body2"
-                      className={`exercise-option ${option.startsWith(exercise.correct_answer) ? 'correct-option' : ''}`}
-                    >
-                      {option}
-                    </Typography>
-                  ))}
-                </Box>
-              )}
-
-              {exercise.explanation && (
-                <Accordion className="exercise-explanation">
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>📖 Explicação</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography variant="body2">
-                      {exercise.explanation}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              )}
-
-              {exercise.reference && (
-                <Typography variant="caption" className="exercise-reference">
-                  📚 Referência: {exercise.reference}
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
-    </Box>
-  );
-
-  // Render da análise
-  const renderAnalysis = () => (
-    <Box className="analysis-container">
-      <Typography variant="h6" gutterBottom>
-        📊 Análise Avançada dos Exercícios
-      </Typography>
-
-      {analysisData && (
-        <Grid container spacing={3}>
-          {/* Estatísticas gerais */}
-          <Grid item xs={12} md={6}>
-            <Paper className="analysis-card" elevation={2}>
-              <Typography variant="h6" gutterBottom>📈 Estatísticas Gerais</Typography>
-              <Box className="stat-item">
-                <Typography>Total de Exercícios: {analysisData.totalExercises}</Typography>
-                <Typography>Tempo de Geração: {analysisData.generationTime}</Typography>
-                <Typography>Complexidade Média: {analysisData.averageComplexity}</Typography>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Distribuição por categoria */}
-          <Grid item xs={12} md={6}>
-            <Paper className="analysis-card" elevation={2}>
-              <Typography variant="h6" gutterBottom>🎯 Distribuição por Categoria</Typography>
-              {Object.entries(analysisData.categoryDistribution).map(([category, count]) => (
-                <Box key={category} className="category-analysis-item">
-                  <Box className="category-info">
-                    <Chip
-                      label={categories[category]?.name || category}
-                      sx={{
-                        backgroundColor: categories[category]?.color || '#gray',
-                        color: 'white',
-                        mr: 1
-                      }}
-                      size="small"
-                    />
-                    <Typography>{count} exercícios</Typography>
-                  </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={(count / analysisData.totalExercises) * 100}
-                    className="category-progress"
-                  />
-                </Box>
-              ))}
-            </Paper>
-          </Grid>
-
-          {/* Configuração utilizada */}
-          <Grid item xs={12}>
-            <Paper className="analysis-card" elevation={2}>
-              <Typography variant="h6" gutterBottom>⚙️ Configuração Utilizada</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6} sm={3}>
-                  <Typography variant="body2">
-                    <strong>Temperatura:</strong> {analysisData.configUsed.temperatura}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Typography variant="body2">
-                    <strong>Tipo:</strong> {analysisData.configUsed.tipoQuestao}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Typography variant="body2">
-                    <strong>Complexidade:</strong> {analysisData.configUsed.complexidade}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                  <Typography variant="body2">
-                    <strong>TopK:</strong> {analysisData.configUsed.topK}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-        </Grid>
-      )}
-
-      <Box sx={{ mt: 3, textAlign: 'center' }}>
-        <Button
-          startIcon={<RefreshIcon />}
-          onClick={() => setCurrentView('config')}
-          variant="outlined"
-          sx={{ mr: 2 }}
-        >
-          Nova Geração
-        </Button>
-        <Button
-          startIcon={<QuizIcon />}
-          onClick={() => setCurrentView('exercises')}
-          variant="contained"
-        >
-          Ver Exercícios
-        </Button>
-      </Box>
-    </Box>
-  );
+    );
+  };
 
   return (
     <Dialog
@@ -781,9 +887,9 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
       <DialogTitle className="modal-header">
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center">
-            <AutoFixHighIcon sx={{ mr: 1 }} />
+            <QuizIcon sx={{ mr: 1 }} />
             <Typography variant="h6">
-              Gerador Avançado de Exercícios com IA
+              Quiz Interativo com IA - Algoritmos e Complexidade
             </Typography>
           </Box>
           <IconButton onClick={onClose} className="close-button">
@@ -791,34 +897,19 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
           </IconButton>
         </Box>
         
-        {/* Navegação */}
-        <Box className="view-navigation">
-          <Button
-            variant={currentView === 'config' ? 'contained' : 'outlined'}
-            onClick={() => setCurrentView('config')}
-            startIcon={<SettingsIcon />}
-            className="nav-button"
-          >
-            Configuração
-          </Button>
-          <Button
-            variant={currentView === 'exercises' ? 'contained' : 'outlined'}
-            onClick={() => setCurrentView('exercises')}
-            startIcon={<SchoolIcon />}
-            className="nav-button"
-            disabled={generatedExercises.length === 0}
-          >
-            Exercícios ({generatedExercises.length})
-          </Button>
-          <Button
-            variant={currentView === 'analysis' ? 'contained' : 'outlined'}
-            onClick={() => setCurrentView('analysis')}
-            startIcon={<AnalyticsIcon />}
-            className="nav-button"
-            disabled={!analysisData}
-          >
-            Análise
-          </Button>
+        {/* Stepper de Progresso */}
+        <Box sx={{ mt: 2 }}>
+          <Stepper activeStep={currentView === 'config' ? 0 : currentView === 'quiz' ? 1 : 2} alternativeLabel>
+            <Step>
+              <StepLabel>Configuração</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Quiz</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Resultados</StepLabel>
+            </Step>
+          </Stepper>
         </Box>
       </DialogTitle>
 
@@ -834,8 +925,8 @@ Seja CRIATIVO, TÉCNICO e EDUCATIVO. Gere exercícios que realmente testem o con
 
         {/* Conteúdo baseado na visualização atual */}
         {currentView === 'config' && renderConfiguration()}
-        {currentView === 'exercises' && renderExercises()}
-        {currentView === 'analysis' && renderAnalysis()}
+        {currentView === 'quiz' && renderQuiz()}
+        {currentView === 'results' && renderResults()}
       </DialogContent>
     </Dialog>
   );
