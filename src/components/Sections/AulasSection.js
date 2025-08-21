@@ -359,10 +359,10 @@ const AulasSection = ({ onOpenAulaModal }) => {
             💡 <strong>Opções disponíveis:</strong>
           </Typography>
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
-            • <strong>📖 GitHub:</strong> Visualizar no GitHub (com visualizador)
+            • <strong>📖 Abrir PDF:</strong> Visualizar no GitHub (com visualizador)
           </Typography>
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
-            • <strong>🚀 PDF Raw:</strong> Abrir PDF diretamente no navegador
+            • <strong>🚀 PDF Direto:</strong> Abrir PDF diretamente no navegador
           </Typography>
           <Typography variant="body2" sx={{ color: '#34495e', ml: 3 }}>
             • <strong>💾 Download:</strong> Baixar o arquivo para seu dispositivo
@@ -395,7 +395,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     padding: '12px 16px',
                     borderRadius: '10px',
                     transition: 'all 0.3s ease',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
@@ -403,7 +403,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  📖 GitHub
+                  📖 {pdf.name}
                 </Button>
                 <Button
                   variant="outlined"
@@ -418,7 +418,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#0984e3',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#0984e3',
@@ -427,7 +427,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  🚀 PDF Raw
+                  🚀 PDF Direto
                 </Button>
                 <Button
                   variant="outlined"
@@ -442,7 +442,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#00cec9',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#00cec9',
@@ -491,7 +491,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     padding: '12px 16px',
                     borderRadius: '10px',
                     transition: 'all 0.3s ease',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
@@ -499,7 +499,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  🎯 GitHub
+                  🎯 {slide.name}
                 </Button>
                 <Button
                   variant="outlined"
@@ -514,7 +514,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#0984e3',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#0984e3',
@@ -523,7 +523,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     }
                   }}
                 >
-                  🚀 PDF Raw
+                  🚀 PDF Direto
                 </Button>
                 <Button
                   variant="outlined"
@@ -538,7 +538,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                     color: '#e17055',
                     padding: '8px 16px',
                     borderRadius: '8px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: '#e17055',
@@ -610,7 +610,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
                   }
                 }}
               >
-                {code.type === 'C' ? '⚙️' : '🐍'} Ver Código {code.type}
+                {code.type === 'C' ? '⚙️' : '🐍'} {code.name}
               </Button>
             </Grid>
           ))}
@@ -630,7 +630,7 @@ const AulasSection = ({ onOpenAulaModal }) => {
           </Typography>
           <Typography variant="body2" sx={{ color: '#155724', mb: 2 }}>
             Todos os PDFs estão hospedados no GitHub e são acessíveis através dos links acima. 
-            Use "GitHub" para visualizar no navegador ou "PDF Raw" para visualização direta.
+            Use o botão principal para visualizar no GitHub ou "PDF Direto" para visualização direta.
           </Typography>
           <Typography variant="body2" sx={{ color: '#28a745', fontWeight: 'bold' }}>
             💡 Dica: Use a IA do ChatBot para tirar dúvidas sobre qualquer conteúdo das aulas!
